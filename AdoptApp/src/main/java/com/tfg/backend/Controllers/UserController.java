@@ -1,5 +1,6 @@
 package com.tfg.backend.Controllers;
 
+import static com.tfg.backend.Dtos.UserConversor.toAutenticatedUserDTO;
 import static com.tfg.backend.Dtos.UserConversor.toUser;
 import static com.tfg.backend.Dtos.UserConversor.toUserDTO;
 
@@ -13,9 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.tfg.backend.Common.JwtGenerator;
+import com.tfg.backend.Common.JwtInfo;
+import com.tfg.backend.Dtos.AuthenticatedUserDTO;
 import com.tfg.backend.Dtos.UserDTO;
+import com.tfg.backend.Entities.RegisteredUser.RoleType;
 import com.tfg.backend.Entities.User;
-import com.tfg.backend.Services.IUserService;
+import com.tfg.backend.Exceptions.IncorrectLoginException;
 import com.tfg.backend.Services.UserService;
 
 @RestController
@@ -23,19 +28,42 @@ import com.tfg.backend.Services.UserService;
 public class UserController {
 	@Autowired
 	UserService userService;
-	
+
+	@Autowired
+	JwtGenerator tokenProvider;
+
+	@Autowired
+	private JwtGenerator jwtGenerator;
+
 	@PostMapping("/signUp")
-	public ResponseEntity<UserDTO> signUp(@RequestBody UserDTO userDTO){
+	public ResponseEntity<UserDTO> signUp(@RequestBody UserDTO userDTO) {
+
 		User user = toUser(userDTO);
-		
+		user.setRole(RoleType.USER);
+
 		userService.registerUser(user);
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId())
+				.toUri();
 		
-		URI location = ServletUriComponentsBuilder
-				.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(user.getId()).toUri();
-		
+
 		return ResponseEntity.created(location).body(toUserDTO(user));
 	}
-	
+
+	@PostMapping("/login")
+	public AuthenticatedUserDTO login(@RequestBody UserDTO userDTO) throws IncorrectLoginException {
+			User user = toUser(userDTO);
+			User usuarioAutenticado = userService.login(user.getUserName(), user.getPassword());
+			return toAutenticatedUserDTO(generateServiceToken(usuarioAutenticado), usuarioAutenticado);
+		
+	}
+
+	private String generateServiceToken(User user) {
+
+		JwtInfo jwtInfo = new JwtInfo(user.getId(), user.getUserName(), user.getRole().toString());
+
+		return jwtGenerator.generate(jwtInfo);
+
+	}
 
 }

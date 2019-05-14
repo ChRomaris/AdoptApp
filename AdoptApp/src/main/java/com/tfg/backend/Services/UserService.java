@@ -2,13 +2,12 @@ package com.tfg.backend.Services;
 
 import java.util.Optional;
 
-import javax.management.InstanceNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tfg.backend.Daos.IUserDao;
+import com.tfg.backend.Entities.RegisteredUser;
 import com.tfg.backend.Entities.User;
 import com.tfg.backend.Exceptions.IncorrectLoginException;
 
@@ -17,16 +16,30 @@ public class UserService implements IUserService {
 
 	@Autowired
 	IUserDao userDao;
-	
+
 	@Override
-    @Transactional
+	@Transactional
 	public void registerUser(User user) {
 		userDao.save(user);
 	}
-	
+
+	public RegisteredUser findByUsername(String username) {
+		Optional<User> user = userDao.findByUserName(username);
+
+		return user.get();
+	}
+
 	@Override
-    @Transactional(readOnly = true)
+	public RegisteredUser findById(Long id) {
+		Optional<User> user = userDao.findById(id);
+
+		return user.get();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
 	public User login(String username, String password) throws IncorrectLoginException {
+
 		Optional<User> user = userDao.findByUserName(username);
 
 		if (user.isPresent() && user.get().getPassword().equals(password)) {

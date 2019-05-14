@@ -1,25 +1,38 @@
 package com.tfg.backend.Entities;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
 import javax.persistence.Table;
-import javax.persistence.InheritanceType;
 
 @Entity
-@Table(name="RegisteredUser")
+@Table(name = "RegisteredUser")
 public class RegisteredUser {
+
+	public RoleType getRole() {
+		return role;
+	}
+
+	public void setRole(RoleType role) {
+		this.role = role;
+	}
+
+	public enum RoleType {
+		USER, SHELTER
+	};
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long Id;
 	@Column
+	private RoleType role;
+	@Column
 	private String userName;
 	@Column
 	private String password;
+
 	public long getId() {
 		return Id;
 	}
@@ -34,14 +47,13 @@ public class RegisteredUser {
 	private Long phoneNumber;
 	@Column
 	private String email;
-	
-	//private Byte[] image;
+
+	// private Byte[] image;
 	@Column
 	private String address;
 	@Column
 	private String location;
-	
-	
+
 	public RegisteredUser(String userName, String password, String name, Long phoneNumber, String email, String address,
 			String location) {
 		super();
@@ -82,9 +94,9 @@ public class RegisteredUser {
 //		return image;
 //	}
 
-	//public void setImage(Byte[] image) {
+	// public void setImage(Byte[] image) {
 //		this.image = image;
-	//}
+	// }
 
 	public String getAddress() {
 		return address;
@@ -103,9 +115,8 @@ public class RegisteredUser {
 	}
 
 	public RegisteredUser() {
-		
+
 	}
-	
 
 	public Long getRegisteredUserId() {
 		return Id;
@@ -128,74 +139,89 @@ public class RegisteredUser {
 	}
 
 	public void setRegisteredUserId(long registeredUserId) {
-		this.Id = registeredUserId;
+		Id = registeredUserId;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (Id ^ (Id >>> 32));
-		result = prime * result + ((address == null) ? 0 : address.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((location == null) ? 0 : location.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
-		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		result = (prime * result) + (int) (Id ^ (Id >>> 32));
+		result = (prime * result) + ((address == null) ? 0 : address.hashCode());
+		result = (prime * result) + ((email == null) ? 0 : email.hashCode());
+		result = (prime * result) + ((location == null) ? 0 : location.hashCode());
+		result = (prime * result) + ((name == null) ? 0 : name.hashCode());
+		result = (prime * result) + ((password == null) ? 0 : password.hashCode());
+		result = (prime * result) + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
+		result = (prime * result) + ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		RegisteredUser other = (RegisteredUser) obj;
-		if (Id != other.Id)
+		if (Id != other.Id) {
 			return false;
+		}
 		if (address == null) {
-			if (other.address != null)
+			if (other.address != null) {
 				return false;
-		} else if (!address.equals(other.address))
+			}
+		} else if (!address.equals(other.address)) {
 			return false;
+		}
 		if (email == null) {
-			if (other.email != null)
+			if (other.email != null) {
 				return false;
-		} else if (!email.equals(other.email))
+			}
+		} else if (!email.equals(other.email)) {
 			return false;
+		}
 		if (location == null) {
-			if (other.location != null)
+			if (other.location != null) {
 				return false;
-		} else if (!location.equals(other.location))
+			}
+		} else if (!location.equals(other.location)) {
 			return false;
+		}
 		if (name == null) {
-			if (other.name != null)
+			if (other.name != null) {
 				return false;
-		} else if (!name.equals(other.name))
+			}
+		} else if (!name.equals(other.name)) {
 			return false;
+		}
 		if (password == null) {
-			if (other.password != null)
+			if (other.password != null) {
 				return false;
-		} else if (!password.equals(other.password))
+			}
+		} else if (!password.equals(other.password)) {
 			return false;
+		}
 		if (phoneNumber == null) {
-			if (other.phoneNumber != null)
+			if (other.phoneNumber != null) {
 				return false;
-		} else if (!phoneNumber.equals(other.phoneNumber))
+			}
+		} else if (!phoneNumber.equals(other.phoneNumber)) {
 			return false;
+		}
 		if (userName == null) {
-			if (other.userName != null)
+			if (other.userName != null) {
 				return false;
-		} else if (!userName.equals(other.userName))
+			}
+		} else if (!userName.equals(other.userName)) {
 			return false;
+		}
 		return true;
 	}
-	
-	
-	
 
 }
