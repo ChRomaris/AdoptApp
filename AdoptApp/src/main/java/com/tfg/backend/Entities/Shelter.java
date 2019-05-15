@@ -11,6 +11,7 @@ import javax.persistence.Table;
 public class Shelter  {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long shelter_id;
 	@Column
 	private String type;
