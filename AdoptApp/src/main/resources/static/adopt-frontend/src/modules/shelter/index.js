@@ -1,3 +1,3 @@
-import shelterMain from './components/shelterMain';
+import shelterCreationForm from './components/shelterCreationForm';
 
-export default shelterMain;
+export default shelterCreationForm;

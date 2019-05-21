@@ -43,7 +43,7 @@ class SignInForm extends Component {
                 
                   localStorage.setItem('serviceToken', response.serviceToken);
                   ToastsStore.success("Logueado Correctamente");
-                  this.props.history.push("/welcome");
+                  this.props.history.push("/header");
                  
                 
               }).catch(error => {

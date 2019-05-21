@@ -10,7 +10,7 @@ import {ToastsContainer, ToastsStore} from 'react-toasts';
 
   
 
-class ShelterCreationForm extends Component{
+class shelterCreationForm extends Component{
 
     constructor(){
         super();
@@ -81,4 +81,4 @@ class ShelterCreationForm extends Component{
 
 }
 
-export default ShelterCreationForm;
+export default shelterCreationForm;

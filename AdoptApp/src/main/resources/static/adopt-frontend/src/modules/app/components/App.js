@@ -12,8 +12,19 @@ import Header from './Header';
 import '../../../App.css';
 
 
+
 class App extends React.Component {
 
+constructor(props){
+  super(props);
+  this.state = {
+    currentUser: null,
+    isAuthenticated: false,
+    isLoading: false
+  }
+
+ 
+}
   render() {
     return (
       <Router>     
@@ -24,7 +35,6 @@ class App extends React.Component {
               <Route exact path="/animal/add" component={AnimalCreationForm}></Route>
               <Route exact path="/header" component={Header}></Route>
               <Route exact path="/"  component={SignInForm}></Route>
-              <Route exact path="/welcome" component={Welcome}></Route>
               </Switch>
       </Router>
     );
