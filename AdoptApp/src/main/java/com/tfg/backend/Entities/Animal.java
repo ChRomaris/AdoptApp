@@ -1,10 +1,17 @@
 package com.tfg.backend.Entities;
 
 import java.util.Calendar;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Animal {
@@ -14,6 +21,7 @@ public class Animal {
 	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id_animal;
 	@Column
 	private String name;
@@ -34,11 +42,37 @@ public class Animal {
 	@Column
 	private String state;
 	
+	@OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
+	private Set<AnimalPicture> images;
 	
+
+	public Set<AnimalPicture> getImages() {
+		return images;
+	}
+
+	public void setImages(Set<AnimalPicture> images) {
+		this.images = images;
+	}
+
 	public long getId_animal() {
 		return id_animal;
 	}
 	
+	public Animal(String name, Genre genre, String description, Calendar birthDate, String health_comment, String color,
+			String size, Boolean trained, String state, Set<AnimalPicture> images) {
+		super();
+		this.name = name;
+		this.genre = genre;
+		this.description = description;
+		this.birthDate = birthDate;
+		this.health_comment = health_comment;
+		this.color = color;
+		this.size = size;
+		this.trained = trained;
+		this.state = state;
+		this.images = images;
+	}
+
 	public Animal(String name, Genre genre, String description, Calendar birthDate, String health_comment, String color,
 			String size, Boolean trained, String state) {
 		super();

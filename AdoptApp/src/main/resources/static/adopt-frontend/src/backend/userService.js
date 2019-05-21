@@ -5,3 +5,8 @@ export const signUp = (user) => {
 
 
 }
+
+export const login = (loginData) => {
+
+    axios.post('')
+}

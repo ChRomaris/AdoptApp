@@ -2,7 +2,10 @@ package com.tfg.backend.Dtos;
 
 import java.util.Calendar;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.tfg.backend.Entities.Animal.Genre;
+import com.tfg.backend.Entities.AnimalPicture;
 
 public class AdoptionAnimalDTO {
 	
@@ -16,6 +19,9 @@ public class AdoptionAnimalDTO {
 	private Boolean trained;
 	private String state;
 	private Long adoptionTime;
+	private String image;
+	private String imageDescription;
+	private Calendar imageDateTime;
 	
 	
 	public AdoptionAnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
@@ -33,6 +39,53 @@ public class AdoptionAnimalDTO {
 		this.adoptionTime = adoptionTime;
 	}
 	
+	
+	
+
+
+
+	public String getImage() {
+		return image;
+	}
+
+
+
+
+
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+
+
+
+
+
+	public String getImageDescription() {
+		return imageDescription;
+	}
+
+
+
+	public void setImageDescription(String imageDescription) {
+		this.imageDescription = imageDescription;
+	}
+
+
+
+	public Calendar getImageDateTime() {
+		return imageDateTime;
+	}
+
+
+
+	public void setImageDateTime(Calendar imageDateTime) {
+		this.imageDateTime = imageDateTime;
+	}
+
+
+
 	public Long getAdoptionTime() {
 		return adoptionTime;
 	}
