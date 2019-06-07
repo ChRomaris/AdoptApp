@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {login}  from '../actions';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 import {NavLink} from 'react-router-dom';
+import logo from '../images/cat2.gif'; 
 
 import '../App.css';
 
@@ -57,7 +58,9 @@ class SignInForm extends Component {
     render() {
         return (
           <div className="App">
-          <div className="App__Aside"></div>
+          <div className="App__Aside"> <img src={logo} alt="loading..." />
+            <p className="MainText">AdoptApp</p>
+           </div>
           <div className="App__Form">
         <div className="FormCenter">
           <ToastsContainer store={ToastsStore}/>

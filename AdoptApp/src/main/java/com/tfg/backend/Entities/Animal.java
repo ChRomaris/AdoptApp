@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ public class Animal {
 	@Column
 	private String state;
 	
-	@OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<AnimalPicture> images;
 	
 
@@ -57,7 +58,9 @@ public class Animal {
 	public long getId_animal() {
 		return id_animal;
 	}
-	
+	public Animal() {
+		
+	}
 	public Animal(String name, Genre genre, String description, Calendar birthDate, String health_comment, String color,
 			String size, Boolean trained, String state, Set<AnimalPicture> images) {
 		super();

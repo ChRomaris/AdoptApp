@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './modules/app';
+import {App} from './modules/app';
 import {Provider} from 'react-redux';
 import {IntlProvider} from 'react-intl';
 import {initReactIntl} from './i18n';

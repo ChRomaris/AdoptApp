@@ -6,6 +6,8 @@ import AnimalCreationForm from '../../animal/components/AnimalCreationForm'
 import Welcome from '../../../pages/Welcome';
 import shelterMain from '../../shelter';
 import Header from './Header';
+import main from '../../mainList';
+import List from '../../mainList/components/List';
 
 
 
@@ -35,6 +37,8 @@ constructor(props){
               <Route exact path="/animal/add" component={AnimalCreationForm}></Route>
               <Route exact path="/header" component={Header}></Route>
               <Route exact path="/"  component={SignInForm}></Route>
+              <Route exact path="/mainPage" component={main}></Route>
+              <Route exact path="/List" component = {List}></Route>
               </Switch>
       </Router>
     );

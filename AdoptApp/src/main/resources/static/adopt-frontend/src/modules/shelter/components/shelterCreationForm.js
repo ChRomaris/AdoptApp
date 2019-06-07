@@ -2,6 +2,7 @@ import React ,{ Component }from 'react';
 import {Container, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {addShelter} from '../actions';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
+import {Header} from '../../app/';
 
 
   import 'bootstrap/dist/css/bootstrap.css';
@@ -59,8 +60,9 @@ class shelterCreationForm extends Component{
     render(){
 
         return (
-                
+            
             <Container className="shelterForm">
+            <Header/>
             <ToastsContainer store={ToastsStore}/>
                 <h2>CREAR ASOCIACIÓN</h2>
             <Form onSubmit={this.handleSubmit}>

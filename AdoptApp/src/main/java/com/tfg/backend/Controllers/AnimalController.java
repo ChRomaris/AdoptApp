@@ -2,6 +2,7 @@ package com.tfg.backend.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,17 +16,19 @@ import com.tfg.backend.Services.AnimalService;
 
 import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimal;
 import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimalDTO;
+import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimalDTOList;
 import static com.tfg.backend.Dtos.UserConversor.toUserDTO;
 
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.List;
 
 @RestController
 @RequestMapping("/animal/")
 public class AnimalController {
-	
+		
 	@Autowired
 	AnimalService animalService;
 	
@@ -37,10 +40,9 @@ public class AnimalController {
 		
 		animalService.addAdoptionAnimal(animal);
 		
-		if(adoptionAnimalDTO.getImage() !=null) {
-			String [] parts = adoptionAnimalDTO.getImage().split(",");
-			byte[] decodedImg = Base64.getDecoder().decode(parts[1].getBytes(StandardCharsets.UTF_8));
-			AnimalPicture animalPicture = new AnimalPicture (decodedImg, adoptionAnimalDTO.getDescription(), adoptionAnimalDTO.getImageDateTime(), animal);
+		if(adoptionAnimalDTO.getImage() != null && adoptionAnimalDTO.getImage().toString() != "") {
+
+			AnimalPicture animalPicture = new AnimalPicture (adoptionAnimalDTO.getImage(), adoptionAnimalDTO.getDescription(), adoptionAnimalDTO.getImageDateTime(), animal);
 			animalService.addAnimalPicture(animalPicture);
 		}
 		
@@ -51,6 +53,13 @@ public class AnimalController {
 
 		return ResponseEntity.created(location).body(toAdoptionAnimalDTO(animal));
 		
+	}
+	
+	@GetMapping("/getAll")
+	public List<AdoptionAnimalDTO> getAllAdoptionAnimals (){
+		List <AdoptionAnimal> adoptionAnimals = animalService.getAllAdoptionAnimals();
+		
+		return toAdoptionAnimalDTOList(adoptionAnimals);
 	}
 
 }

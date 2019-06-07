@@ -20,8 +20,8 @@ public class AnimalPicture {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long AnimalPictureId;
 	
-	@Column(length = 10000)
-	private byte[] image;
+	@Column (length = 500000)
+	private String image;
 	
 	@Column
 	private String description;
@@ -29,15 +29,19 @@ public class AnimalPicture {
 	@Column 
 	private Calendar dateTime;
 	
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
-	public AnimalPicture(byte[] image, String description, Calendar dateTime, Animal animal) {
+	public AnimalPicture() {
+		super();
+	}
+
+	public AnimalPicture(String image, String description, Calendar dateTime, Animal animal) {
 		super();
 		this.image = image;
 		this.description = description;
@@ -49,7 +53,7 @@ public class AnimalPicture {
 	@JoinColumn (name = "id_animal")
 	private Animal animal;
 	
-	public AnimalPicture(byte[] image, String description, Calendar dateTime) {
+	public AnimalPicture(String image, String description, Calendar dateTime) {
 		super();
 		this.image = image;
 		this.description = description;

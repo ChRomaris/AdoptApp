@@ -1,8 +1,13 @@
 package com.tfg.backend.Services;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tfg.backend.Daos.IAdoptionAnimalDao;
 import com.tfg.backend.Daos.IAnimalDao;
 import com.tfg.backend.Daos.IAnimalPictureDao;
 import com.tfg.backend.Entities.AdoptionAnimal;
@@ -16,6 +21,9 @@ public class AnimalService implements IAnimalService {
 	
 	@Autowired
 	IAnimalPictureDao animalPictureDao;
+	
+	@Autowired
+	IAdoptionAnimalDao adoptionAnimalDao;
 
 	@Override
 	public AdoptionAnimal addAdoptionAnimal(AdoptionAnimal animal) {
@@ -28,6 +36,13 @@ public class AnimalService implements IAnimalService {
 		animalPictureDao.save(animalPicture);
 	}
 	
+	@Override
+	public List<AdoptionAnimal> getAllAdoptionAnimals (){
+		List<AdoptionAnimal> allAdoptionAnimals = new ArrayList<>();
+		Iterator<AdoptionAnimal> iteratorAnimals = adoptionAnimalDao.findAll().iterator();
+		iteratorAnimals.forEachRemaining(allAdoptionAnimals::add);
+		return allAdoptionAnimals;
+	}
 	
 
 }

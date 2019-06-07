@@ -1,6 +1,7 @@
 package com.tfg.backend.Dtos;
 
 import java.util.Calendar;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,11 +20,15 @@ public class AdoptionAnimalDTO {
 	private Boolean trained;
 	private String state;
 	private Long adoptionTime;
-	private String image;
+	private  String image;
 	private String imageDescription;
 	private Calendar imageDateTime;
 	
 	
+	public AdoptionAnimalDTO() {
+		super();
+	}
+
 	public AdoptionAnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
 			String color, String size, Boolean trained, String state, Long adoptionTime) {
 		super();
@@ -37,6 +42,22 @@ public class AdoptionAnimalDTO {
 		this.trained = trained;
 		this.state = state;
 		this.adoptionTime = adoptionTime;
+	}
+	
+	public AdoptionAnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
+			String color, String size, Boolean trained, String state, Long adoptionTime, String image) {
+		super();
+		this.name = name;
+		this.genre = genre;
+		this.description = description;
+		this.birthDate = birthDate;
+		this.health_comment = health_comment;
+		this.color = color;
+		this.size = size;
+		this.trained = trained;
+		this.state = state;
+		this.adoptionTime = adoptionTime;
+		this.image = image;
 	}
 	
 	

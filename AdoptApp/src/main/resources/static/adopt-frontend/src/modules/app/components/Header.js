@@ -35,6 +35,12 @@ class Header extends Component{
                         <Link to="/" className="FormField__Link">Iniciar Sesión</Link>
                     </MDBNavItem>
                     <MDBNavItem>
+                        <Link to="/animal/add" className="FormField__Link">Añadir animal</Link>
+                    </MDBNavItem>
+                    <MDBNavItem>
+                        <Link to="/List" className="FormField__Link">Animales en adopción</Link>
+                    </MDBNavItem>
+                    <MDBNavItem>
                       
                     </MDBNavItem>
                   </NavbarNav>
