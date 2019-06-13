@@ -10,8 +10,8 @@ export function handleResponse(response) {
         if (!response.ok) {
             if ([401, 403].indexOf(response.status) !== -1) {
                 // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-                authenticationService.logout();
-                location.reload(true);
+                userService.logout();
+                window.location.reload(true);
             }
 
             const error = (data && data.message) || response.statusText;
@@ -20,6 +20,19 @@ export function handleResponse(response) {
 
         return data;
     });
+}
+export const login = (loginData) => {   
+
+    axios.post('http://localhost:8080/user/signIn',loginData)
+    .then(handleResponse).then(user => {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        currentUserSubject.next(user);
+        return user;
+    })  
+}
+
+function logout() {
+    sessionStorage.removeItem('serviceToken');
 }
 
 export const userService = {
@@ -36,17 +49,7 @@ export const signUp = (user) => {
 
 }
 
-export const login = (loginData) => {
 
-    axios.post('http://localhost:8080/user/signIn',loginData)
-    .then(handleResponse).then(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        currentUserSubject.next(user);
-        return user;
-    })
-}
 
-function logout() {
-    localStorage.removeItem('currentUser');
-    currentUserSubject.next(null);
-}
+
+

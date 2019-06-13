@@ -6,6 +6,7 @@ import { MDBNavbar, MDBNavbarBrand, NavbarNav, MDBNavItem,  MDBNavbarToggler, MD
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
+import { userService } from '../../../backend/userService';
 
 class Header extends Component{
     state = {
@@ -16,11 +17,15 @@ class Header extends Component{
         this.setState(prevState => ({ collapseID: (prevState.collapseID !== collapseID ? collapseID : '') }));
       }
 
+      logout(){
+        userService.logout();
+      }
+
     render(){
         return(
             
             <MDBContainer>
-            <MDBNavbar color="light-blue lighten-4" style={{ marginTop: '20px' }} light>
+            <MDBNavbar color="light-blue lighten-4" style={{ marginTop: '20px' , width: '100%' }} light>
               <MDBContainer>
                 <MDBNavbarBrand>
                   Navbar
@@ -29,19 +34,19 @@ class Header extends Component{
                 <MDBCollapse id="navbarCollapse1" isOpen={this.state.collapseID} navbar>
                   <NavbarNav left>
                     <MDBNavItem active>
-                      <Link to="/shelter/add" className="FormField__Link">Crear Asociación</Link>
+                      <Link to="/shelter/add">Crear Asociación</Link>
                     </MDBNavItem>
                     <MDBNavItem>
-                        <Link to="/" className="FormField__Link">Iniciar Sesión</Link>
+                      <Link to="/">  Iniciar Sesión</Link>
                     </MDBNavItem>
                     <MDBNavItem>
-                        <Link to="/animal/add" className="FormField__Link">Añadir animal</Link>
+                      <Link to="/animal/add"> Añadir animal</Link>
                     </MDBNavItem>
                     <MDBNavItem>
-                        <Link to="/List" className="FormField__Link">Animales en adopción</Link>
+                      <Link to="/List"> Animales en adopción</Link>
                     </MDBNavItem>
                     <MDBNavItem>
-                      
+                      <a href='/' onClick={this.logout}>  Cerrar Sesión</a>
                     </MDBNavItem>
                   </NavbarNav>
                 </MDBCollapse>

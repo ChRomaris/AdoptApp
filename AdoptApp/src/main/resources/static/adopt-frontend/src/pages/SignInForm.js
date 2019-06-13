@@ -42,9 +42,9 @@ class SignInForm extends Component {
               login(loginData)
               .then(response => {
                 
-                  localStorage.setItem('serviceToken', response.serviceToken);
+                  sessionStorage.setItem('serviceToken', response.serviceToken);
                   ToastsStore.success("Logueado Correctamente");
-                  this.props.history.push("/header");
+                  this.props.history.replace("/List")
                  
                 
               }).catch(error => {

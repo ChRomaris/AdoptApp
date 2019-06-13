@@ -1,7 +1,6 @@
 import React from 'react';
 import {CardHeader, CardBody, CardTitle, CardText, Button, CardFooter,Card} from 'reactstrap';
 import PreviewImage from '../components/PreviewImage';
-import CardSection from '../components/CardSection';
 import '../../../styles/cardStyle.css'
 const CardConst = (props) =>  {
     return(

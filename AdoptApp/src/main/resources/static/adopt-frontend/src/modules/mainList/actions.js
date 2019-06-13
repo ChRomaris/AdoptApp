@@ -1,4 +1,4 @@
-import { brotliDecompressSync } from "zlib";
+
 
 const request = (options) => {
     const headers = new Headers({
