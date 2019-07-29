@@ -19,7 +19,7 @@ public class UserService implements IUserService {
 
 	@Override
 	@Transactional
-	public void registerUser(User user) {
+	public void registerUpdateUser(User user) {
 		userDao.save(user);
 	}
 
@@ -49,5 +49,6 @@ public class UserService implements IUserService {
 		}
 
 	}
+	
 
 }

@@ -2,7 +2,7 @@ import React ,{ Component }from 'react';
 import {Container, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {addShelter} from '../actions';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
-import {Header} from '../../app/';
+import {SideMenu} from '../../app';
 
 
   import 'bootstrap/dist/css/bootstrap.css';
@@ -11,7 +11,7 @@ import {Header} from '../../app/';
 
   
 
-class shelterCreationForm extends Component{
+class ShelterCreationForm extends Component{
 
     constructor(){
         super();
@@ -45,7 +45,8 @@ class shelterCreationForm extends Component{
 
         const shelterCreationData = {
             name : this.state.name,
-            email : this.state.email
+            email : this.state.email,
+            userToken : sessionStorage.getItem('serviceToken')
         };
         addShelter(shelterCreationData).then(response => 
           {
@@ -60,9 +61,10 @@ class shelterCreationForm extends Component{
     render(){
 
         return (
-            
+            <div>
+            <SideMenu/>
             <Container className="shelterForm">
-            <Header/>
+            
             <ToastsContainer store={ToastsStore}/>
                 <h2>CREAR ASOCIACIÓN</h2>
             <Form onSubmit={this.handleSubmit}>
@@ -77,10 +79,11 @@ class shelterCreationForm extends Component{
                     <Button>Crear</Button>
             </Form>
             </Container>
+            </div>
            
         )
     }
 
 }
 
-export default shelterCreationForm;
+export default ShelterCreationForm;

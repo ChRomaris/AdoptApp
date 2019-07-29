@@ -17,7 +17,6 @@ public class UserDTO {
 	private String address;
 	private String location;
 	
-	
 	public UserDTO() {
 		super();
 	}
@@ -30,10 +29,11 @@ public class UserDTO {
 	
 	
 	
+	
 	public UserDTO(long id, String userName, String password, String name, Long phoneNumber, String email,
 			String address, String location) {
 		super();
-		Id = id;
+		this.Id = id;
 		this.userName = userName;
 		this.password = password;
 		this.name = name;
@@ -42,6 +42,19 @@ public class UserDTO {
 		this.address = address;
 		this.location = location;
 	}
+	
+	public UserDTO(String userName, String password, String name, Long phoneNumber, String email,
+			String address, String location) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+		this.address = address;
+		this.location = location;
+	}
+	
 
 	public long getId() {
 		return Id;

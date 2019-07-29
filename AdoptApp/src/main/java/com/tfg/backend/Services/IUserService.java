@@ -6,10 +6,11 @@ import com.tfg.backend.Exceptions.IncorrectLoginException;
 
 public interface IUserService {
 
-	void registerUser(User user);
 
 	User login(String username, String password) throws IncorrectLoginException;
 
 	RegisteredUser findById(Long userId);
+
+	void registerUpdateUser(User user);
 
 }

@@ -25,3 +25,27 @@ export function addShelter (shelterData) {
         body: JSON.stringify(shelterData)
     });
 }
+
+export function findShelterByUser (userToken){
+    return request({
+        url: "http://localhost:8080/shelter/findByUser",
+        method: 'POST',
+        body: JSON.stringify(userToken)
+    });
+}
+
+export function getShelterAnimals (param){
+    return request({
+        url: "http://localhost:8080/shelter/list",
+        method: 'POST',
+        body: JSON.stringify(param)
+    }); 
+}
+
+export function deleteShelterAnimal (param){
+    return request({
+        url: "http://localhost:8080/shelter/animal/delete",
+        method: 'POST',
+        body: JSON.stringify(param)
+    });
+}

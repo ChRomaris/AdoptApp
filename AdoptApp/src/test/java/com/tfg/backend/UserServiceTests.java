@@ -28,7 +28,7 @@ public class UserServiceTests {
 	public void registerUser () throws InstanceNotFoundException {
 			User usuario = new User();
 			usuario.setUserName("usernameUsuario");
-			userService.registerUser(usuario);
+			userService.registerUpdateUser(usuario);
 			User usuarioEncontrado = userDao.findById(usuario.getRegisteredUserId()).get();
 			assertEquals(usuarioEncontrado.getUserName(), "usernameUsuario");
 	}
@@ -38,7 +38,7 @@ public class UserServiceTests {
 		User usuario = new User();
 		usuario.setUserName("username1");
 		usuario.setPassword("password1");
-		userService.registerUser(usuario);
+		userService.registerUpdateUser(usuario);
 		User user = userService.login("username1", "password1");
 		
 		assertEquals(user, usuario);

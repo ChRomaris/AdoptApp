@@ -29,6 +29,13 @@ public User(String userName, String password, String name, Long phoneNumber, Str
 
 	
 }
+public User(Long id, String userName, String password, String name, Long phoneNumber, String email, String address,
+		String location) {
+	
+	super(id, userName, password, name, phoneNumber, email, address, location);
+
+	
+}
 
 public String getLastName() {
 	return lastName;

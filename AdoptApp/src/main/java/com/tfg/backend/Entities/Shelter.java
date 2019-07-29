@@ -1,10 +1,19 @@
 package com.tfg.backend.Entities;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="Shelter")
@@ -21,14 +30,41 @@ public class Shelter  {
 	private Long phoneNumber;
 	@Column
 	private String email;
+
+
 	@Column
 	private String address;
 	@Column
 	private String location;
 	
+	@JsonManagedReference
+	@OneToMany(mappedBy="shelter",cascade = CascadeType.ALL)
+	private List<Animal>animals;
+	
+	 @OneToOne(cascade = CascadeType.ALL)
+	 @JoinColumn(name = "AdminId", referencedColumnName = "id") 
+	private RegisteredUser admin;
+	
 	
 	public String getType() {
 		return type;
+	}
+
+	public RegisteredUser getAdmin() {
+		return admin;
+	}
+	
+	
+	public List<Animal> getAnimals() {
+		return animals;
+	}
+
+	public void setAnimals(List<Animal> animals) {
+		this.animals = animals;
+	}
+
+	public void setAdmin(RegisteredUser admin) {
+		this.admin = admin;
 	}
 
 	public void setType(String type) {

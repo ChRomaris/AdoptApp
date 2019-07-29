@@ -3,25 +3,26 @@
   font-family: 'mainFont';
   font-style: normal;
   font-weight: 400;
-  src: url('fonts/Juri Zaech - FrontageCondensed-Outline.otf'); /* IE9 Compat Modes */
+  src: url('../../fonts/Juri Zaech - FrontageCondensed-Outline.otf'); /* IE9 Compat Modes */
   src: local('mainFont'), local('mainFont'),
-       url('fonts/Juri Zaech - FrontageCondensed-Outline.otf') format('embedded-opentype'), /* IE6-IE8 */
+       url('../../fonts/Juri Zaech - FrontageCondensed-Outline.otf') format('embedded-opentype'), /* IE6-IE8 */
 }
 .MainText{
   font-family: mainFont;
   font-size: 400%;
-  margin-left: 28%;
+  margin-left: 33%;
   color:  #2E4158;
 }
 body{
   margin : 0;
   padding: 0;
   font-family: sans-serif;
+
 }
 .App {
   height: 100vh;
   display: flex;
-  color: white;
+  color: #2E4158;
   
 
 }
@@ -36,6 +37,17 @@ body{
   background-color: #2E4158;
   padding: 25px 40px;
   overflow: auto;
+}
+
+.Simple_Form{
+  width: 50%;
+  background-color:white;
+  padding: 10px;
+  overflow: auto;
+  margin-left: 25%;
+  margin-top: 2%;
+  border-style: solid;
+  border-color: #2E4158;
 }
 
 .PageSwitcher {
@@ -71,13 +83,15 @@ body{
 }
 
 .FormCenter {
-  margin-bottom: 100px;
+  margin-bottom: 1%;
+  margin-left: 10%;
 }
 
 .FormTitle {
   color: #707C8B;
   font-weight: 300;
-  margin-bottom: 50px;
+  margin-bottom: 1%;
+  margin-left: 25%;
 }
 
 .FormTitle__Link {
@@ -161,4 +175,16 @@ body{
   display: inline-block;
   padding-bottom: 2px;
   margin-left: 5px;
+}
+
+.sideNav{
+  background-color: blue;
+}
+
+.bar{
+  background-color: #2E4158;
+}
+
+.animalForm{
+  margin-top: 2%;
 }

@@ -1,36 +1,21 @@
 import React, {Component} from 'react';
 import CardConst from '../components/CardConst';
-import {getAllAdoptionAnimals} from '../actions'
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 import {Container} from 'reactstrap';
 import Moment from 'moment';
-import Header from '../../app/components/Header'
+import {SideMenu} from '../../app/'
+
 
 import '../../../styles/MainListStyle.css'
 
 
 class List extends Component {
     constructor(props){
-        super();
-        this.state = {
-            animals : []
-        }
-
+        super(props);
+        this.showForm = this.showForm.bind(this);
         this.formatDate = this.formatDate.bind(this);
     }
 
-
-    componentDidMount(){
-        getAllAdoptionAnimals().then( data =>  {
-            this.setState({
-                animals : data
-            })
-            ToastsStore.success("Todo correcto");
-        }).catch(error => {
-            
-               ToastsStore.error("Error al recuperar la informacion");
-        });
-    }
 
     formatDate(date){
         return ( new Intl.DateTimeFormat('en-GB', { 
@@ -40,18 +25,27 @@ class List extends Component {
         }).format(date) )
     }
 
+    showForm(id){
+        console.log("id:" + id)
+        this.props.ShowEditingForm(id);
+    }
+
     render (){
     Moment.locale('es');
+    
         return(
-            <Container >
-            <Header/>
+            <div className="main">
+            <SideMenu></SideMenu>
+            <Container>
             <ToastsContainer store={ToastsStore}/>
             <div>
-            {this.state.animals.map(item => (
-                <CardConst classname="card" name = {item.name} genre = {item.genre} birthDate = {Moment(item.birthDate).fromNow(true)} description = {item.description} key={item.name} image ={item.image} ></CardConst>
+            {this.props.animales.map(item => (
+                <CardConst  classname="card" showEditingForm={this.showForm}  id = {item.id} name = {item.name} genre = {item.genre} birthDate = {Moment(item.birthDate).fromNow(true)} description = {item.description} key={item.name} image ={item.image} ></CardConst>
             ))}
-    </div>
+            </div>
+
             </Container>
+            </div>
         )
     }
 

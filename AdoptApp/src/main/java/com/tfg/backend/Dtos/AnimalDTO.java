@@ -1,16 +1,12 @@
 package com.tfg.backend.Dtos;
 
 import java.util.Calendar;
-import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import com.tfg.backend.Entities.Animal.Genre;
-import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.Shelter;
+import com.tfg.backend.Entities.Animal.Genre;
 
-public class AdoptionAnimalDTO {
-	private Long id;
+public class AnimalDTO {
+	
 	private String name;
 	private Genre genre;
 	private String description;
@@ -54,17 +50,11 @@ public class AdoptionAnimalDTO {
 		this.shelterName = shelterName;
 	}
 
-	public AdoptionAnimalDTO() {
+	public AnimalDTO() {
 		super();
-	}
-	
-	public AdoptionAnimalDTO(Long id) {
-		super();
-		
-		this.id = id;
 	}
 
-	public AdoptionAnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
+	public AnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
 			String color, String size, Boolean trained, String state, Long adoptionTime) {
 		super();
 		this.name = name;
@@ -79,7 +69,7 @@ public class AdoptionAnimalDTO {
 		this.adoptionTime = adoptionTime;
 	}
 	
-	public AdoptionAnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
+	public AnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
 			String color, String size, Boolean trained, String state, Long adoptionTime, String image) {
 		super();
 		this.name = name;
@@ -95,7 +85,7 @@ public class AdoptionAnimalDTO {
 		this.image = image;
 	}
 	
-	public AdoptionAnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
+	public AnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
 			String color, String size, Boolean trained, String state, String image) {
 		super();
 		this.name = name;
@@ -110,25 +100,9 @@ public class AdoptionAnimalDTO {
 		this.image = image;
 	}
 	
-	public AdoptionAnimalDTO(Long id, String name, Genre genre, String description, Calendar birthDate, String health_comment,
-			String color, String size, Boolean trained, String state, String image) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.genre = genre;
-		this.description = description;
-		this.birthDate = birthDate;
-		this.health_comment = health_comment;
-		this.color = color;
-		this.size = size;
-		this.trained = trained;
-		this.state = state;
-		this.image = image;
-	}
 	
 	
-	
-	public AdoptionAnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
+	public AnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
 			String color, String size, Boolean trained, String state, Long adoptionTime, String image,
 			String imageDescription, String shelterName) {
 		super();
@@ -246,19 +220,8 @@ public class AdoptionAnimalDTO {
 	public String getState() {
 		return state;
 	}
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public void setState(String state) {
 		this.state = state;
 	}
-	
-	
-	
 
 }

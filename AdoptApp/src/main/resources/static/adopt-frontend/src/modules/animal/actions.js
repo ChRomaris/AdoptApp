@@ -25,3 +25,25 @@ export function addAnimal (animalCreationRequest) {
         body: JSON.stringify(animalCreationRequest)
     });
 }
+
+export function editAnimal(params){
+    return request ({
+        url: "http://localhost:8080/animal/edit",
+        method: 'POST',
+        body: JSON.stringify(params)
+    });
+}
+export function getAnimalInfo(params){
+    return request ({
+        url: "http://localhost:8080/animal/getInfo",
+        method: 'POST',
+        body: JSON.stringify(params)
+    });
+}
+export function getAllAdoptionAnimals () {
+    return request ({
+        url: "http://localhost:8080/animal/getAll",
+        method: 'GET'
+    })
+}
+

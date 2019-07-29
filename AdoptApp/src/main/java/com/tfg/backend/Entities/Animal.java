@@ -10,9 +10,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Animal {
@@ -46,6 +51,11 @@ public class Animal {
 	@OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<AnimalPicture> images;
 	
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name="shelter", referencedColumnName = "shelter_id")
+	private Shelter shelter;
+	
 
 	public Set<AnimalPicture> getImages() {
 		return images;
@@ -75,6 +85,22 @@ public class Animal {
 		this.state = state;
 		this.images = images;
 	}
+	
+	public Animal(String name, Genre genre, String description, Calendar birthDate, String health_comment, String color,
+			String size, Boolean trained, String state, Set<AnimalPicture> images, Shelter shelter) {
+		super();
+		this.name = name;
+		this.genre = genre;
+		this.description = description;
+		this.birthDate = birthDate;
+		this.health_comment = health_comment;
+		this.color = color;
+		this.size = size;
+		this.trained = trained;
+		this.state = state;
+		this.images = images;
+		this.shelter = shelter;
+	}
 
 	public Animal(String name, Genre genre, String description, Calendar birthDate, String health_comment, String color,
 			String size, Boolean trained, String state) {
@@ -88,6 +114,21 @@ public class Animal {
 		this.size = size;
 		this.trained = trained;
 		this.state = state;
+	}
+	
+	public Animal(String name, Genre genre, String description, Calendar birthDate, String health_comment, String color,
+			String size, Boolean trained, String state, Shelter shelter) {
+		super();
+		this.name = name;
+		this.genre = genre;
+		this.description = description;
+		this.birthDate = birthDate;
+		this.health_comment = health_comment;
+		this.color = color;
+		this.size = size;
+		this.trained = trained;
+		this.state = state;
+		this.shelter = shelter;
 	}
 	public void setId_animal(long id_animal) {
 		this.id_animal = id_animal;
@@ -145,6 +186,14 @@ public class Animal {
 	}
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public Shelter getShelter() {
+		return shelter;
+	}
+
+	public void setShelter(Shelter shelter) {
+		this.shelter = shelter;
 	}
 	
 	

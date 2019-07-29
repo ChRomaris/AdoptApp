@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import {login}  from '../actions';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 import {NavLink} from 'react-router-dom';
-import logo from '../images/cat2.gif'; 
+import logo from '../../../images/cat2.gif';
+import {findShelterByUser} from '../../shelter/actions'
 
-import '../App.css';
+
+import '../../app/App.css';
 
 class SignInForm extends Component {
     constructor() {
@@ -13,11 +15,13 @@ class SignInForm extends Component {
 
         this.state = {
             userName: '',
-            password: ''
+            password: '',
+            redirect: false
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+       
     }
 
     handleChange(e) {
@@ -43,6 +47,19 @@ class SignInForm extends Component {
               .then(response => {
                 
                   sessionStorage.setItem('serviceToken', response.serviceToken);
+                  sessionStorage.setItem('userId', response.id);
+                  findShelterByUser (response.serviceToken).then(response => {
+                    if(response.name != null){
+                      sessionStorage.setItem('isAdmin', true );
+                      sessionStorage.setItem('shelterName', response.name)
+                    }else{
+                      sessionStorage.setItem('isAdmin', false ); 
+                      sessionStorage.setItem('shelterName', null)
+                    }
+                    
+                  }).catch(error => {
+                    ToastsStore.success("Error Recuperando asociación");
+                  })
                   ToastsStore.success("Logueado Correctamente");
                   this.props.history.replace("/List")
                  
@@ -51,13 +68,23 @@ class SignInForm extends Component {
                   
                      ToastsStore.error("Error de login");
               });
+
+              
+
+
+
+          
     
         console.log(this.state);
     }   
 
+
+
     render() {
+
         return (
           <div className="App">
+            
           <div className="App__Aside"> <img src={logo} alt="loading..." />
             <p className="MainText">AdoptApp</p>
            </div>
@@ -69,7 +96,7 @@ class SignInForm extends Component {
                 <NavLink exact to="/signUp" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Registrarse</NavLink>
               </div>
           <div className="FormTitle">
-                  <NavLink to="/" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Acceder</NavLink> or <NavLink exact to="/signUp" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Registrarse</NavLink>
+                  <NavLink to="/" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Acceder</NavLink> o <NavLink exact to="/signUp" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Registrarse</NavLink>
               </div>
             <form onSubmit={this.handleSubmit} className="FormFields">
             <div className="FormField">
@@ -89,8 +116,9 @@ class SignInForm extends Component {
             </div>
             </div>
             </div>
-        );
-    }
-}
+        );}}
+
+    
+
 
 export default SignInForm;

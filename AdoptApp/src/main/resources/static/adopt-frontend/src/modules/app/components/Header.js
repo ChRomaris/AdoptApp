@@ -7,15 +7,29 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { userService } from '../../../backend/userService';
+import { findShelterByUser } from "../../shelter/actions";
 
 class Header extends Component{
     state = {
-        collapseID: ''
+        collapseID: '',
+        shelterName: ''
       }
       
       toggleCollapse = collapseID => () => {
         this.setState(prevState => ({ collapseID: (prevState.collapseID !== collapseID ? collapseID : '') }));
       }
+
+      componentDidMount(){
+        findShelterByUser(sessionStorage.getItem('serviceToken')).then(response=>
+          {
+            this.setState ={
+              shelterName : response.name
+            }
+          }).catch(error=>{
+            
+          })
+      }
+
 
       logout(){
         userService.logout();
@@ -44,6 +58,9 @@ class Header extends Component{
                     </MDBNavItem>
                     <MDBNavItem>
                       <Link to="/List"> Animales en adopción</Link>
+                    </MDBNavItem>
+                    <MDBNavItem>
+                      <Link to="/user/Update"> Perfil</Link>
                     </MDBNavItem>
                     <MDBNavItem>
                       <a href='/' onClick={this.logout}>  Cerrar Sesión</a>

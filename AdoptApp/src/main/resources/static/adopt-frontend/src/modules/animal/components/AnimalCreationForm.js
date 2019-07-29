@@ -3,7 +3,7 @@ import {addAnimal} from '../actions';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 import {Container, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import FileBase64 from 'react-file-base64';
-import Header from '../../app/components/Header';
+import { SideMenu } from '../../app';
 
 class AnimalCreationForm extends Component{
 
@@ -63,8 +63,6 @@ class AnimalCreationForm extends Component{
 
     getFiles(files){
         this.setState({ image: files[0].base64})
-        console.log(this.state.image);
-        console.log(this.state.name);
       }
 
     handleSubmit(e){
@@ -83,7 +81,8 @@ class AnimalCreationForm extends Component{
             trained: this.state.trained,
             state : this.state.state,
             image : this.state.image,
-            imageDescription : this.state.imageDescription
+            imageDescription : this.state.imageDescription,
+            userToken : sessionStorage.getItem('serviceToken')
             
         };
         addAnimal(animalCreationData).then(response => 
@@ -98,9 +97,10 @@ class AnimalCreationForm extends Component{
     render(){
 
         return (
-            
+            <div>
+            <SideMenu/>
             <Container className="animalForm">
-            <Header/>
+            
             <ToastsContainer store={ToastsStore}/>
                 <h2>AÑADIR ANIMAL</h2>
             <Form onSubmit={this.handleSubmit}>
@@ -151,6 +151,7 @@ class AnimalCreationForm extends Component{
                     <Button>Añadir</Button>
             </Form>
             </Container>
+            </div>
            
         )
     }

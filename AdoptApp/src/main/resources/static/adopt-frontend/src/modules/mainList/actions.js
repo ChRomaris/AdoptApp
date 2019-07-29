@@ -19,9 +19,3 @@ const request = (options) => {
     );
 };
 
-export function getAllAdoptionAnimals () {
-    return request ({
-        url: "http://localhost:8080/animal/getAll",
-        method: 'GET'
-    })
-}

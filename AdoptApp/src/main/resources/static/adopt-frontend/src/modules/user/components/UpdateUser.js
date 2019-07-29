@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import {signUp}  from '../actions';
+import {registerUpdateUser} from '../actions'
+import React, {Component} from 'react';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
-import {NavLink} from 'react-router-dom';
-import logo from '../images/cat2.gif'; 
+import {SideMenu} from '../../app/'
 
-class SignUpForm extends Component {
+class UpdateUser extends Component {
+
     constructor() {
         super();
 
         this.state = {
+            id : sessionStorage.getItem('userId'),
             userName: '',
             email: '',
             password: '',
@@ -21,19 +21,43 @@ class SignUpForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(e) {
-        let target = e.target;
-        let value = target.type === 'checkbox' ? target.checked : target.value;
-        let name = target.name;
+    handleChange(e){
 
-        this.setState({
-          [name]: value
-        });
-    }
+    
+       
+      let target = e.target;
+      let value = target.type === 'checkbox' ? target.checked : target.value;
+      let name = target.name;
+      let genre = target.genre;
+      let description = target.description;
+      let birthDate = target.birthDate;
+      let healthComment = target.healthComment;
+      let color = target.color;
+      let size = target.size;
+      let trained = target.trained;
+      let state = target.state;
+      let image = target.image;
+      let imageDescription = target.imageDescription
+
+      this.setState({
+        [name]: value,
+        [genre]: value,
+        [description] : value,
+        [birthDate] : value,
+        [healthComment] : value,
+        [color] : value,
+        [size] : value,
+        [trained] : value,
+        [state] : value,
+        [image] : value,
+        [imageDescription]: value
+      });
+  }
 
     handleSubmit(event) {
         event.preventDefault();
-        const signupRequest = {
+        const updateUserParams = {
+          id : this.state.id,
           name : this.state.name, 
           userName: this.state.userName,
           email: this.state.email,
@@ -41,7 +65,7 @@ class SignUpForm extends Component {
           hasAgreed : this.state.hasAgreed
         };
         
-        signUp(signupRequest)
+        registerUpdateUser(updateUserParams)
           .then(response => { 
             ToastsStore.success("Registrado Correctamente");
         }).catch(error => {
@@ -49,22 +73,16 @@ class SignUpForm extends Component {
         });
     };
 
-    render() {
+    render(){
         return (
-          <div className="App">
-            <div className="App__Aside"> <img src={logo} alt="loading..." />
-            <p className="MainText">AdoptApp</p>
-           </div>
-          <div className="App__Form">
+          <div>
+         < SideMenu></SideMenu>
+          <div className="Simple_Form">
         <div className="FormCenter">
         <ToastsContainer store={ToastsStore}/>
-              <div className="PageSwitcher">
-                <NavLink to="/" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Acceder</NavLink>
-                <NavLink exact to="/signUp" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Registrarse</NavLink>
-              </div>
         <div className="FormTitle">
-                  <NavLink to="/" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Acceder</NavLink> or <NavLink exact to="/signUp" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Registrarse</NavLink>
-              </div>
+                 INFORMACIÓN PERSONAL
+          </div>
             <form ref={node => this.form = node} onSubmit={(e) => this.handleSubmit(e)} className="FormFields">
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="name">Nombre</label>
@@ -83,12 +101,14 @@ class SignUpForm extends Component {
                 <input type="email" id="email" className="FormField__Input" placeholder="Introducir correo electónico" name="email" value={this.state.email} onChange={this.handleChange} required />
               </div>
               <div className="FormField">
-                  <button type ="submit" className="FormField__Button mr-20">Registrarse</button> <Link to="/" className="FormField__Link">Ya tengo cuenta</Link>
+                  <button type ="submit" className="FormField__Button mr-20">Actualizar Información</button>
               </div>
             </form>
           </div>
           </div>
-          </div> );
+          </div>
+        )
     }
 }
-export default SignUpForm;
+
+export default UpdateUser;

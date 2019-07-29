@@ -35,20 +35,21 @@ public class UserController {
 	@Autowired
 	private JwtGenerator jwtGenerator;
 
-	@PostMapping("/signUp")
-	public ResponseEntity<UserDTO> signUp(@RequestBody UserDTO userDTO) {
+	@PostMapping("/registerUpdateUser")
+	public AuthenticatedUserDTO  signUp(@RequestBody UserDTO userDTO) {
 
 		User user = toUser(userDTO);
 		user.setRole(RoleType.USER);
 
-		userService.registerUser(user);
+		userService.registerUpdateUser(user);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId())
 				.toUri();
 		
 
-		return ResponseEntity.created(location).body(toUserDTO(user));
+		return toAutenticatedUserDTO(generateServiceToken(user), user);
 	}
+	
 
 	@PostMapping("/login")
 	public AuthenticatedUserDTO login(@RequestBody UserDTO userDTO) throws IncorrectLoginException {

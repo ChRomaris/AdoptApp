@@ -10,9 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.tfg.backend.Dtos.AdoptionAnimalDTO;
+import com.tfg.backend.Dtos.AllAdoptionAnimalsDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.AnimalPicture;
+import com.tfg.backend.Entities.Shelter;
+import com.tfg.backend.Exceptions.IncorrectValueException;
 import com.tfg.backend.Services.AnimalService;
+import com.tfg.backend.Services.ShelterService;
 
 import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimal;
 import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimalDTO;
@@ -32,9 +36,16 @@ public class AnimalController {
 	@Autowired
 	AnimalService animalService;
 	
+	@Autowired
+	ShelterService shelterService;
+	
 	
 	@PostMapping("/add")
 	public ResponseEntity<AdoptionAnimalDTO> addAdoptionAnimal (@RequestBody AdoptionAnimalDTO adoptionAnimalDTO) throws IOException {
+		
+		Shelter shelter = shelterService.findByUser(adoptionAnimalDTO.getUserToken());
+		
+		adoptionAnimalDTO.setShelter(shelter);
 		
 		AdoptionAnimal animal = toAdoptionAnimal(adoptionAnimalDTO);
 		
@@ -55,11 +66,42 @@ public class AnimalController {
 		
 	}
 	
-	@GetMapping("/getAll")
-	public List<AdoptionAnimalDTO> getAllAdoptionAnimals (){
-		List <AdoptionAnimal> adoptionAnimals = animalService.getAllAdoptionAnimals();
+	@PostMapping("/edit")
+	public ResponseEntity<AdoptionAnimalDTO> editAdoptionAnimal (@RequestBody AdoptionAnimalDTO adoptionAnimalDTO)  {
+		try {
+			Shelter shelter = shelterService.findByUser(adoptionAnimalDTO.getUserToken());
+			
+			adoptionAnimalDTO.setShelter(shelter);
+			
+			AdoptionAnimalDTO modifiedAdoptionAnimal = animalService.editAdoptionAnimal(adoptionAnimalDTO);
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(modifiedAdoptionAnimal.getId())
+					.toUri();
+
+			return ResponseEntity.created(location).body(modifiedAdoptionAnimal);
+		} catch (IncorrectValueException e) {
+			return null;
+		}
 		
-		return toAdoptionAnimalDTOList(adoptionAnimals);
+}
+	
+	@GetMapping("/getAll")
+	public AllAdoptionAnimalsDTO getAllAdoptionAnimals (){
+		List <AdoptionAnimal> adoptionAnimals = animalService.getAllAdoptionAnimals();
+		AllAdoptionAnimalsDTO allAdoptionAnimalsDTO = new AllAdoptionAnimalsDTO();
+		allAdoptionAnimalsDTO.setAnimales(toAdoptionAnimalDTOList(adoptionAnimals));
+		
+		return allAdoptionAnimalsDTO;
+		
+		
+	}
+	
+	@PostMapping("/getInfo")
+	public AdoptionAnimalDTO getAnimalInfo (@RequestBody AdoptionAnimalDTO animal) {
+		try {
+			return animalService.getAnimalInfo(animal);
+		} catch (IncorrectValueException e) {
+			return null;
+		}
 	}
 
 }

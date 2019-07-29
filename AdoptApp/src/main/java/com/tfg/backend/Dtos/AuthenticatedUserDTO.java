@@ -6,6 +6,16 @@ public class AuthenticatedUserDTO {
 
 	private String serviceToken;
 	private UserDTO userDto;
+	private long id;
+	private String shelterName;
+
+	public String getShelterName() {
+		return shelterName;
+	}
+
+	public void setShelterName(String shelterName) {
+		this.shelterName = shelterName;
+	}
 
 	public AuthenticatedUserDTO() {
 	}
@@ -14,6 +24,7 @@ public class AuthenticatedUserDTO {
 
 		this.serviceToken = serviceToken;
 		this.userDto = userDto;
+		this.id = userDto.getId();
 
 	}
 
@@ -28,6 +39,14 @@ public class AuthenticatedUserDTO {
 	@JsonProperty("user")
 	public UserDTO getUserDto() {
 		return userDto;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public void setUserDto(UserDTO userDto) {

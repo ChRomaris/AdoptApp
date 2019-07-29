@@ -33,6 +33,8 @@ export const login = (loginData) => {
 
 function logout() {
     sessionStorage.removeItem('serviceToken');
+    sessionStorage.removeItem('shelterName');
+    sessionStorage.removeItem('userId');
 }
 
 export const userService = {

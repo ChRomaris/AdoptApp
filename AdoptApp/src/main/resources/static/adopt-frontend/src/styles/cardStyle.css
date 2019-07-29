@@ -1,14 +1,17 @@
 .picture{
-    display: inline-block;
-    width: 15%;
+    display: inline;
+   float: left;
     padding: 0px;
+    
 
 
 }
 .texts{
-    display:inline-block;
-    width: 25%;
+    
+   
     margin-left: 10%;
+    float: left;
+
 }
 
 .cardBody{
@@ -16,4 +19,12 @@
     height: 100%;
     border-style: solid;
     border-width: 1px;
+}
+
+.buttons{
+    
+    display: block;
+    position: relative;
+    margin-left: 50%;
+
 }

@@ -10,6 +10,14 @@ public class ShelterDTO {
 	private String email;
 	private String address;
 	private String location;
+	private String userToken;
+	
+	public String getUserToken() {
+		return userToken;
+	}
+	public void setUserToken(String userToken) {
+		this.userToken = userToken;
+	}
 	public String getType() {
 		return type;
 	}
@@ -55,6 +63,11 @@ public class ShelterDTO {
 		this.address = address;
 		this.location = location;
 	}
+	public ShelterDTO() {
+		super();
+	}
+	
+	
 
 	
 	

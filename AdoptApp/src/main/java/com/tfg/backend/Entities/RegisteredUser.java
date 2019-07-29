@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -32,6 +33,9 @@ public class RegisteredUser {
 	private String userName;
 	@Column
 	private String password;
+	
+	 @OneToOne(mappedBy = "admin")
+	 private Shelter shelter;
 
 	public long getId() {
 		return Id;
@@ -57,6 +61,19 @@ public class RegisteredUser {
 	public RegisteredUser(String userName, String password, String name, Long phoneNumber, String email, String address,
 			String location) {
 		super();
+		this.userName = userName;
+		this.password = password;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+		this.address = address;
+		this.location = location;
+	}
+	
+	public RegisteredUser(Long id, String userName, String password, String name, Long phoneNumber, String email, String address,
+			String location) {
+		super();
+		this.Id = id;
 		this.userName = userName;
 		this.password = password;
 		this.name = name;

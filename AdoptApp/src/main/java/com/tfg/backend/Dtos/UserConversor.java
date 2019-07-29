@@ -9,7 +9,7 @@ public class UserConversor {
 
 	public final static User toUser(UserDTO userDTO) {
 
-		return new User(userDTO.getUserName(), userDTO.getPassword(), userDTO.getName(), userDTO.getPhoneNumber(),
+		return new User(userDTO.getId(), userDTO.getUserName(), userDTO.getPassword(), userDTO.getName(), userDTO.getPhoneNumber(),
 				userDTO.getEmail(), userDTO.getAddress(), userDTO.getLocation());
 
 	}

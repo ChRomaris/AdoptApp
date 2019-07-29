@@ -18,12 +18,12 @@ const request = (options) => {
     );
 };
 
-export function signUp (signUpRequest) {
+export function registerUpdateUser (registerUpdateRequest) {
     
     return request ({
-        url: "http://localhost:8080/user/signUp",
+        url: "http://localhost:8080/user/registerUpdateUser",
         method: 'POST',
-        body: JSON.stringify(signUpRequest)
+        body: JSON.stringify(registerUpdateRequest)
     });
 }
 

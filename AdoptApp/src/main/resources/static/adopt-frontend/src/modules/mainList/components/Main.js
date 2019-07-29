@@ -1,12 +1,14 @@
 import React from 'react';
-import {Header}  from '../../app/';
+import {SideMenu}  from '../../app/';
 
 
 class Main extends React.Component {
     
     render(){
         return (
-        <Header></Header>
+            <div className="main">
+        <SideMenu></SideMenu>
+        </div>
          )
     }
 }
