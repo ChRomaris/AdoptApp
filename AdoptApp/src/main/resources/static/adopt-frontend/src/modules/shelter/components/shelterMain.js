@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ShelterAnimalList from './ShelterAnimalList';
 import {findShelterByUser} from '../actions';
-import ShelterCreationForm from './ShelterCreationForm';
+import shelterCreationForm from './ShelterCreationForm';
 
 function ShelterExists(props){
     const name = props.shelterName;
@@ -9,7 +9,7 @@ function ShelterExists(props){
     if(name !=null){
         return <ShelterAnimalList/>;
     }else{
-        return <ShelterCreationForm/>;
+        return <shelterCreationForm/>;
     }
 }
 
