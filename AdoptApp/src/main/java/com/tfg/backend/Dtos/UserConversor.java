@@ -8,10 +8,7 @@ public class UserConversor {
 	}
 
 	public final static User toUser(UserDTO userDTO) {
-
-		return new User(userDTO.getId(), userDTO.getUserName(), userDTO.getPassword(), userDTO.getName(), userDTO.getPhoneNumber(),
-				userDTO.getEmail(), userDTO.getAddress(), userDTO.getLocation());
-
+		return new User(userDTO.getId(), userDTO.getUserName(), userDTO.getPassword(), userDTO.getName(), userDTO.getEmail(), userDTO.getLatitude(), userDTO.getLongitude());
 	}
 
 	public final static UserDTO toUserDTO(User user) {

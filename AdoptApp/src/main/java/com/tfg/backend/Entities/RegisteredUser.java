@@ -11,15 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "RegisteredUser")
 public class RegisteredUser {
-
-	public RoleType getRole() {
-		return role;
-	}
-
-	public void setRole(RoleType role) {
-		this.role = role;
-	}
-
+	
 	public enum RoleType {
 		USER, SHELTER
 	};
@@ -33,18 +25,11 @@ public class RegisteredUser {
 	private String userName;
 	@Column
 	private String password;
+	@Column
+	private Float latitude;
+	@Column 
+	private Float longitude;
 	
-	 @OneToOne(mappedBy = "admin")
-	 private Shelter shelter;
-
-	public long getId() {
-		return Id;
-	}
-
-	public void setId(long id) {
-		Id = id;
-	}
-
 	@Column
 	private String name;
 	@Column
@@ -57,7 +42,28 @@ public class RegisteredUser {
 	private String address;
 	@Column
 	private String location;
+	
+	@OneToOne(mappedBy = "admin")
+	 private Shelter shelter;
+	
+	
+	
+	public RegisteredUser() {
 
+	}
+	
+	public RegisteredUser(Long id, String username, String password, String name, String email, Float latitude, Float longitude) {
+		super();
+		this.Id = id;
+		this.userName = username;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+	
+	
 	public RegisteredUser(String userName, String password, String name, Long phoneNumber, String email, String address,
 			String location) {
 		super();
@@ -82,6 +88,65 @@ public class RegisteredUser {
 		this.address = address;
 		this.location = location;
 	}
+	
+	public RegisteredUser(RoleType role, String userName, String password, Float latitude, Float longitude,
+			Shelter shelter, String name, Long phoneNumber, String email, String address, String location) {
+		super();
+		this.role = role;
+		this.userName = userName;
+		this.password = password;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.shelter = shelter;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+		this.address = address;
+		this.location = location;
+	}
+	
+	
+	public RoleType getRole() {
+		return role;
+	}
+
+	public void setRole(RoleType role) {
+		this.role = role;
+	}
+	
+	 public Float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Float latitude) {
+		this.latitude = latitude;
+	}
+
+	public Float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Float longitude) {
+		this.longitude = longitude;
+	}
+
+	public Shelter getShelter() {
+		return shelter;
+	}
+
+	public void setShelter(Shelter shelter) {
+		this.shelter = shelter;
+	}
+
+
+	public long getId() {
+		return Id;
+	}
+
+	public void setId(long id) {
+		Id = id;
+	}
+
 
 	public String getName() {
 		return name;
@@ -131,9 +196,6 @@ public class RegisteredUser {
 		this.location = location;
 	}
 
-	public RegisteredUser() {
-
-	}
 
 	public Long getRegisteredUserId() {
 		return Id;

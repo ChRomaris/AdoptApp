@@ -21,13 +21,16 @@ public class User extends RegisteredUser {
  private String lastName2;
 
  public User() {}
+ 
+ public User (Long id, String username, String password, String name, String email, Float latitude, Float longitude) {
+	 super(id, username, password, name, email, latitude, longitude);
+ }
 
 public User(String userName, String password, String name, Long phoneNumber, String email, String address,
 		String location) {
 	
 	super(userName, password, name, phoneNumber, email, address, location);
 
-	
 }
 public User(Long id, String userName, String password, String name, Long phoneNumber, String email, String address,
 		String location) {

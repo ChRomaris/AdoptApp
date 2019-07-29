@@ -16,6 +16,8 @@ public class UserDTO {
 	private String email;
 	private String address;
 	private String location;
+	private Float latitude;
+	private Float longitude;
 	
 	public UserDTO() {
 		super();
@@ -26,9 +28,6 @@ public class UserDTO {
 		this.userName = userName;
 		this.password = password;
 	}
-	
-	
-	
 	
 	public UserDTO(long id, String userName, String password, String name, Long phoneNumber, String email,
 			String address, String location) {
@@ -55,6 +54,20 @@ public class UserDTO {
 		this.location = location;
 	}
 	
+
+	public UserDTO(String userName, String password, String name, Long phoneNumber, String email, String address,
+			String location, Float latitude, Float longitude) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+		this.address = address;
+		this.location = location;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
 
 	public long getId() {
 		return Id;
@@ -103,6 +116,22 @@ public class UserDTO {
 	}
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public Float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Float latitude) {
+		this.latitude = latitude;
+	}
+
+	public Float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Float longitude) {
+		this.longitude = longitude;
 	}
 	
 	
