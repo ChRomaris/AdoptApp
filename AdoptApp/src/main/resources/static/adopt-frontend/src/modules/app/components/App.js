@@ -11,6 +11,7 @@ import shelterMain from '../../shelter/components/shelterMain';
 import UpdateUser from '../../user/components/UpdateUser';
 import ShelterAnimalList from '../../shelter/components/ShelterAnimalList'
 import AddLocationMap from '../../user/components/AddLocationMap'
+import AddLocation from '../../user/components/AddLocation'
 import '../App.css';
 
 
@@ -43,6 +44,7 @@ constructor(props){
                 <Route exact path="/user/update" component = {UpdateUser}></Route>
                 <Route exact path="/shelter" component = {ShelterAnimalList}></Route>
                 <Route exact path="/map" component = {AddLocationMap}></Route>
+                <Route exact path="/addLocation" component = {AddLocation}></Route>
               </Switch>
       </Router>
     );

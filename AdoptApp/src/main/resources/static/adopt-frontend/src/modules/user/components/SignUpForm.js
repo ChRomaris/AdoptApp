@@ -63,7 +63,7 @@ class SignUpForm extends Component {
             sessionStorage.setItem('serviceToken', response.serviceToken);
             sessionStorage.setItem('userId', response.id);
             ToastsStore.success("Registrado Correctamente");
-            this.props.history.replace("/List")
+            this.props.history.replace("/addLocation")
 
         }).catch(error => {
           ToastsStore.error("Algo ha salido mal");
