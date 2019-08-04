@@ -1,46 +1,54 @@
 import React,{Component}  from 'react';
 import GoogleMapReact from 'google-map-react';
-import animalMarker from '../../../images/dog.png'
+import Marker from './Marker';
 
-const AnyReactComponent = ({ text }) => <img src={animalMarker} alt="marker" height="30px"></img>;
+import '../../../styles/userStyles.css'
+
+//const AnyReactComponent = ({ text }) => <img  src= {animalMarker} alt={text} height="20px" width="5px"  ></img>;
 
 class AddLocationMap extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             selectedLatitude: '',
             selectedLongitude:''
         }
+
+        this.setParentLocation = this.setParentLocation.bind(this)
+        
     }
     static defaultProps = {
         center: {
-          lat: 40.411816,
-          lng: -3.709079
+          lat: 42.09989087544122,
+          lng: -77.03967669057192
         },
-        zoom: 6
+        zoom:11
       };
+      
+
+      setParentLocation(lat,long){
+        this.props.setParentLocationState(lat,long)
+      }
 
       _onClick = ({x, y, lat, lng, event}) => {
-          this.setState({
-              selectedLatitude:lat,
-              selectedLongitude:lng
-          }, () => {
-            console.log("latitude: "+ this.state.selectedLatitude + "longitude: "+ this.state.selectedLongitude)
-          })
+        this.setState({
+          selectedLatitude: lat,
+          selectedLongitude: lng
+        },this.setParentLocation(lat,lng))
         }
      
       render() {
         return (    
-          <div style={{ height: '60vh', width: '100%' }}>
+          <div style={{ height: '100vh', width: '100%' }}>
             <GoogleMapReact onClick={this._onClick}
-              bootstrapURLKeys={{ key: "AIzaSyAREV4WoFuo_aAjetmOHXmr9ulKepuYKRo" }}
+              bootstrapURLKeys={{ key: 'AIzaSyAREV4WoFuo_aAjetmOHXmr9ulKepuYKRo' }}
               defaultCenter={this.props.center}
               defaultZoom={this.props.zoom}
             >
-            <AnyReactComponent
+            <Marker
               lat={this.state.selectedLatitude}
               lng={this.state.selectedLongitude}
-              text="My Marker"
+              name="My Marker"
           />
             </GoogleMapReact>
           </div>

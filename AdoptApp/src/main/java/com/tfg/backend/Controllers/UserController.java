@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.tfg.backend.Common.JwtGenerator;
 import com.tfg.backend.Common.JwtInfo;
 import com.tfg.backend.Dtos.AuthenticatedUserDTO;
+import com.tfg.backend.Dtos.LocationDTO;
 import com.tfg.backend.Dtos.UserDTO;
 import com.tfg.backend.Entities.RegisteredUser.RoleType;
 import com.tfg.backend.Entities.User;
@@ -65,6 +66,11 @@ public class UserController {
 
 		return jwtGenerator.generate(jwtInfo);
 
+	}
+	
+	@PostMapping("/setLocation")
+	public UserDTO setLocation (@RequestBody LocationDTO locationDTO) {
+		return toUserDTO(userService.setLocation(locationDTO));
 	}
 
 }

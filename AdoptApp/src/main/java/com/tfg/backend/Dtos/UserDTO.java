@@ -16,8 +16,8 @@ public class UserDTO {
 	private String email;
 	private String address;
 	private String location;
-	private Float latitude;
-	private Float longitude;
+	private double latitude;
+	private double longitude;
 	
 	public UserDTO() {
 		super();
@@ -118,19 +118,19 @@ public class UserDTO {
 		this.location = location;
 	}
 
-	public Float getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Float latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
-	public Float getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Float longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	

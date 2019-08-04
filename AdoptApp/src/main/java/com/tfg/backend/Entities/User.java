@@ -22,7 +22,7 @@ public class User extends RegisteredUser {
 
  public User() {}
  
- public User (Long id, String username, String password, String name, String email, Float latitude, Float longitude) {
+ public User (Long id, String username, String password, String name, String email, double latitude, double longitude) {
 	 super(id, username, password, name, email, latitude, longitude);
  }
 

@@ -34,3 +34,11 @@ export function login (loginData) {
         body: JSON.stringify(loginData)
     })
 }
+
+export function setLocation(locationParams){
+    return request ({
+        url: "http://localhost:8080/user/setLocation",
+        method: 'POST',
+        body: JSON.stringify(locationParams)
+    })
+}

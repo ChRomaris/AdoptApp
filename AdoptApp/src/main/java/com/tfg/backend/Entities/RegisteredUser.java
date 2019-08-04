@@ -26,9 +26,9 @@ public class RegisteredUser {
 	@Column
 	private String password;
 	@Column
-	private Float latitude;
+	private double latitude;
 	@Column 
-	private Float longitude;
+	private double longitude;
 	
 	@Column
 	private String name;
@@ -52,7 +52,7 @@ public class RegisteredUser {
 
 	}
 	
-	public RegisteredUser(Long id, String username, String password, String name, String email, Float latitude, Float longitude) {
+	public RegisteredUser(Long id, String username, String password, String name, String email, double latitude, double longitude) {
 		super();
 		this.Id = id;
 		this.userName = username;
@@ -114,19 +114,19 @@ public class RegisteredUser {
 		this.role = role;
 	}
 	
-	 public Float getLatitude() {
+	 public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Float latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
-	public Float getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Float longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 

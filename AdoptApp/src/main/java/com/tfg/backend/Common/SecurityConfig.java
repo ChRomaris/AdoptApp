@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and().addFilter(new JwtFilter(authenticationManager(), jwtGenerator)).authorizeRequests()
 				.antMatchers("/user/registerUpdateUser").permitAll().antMatchers("/user/login").permitAll()
-				.antMatchers("/animal/add").permitAll().antMatchers("/shelter/add").permitAll().antMatchers("/animal/getAll").permitAll().antMatchers("/shelter/findByUser").permitAll().antMatchers("/user/update").permitAll().antMatchers("/shelter/list").permitAll().antMatchers("/shelter/animal/delete").permitAll().antMatchers("/animal/edit").permitAll().antMatchers("/animal/getInfo").permitAll()
+				.antMatchers("/animal/add").permitAll().antMatchers("/shelter/add").permitAll().antMatchers("/animal/getAll").permitAll().antMatchers("/shelter/findByUser").permitAll().antMatchers("/user/update").permitAll().antMatchers("/shelter/list").permitAll().antMatchers("/shelter/animal/delete").permitAll().antMatchers("/animal/edit").permitAll().antMatchers("/animal/getInfo").permitAll().antMatchers("/user/setLocation").permitAll()
 				.antMatchers("/catalog/products/*").permitAll().antMatchers("/catalog/products").permitAll()
 				.antMatchers("/**").hasRole("USER");
 
