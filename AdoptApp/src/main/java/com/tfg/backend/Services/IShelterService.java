@@ -14,12 +14,12 @@ import com.tfg.backend.Exceptions.IncorrectValueException;
 
 public interface IShelterService {
 	
-	Shelter createShelter(Shelter shelter, String userToken);
+	Shelter createShelter(Shelter shelter, String userToken) throws ForbiddenException;
 
-	Shelter findByUser(String userToken);
+	Shelter findByUser(String userToken) throws ForbiddenException;
 
 
-	List<Animal> getShelterAdoptionAnimals(SearchShelterAnimalsDTO param);
+	List<Animal> getShelterAdoptionAnimals(SearchShelterAnimalsDTO param) throws ForbiddenException;
 
 	List<Animal> deleteAnimal(DeleteAnimalDTO deleteAnimalDTO) throws ForbiddenException, IncorrectValueException;
 

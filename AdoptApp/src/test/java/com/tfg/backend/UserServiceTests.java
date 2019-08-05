@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.tfg.backend.Daos.IUserDao;
 import com.tfg.backend.Entities.User;
+import com.tfg.backend.Exceptions.DuplicatedUserException;
 import com.tfg.backend.Exceptions.IncorrectLoginException;
 import com.tfg.backend.Services.UserService;
 
@@ -25,7 +26,7 @@ public class UserServiceTests {
 	IUserDao userDao;
 	
 	@Test
-	public void registerUser () throws InstanceNotFoundException {
+	public void registerUser () throws InstanceNotFoundException, DuplicatedUserException {
 			User usuario = new User();
 			usuario.setUserName("usernameUsuario");
 			userService.registerUpdateUser(usuario);
@@ -34,7 +35,7 @@ public class UserServiceTests {
 	}
 	
 	@Test 
-	public void login() throws IncorrectLoginException {
+	public void login() throws IncorrectLoginException, DuplicatedUserException {
 		User usuario = new User();
 		usuario.setUserName("username1");
 		usuario.setPassword("password1");

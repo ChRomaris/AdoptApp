@@ -66,7 +66,7 @@ class SignInForm extends Component {
                 
               }).catch(error => {
                   
-                     ToastsStore.error("Error de login");
+                     ToastsStore.error(error.globalError);
               });
 
               

@@ -66,7 +66,7 @@ class SignUpForm extends Component {
             this.props.history.replace("/addLocation")
 
         }).catch(error => {
-          ToastsStore.error("Algo ha salido mal");
+          ToastsStore.error(error.globalError);
         });
     };
 
