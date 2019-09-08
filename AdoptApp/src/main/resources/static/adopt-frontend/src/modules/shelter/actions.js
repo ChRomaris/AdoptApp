@@ -49,3 +49,20 @@ export function deleteShelterAnimal (param){
         body: JSON.stringify(param)
     });
 }
+
+    export function updateShelter(updateShelterRequest){
+        return request ({
+            url: "http://localhost:8080/profile/update ",
+            method: 'POST',
+            body: JSON.stringify(updateShelterRequest)
+        });
+    }
+
+        export function getShelterInfo(shelterInfo){
+            return request ({
+                url: "http://localhost:8080/profile/getInfo",
+                method: 'POST',
+                body: JSON.stringify(shelterInfo)
+            });
+        }
+        

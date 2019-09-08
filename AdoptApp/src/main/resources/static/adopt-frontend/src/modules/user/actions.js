@@ -46,7 +46,7 @@ export function login (loginData) {
 
 export function setLocation(locationParams){
     return request ({
-        url: "http://localhost:8080/user/setLocation",
+        url: "http://localhost:8080/profile/setLocation",
         method: 'POST',
         body: JSON.stringify(locationParams)
     })

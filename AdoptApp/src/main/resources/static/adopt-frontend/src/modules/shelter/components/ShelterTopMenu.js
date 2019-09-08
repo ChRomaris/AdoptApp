@@ -64,7 +64,7 @@ class ShelterTopMenu extends Component {
                   <span className="mr-2">Perfil</span>
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
-                  <MDBDropdownItem href="#/user/update">Información Asociación</MDBDropdownItem>
+                  <MDBDropdownItem href="#/shelter/update">Información Asociación</MDBDropdownItem>
                   <MDBDropdownItem  href="/" onClick={this.logout} >Cerrar Sesión</MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>

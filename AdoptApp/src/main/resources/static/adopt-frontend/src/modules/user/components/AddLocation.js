@@ -22,7 +22,7 @@ class AddLocation extends Component {
         const locationParams={
             latitude: this.state.latitude,
             longitude: this.state.longitude,
-            userToken: sessionStorage.getItem('serviceToken')
+            token: sessionStorage.getItem('serviceToken')
         }
         setLocation(locationParams).then(response=>{
             console.log("Todo Correcto guardadando la localizacion")
