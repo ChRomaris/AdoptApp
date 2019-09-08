@@ -4,17 +4,10 @@ public class LocationDTO {
 	
 	private Float latitude;
 	private Float longitude;
-	private String userToken;
+	private String token;
 	
 	public LocationDTO() {
 		super();
-	}
-
-	public LocationDTO(Float latitude, Float longitude, String userToken) {
-		super();
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.userToken = userToken;
 	}
 	
 	public Float getLatitude() {
@@ -29,11 +22,11 @@ public class LocationDTO {
 	public void setLongitude(Float longitude) {
 		this.longitude = longitude;
 	}
-	public String getUserToken() {
-		return userToken;
+	public String getToken() {
+		return token;
 	}
-	public void setUserToken(String userToken) {
-		this.userToken = userToken;
+	public void setToken(String token) {
+		this.token = token;
 	}
 	
 	

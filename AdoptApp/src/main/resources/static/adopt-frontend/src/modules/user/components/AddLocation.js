@@ -18,6 +18,7 @@ class AddLocation extends Component {
     }
 
     saveLocation(){
+        console.log("Se guarda la localización: "+ this.state.latitude + this.state.longitude)
         const locationParams={
             latitude: this.state.latitude,
             longitude: this.state.longitude,
@@ -25,7 +26,8 @@ class AddLocation extends Component {
         }
         setLocation(locationParams).then(response=>{
             console.log("Todo Correcto guardadando la localizacion")
-            this.props.history.push("/List");
+            this.props.history.replace("/List")
+            
         }).catch(error=>{
             console.log("Algo fue mal guardado la localizacion")
         })
@@ -42,6 +44,7 @@ class AddLocation extends Component {
 
     handleSubmit(event){
         this.saveLocation();
+        event.preventDefault();
     }
 
     render(){

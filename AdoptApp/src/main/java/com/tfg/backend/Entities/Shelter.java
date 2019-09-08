@@ -1,4 +1,5 @@
 package com.tfg.backend.Entities;
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,123 +17,85 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name="Shelter")
-public class Shelter  {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long shelter_id;
-	@Column
-	private String type;
-	@Column
-	private String name;
-	@Column
-	private Long phoneNumber;
-	@Column
-	private String email;
+@Table(name = "Shelter")
+public class Shelter extends Profile {
 
+    @Column
+    private String type;
+    @Column
+    private String name;
+    @Column
+    private String email;
+    @Column
+    private Long phoneNumber;
+    @Column 
+    private String description;
+    @Column
+    private String address;
+    
+    @JsonManagedReference
+    @OneToMany(mappedBy = "shelter", cascade = CascadeType.ALL)
+    private List<AdoptionAnimal> animals;
 
-	@Column
-	private String address;
-	@Column
-	private String location;
-	
-	@JsonManagedReference
-	@OneToMany(mappedBy="shelter",cascade = CascadeType.ALL)
-	private List<Animal>animals;
-	
-	 @OneToOne(cascade = CascadeType.ALL)
-	 @JoinColumn(name = "AdminId", referencedColumnName = "id") 
-	private RegisteredUser admin;
-	
-	
-	public String getType() {
-		return type;
-	}
+    public Shelter() {
+	setRole(RoleType.SHELTER);
+    }
 
-	public RegisteredUser getAdmin() {
-		return admin;
-	}
-	
-	
-	public List<Animal> getAnimals() {
-		return animals;
-	}
+    public String getType() {
+	return type;
+    }
 
-	public void setAnimals(List<Animal> animals) {
-		this.animals = animals;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setAdmin(RegisteredUser admin) {
-		this.admin = admin;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public long getShelter_id() {
-		return shelter_id;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public void setShelter_id(long shelter_id) {
-		this.shelter_id = shelter_id;
-	}
+    public List<AdoptionAnimal> getAnimals() {
+	return animals;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setAnimals(List<AdoptionAnimal> animals) {
+	this.animals = animals;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setType(String type) {
+	this.type = type;
+    }
 
-	public Long getPhoneNumber() {
-		return phoneNumber;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public void setPhoneNumber(Long phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public void setName(String name) {
+	this.name = name;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public Long getPhoneNumber() {
+	return phoneNumber;
+    }
 
-	public Shelter( String type, String name, Long phoneNumber, String email, String address,
-			String location) {
-		super();
-		this.type = type;
-		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.email = email;
-		this.address = address;
-		this.location = location;
-	}
+    public void setPhoneNumber(Long phoneNumber) {
+	this.phoneNumber = phoneNumber;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+	return email;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public void setEmail(String email) {
+	this.email = email;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public Shelter() {
-		
-	}
-	
 
 }

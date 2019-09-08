@@ -4,13 +4,13 @@ import java.util.List;
 
 public class AllAdoptionAnimalsDTO {
 	
-	private List<AdoptionAnimalDTO> animales;
+	private List<ReturnedAdoptionAnimalDTO> animales;
 
-	public List<AdoptionAnimalDTO> getAnimales() {
+	public List<ReturnedAdoptionAnimalDTO> getAnimales() {
 		return animales;
 	}
 
-	public void setAnimales(List<AdoptionAnimalDTO> animales) {
+	public void setAnimales(List<ReturnedAdoptionAnimalDTO> animales) {
 		this.animales = animales;
 	}
 	

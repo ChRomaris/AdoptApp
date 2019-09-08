@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 import {Container, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 //import FileBase64 from 'react-file-base64';
-import { SideMenu } from '../../app';
+import { TopMenu } from '../../app';
 import {getAnimalInfo} from '../actions';
 class UpdateAnimalForm extends Component{
     constructor(){
@@ -75,18 +75,19 @@ class UpdateAnimalForm extends Component{
         const animalEditionData = {
             id : this.props.animalId,
             name : this.state.name,
-            genre : this.state.email,
+            genre : this.state.genre,
             description : this.state.description,
-            birthDate : this.state.birthDate,
-            health_Comment : this.state.healthComment,
             color : this.state.color,
             size : this.state.size,
-            trained: this.state.trained,
-            state : this.state.state,
             image : this.state.image,
             imageDescription : this.state.imageDescription,
-            userToken : sessionStorage.getItem('serviceToken')
-            
+            adoptionAnimalInfoDTO : {
+                birthDate : this.state.birthDate,
+            },
+            userToken : sessionStorage.getItem('serviceToken'),
+            health_Comment : this.state.healthComment,
+            trained: this.state.trained,
+            state : this.state.state
         };
 
         editAnimal(animalEditionData).then(response => 
@@ -106,7 +107,7 @@ class UpdateAnimalForm extends Component{
 
         return (
             <div>
-            <SideMenu/>
+            <TopMenu/>
             <Container className="animalForm">
             
             <ToastsContainer store={ToastsStore}/>

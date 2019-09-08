@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {registerUpdateUser}  from '../actions';
+import {register}  from '../actions';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 import {NavLink} from 'react-router-dom';
 import logo from '../../../images/cat2.gif';
@@ -12,55 +12,92 @@ class SignUpForm extends Component {
 
         this.state = {
             userName: '',
-            email: '',
             password: '',
-            name: '',
-            lastname1: '',
-            lastname2: '',
-            hasAgreed: false
+            type:null,
+            name:null,
+            phoneNumber: null,
+            email: null,
+            address:null,
+            description:null,
+            lastname: null,
+            lastname2: null,
+            genre: null,
+            isShelter: false
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        
+        this.handleCheck = this.handleCheck.bind(this);
 
     }
 
-    handleChange(e) {
-        let target = e.target;
-        let value = target.type === 'checkbox' ? target.checked : target.value;
-        let name = target.name;
-        let userName = target.userName;
-        let email = target.email;
-        let password = target.password;
-        let lastname1 = target.lastname1;
-        let lastname2 = target.lastname2;
+    componentDidMount(){
+      if(sessionStorage.getItem('serviceToken')!=null){
+        this.props.history.replace("/List")
+      }
+    }
 
+    handleChange(e) {
+     
+        let target = e.target;
         this.setState({
-          [name]: value,
-          [userName] : target.userName,
-          [email] : target.email,
-          [password] : target.password,
-          [lastname1] :target.lastname1,
-          [lastname2] : target.lastname2
-        });
+          [target.name] : target.value,
+        },()=>{console.log(this.state)});
+    }
+
+    handleCheck(e){
+
+      
+      if(this.state.isShelter){
+        this.setState({
+          isShelter: false
+        },()=>{console.log(this.state)});
+      }else{
+        this.setState({
+          isShelter:true
+        },()=>{console.log(this.state)});
+      }
+
+      
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        const signupRequest = {
-          name : this.state.name, 
-          lastname1 : this.state.lastname1,
-          lastname2 : this.state.lastname2,
-          userName: this.state.userName,
-          email: this.state.email,
+        const signUpShelter = {
+
+          username: this.state.userName,
           password: this.state.password,
-          hasAgreed : this.state.hasAgreed
-        };
-        
-        registerUpdateUser(signupRequest)
+          shelterDTO : {
+            type: this.state.type,
+            name:this.state.name,
+            phoneNumber: this.state.phoneNumber,
+            email: this.state.email,
+            address: this.state.address,
+            description: this.state.description
+          }
+
+        }
+
+        const signUpUser = {
+
+          username: this.state.userName,
+          password: this.state.password,
+          userDTO : {
+            name: this.state.name,
+            lastname: this.state.lastname,
+            lastname2: this.state.lastname2,
+            email: this.state.email,
+            address: this.state.address,
+            genre: this.state.genre
+          }
+
+        }
+
+        if(this.state.isShelter){
+         
+          register(signUpShelter)
           .then(response => { 
-            sessionStorage.setItem('serviceToken', response.serviceToken);
+            sessionStorage.setItem('serviceToken', response.token);
             sessionStorage.setItem('userId', response.id);
             ToastsStore.success("Registrado Correctamente");
             this.props.history.replace("/addLocation")
@@ -68,6 +105,19 @@ class SignUpForm extends Component {
         }).catch(error => {
           ToastsStore.error(error.globalError);
         });
+        }else{
+          register(signUpUser)
+          .then(response => { 
+            sessionStorage.setItem('serviceToken', response.token);
+            sessionStorage.setItem('userId', response.id);
+            ToastsStore.success("Registrado Correctamente");
+            this.props.history.replace("/addLocation")
+
+        }).catch(error => {
+          ToastsStore.error(error.globalError);
+        });
+        }
+
     };
 
 
@@ -92,34 +142,18 @@ class SignUpForm extends Component {
                   <NavLink to="/"  className="FormTitle__Link">Acceder</NavLink> o <NavLink exact to="/signUp" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Registrarse</NavLink>
               </div>              <div className="FormField">
                 <label className="FormField__Label" htmlFor="userName">Usuario</label>
-                <input type="text" id="userName" className="FormField__Input" placeholder="Introducir usuario" name="userName" value={this.state.userName} onChange={this.handleChange} required />
+                <input type="text" id="userName" className="FormField__Input" placeholder="Introducir usuario" name="userName" defaultValue={this.state.userName} onChange={this.handleChange} required />
               </div>
               
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="password">Contraseña</label>
-                <input type="password" id="password" className="FormField__Input" placeholder="Introducir Contraseña" name="password" value={this.state.password} onChange={this.handleChange} required />
+                <input type="password" id="password" className="FormField__Input" placeholder="Introducir Contraseña" name="password" defaultValue={this.state.password} onChange={this.handleChange} required />
               </div>
-
+              <div className="FormField">
+                <label className="FormField__Label" htmlFor="password">Asociación</label>
+                <input type="checkbox" id="isShelter" defaultChecked={this.state.isShelter}  name="isShelter"  onChange={this.handleCheck}/>
+              </div>
             <form ref={node => this.form = node} onSubmit={(e) => this.handleSubmit(e)} className="FormFields">
-              <div className="FormField">
-                <label className="FormField__Label" htmlFor="name">Nombre</label>
-                <input type="text" id="name" className="FormField__Input" placeholder="Introducir nombre completo" name="name" defaultValue={this.state.name} onChange={this.handleChange} required />
-              </div>
-
-              <div className="FormField">
-                <label className="FormField__Label" htmlFor="name">Apellido 1</label>
-                <input type="text" id="apellido1" className="FormField__Input" placeholder="Introducir nombre completo" name="apellido1" defaultValue={this.state.lastname1} onChange={this.handleChange} required />
-              </div>
-
-              <div className="FormField">
-                <label className="FormField__Label" htmlFor="name">Apellido 2</label>
-                <input type="text" id="apellido2" className="FormField__Input" placeholder="Introducir nombre completo" name="apellido2" defaultValue={this.state.lastname2} onChange={this.handleChange} required />
-              </div>
-
-              <div className="FormField">
-                <label className="FormField__Label" htmlFor="email">Correo Electrónico</label>
-                <input type="email" id="email" className="FormField__Input" placeholder="Introducir correo electónico" name="email" value={this.state.email} onChange={this.handleChange} required />
-              </div>
               <div className="FormField">
                   <button type ="submit" className="FormField__Button mr-20">Registrarse</button> <Link to="/" className="FormField__Link">Ya tengo cuenta</Link>
               </div>

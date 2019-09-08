@@ -7,20 +7,13 @@ import com.tfg.backend.Entities.Animal;
 
 public class ShelterAdoptionAnimalsDTO {
 	
-	private List<AdoptionAnimalDTO> animals;
-	private String shelterName;
+	private List<ReturnedAdoptionAnimalDTO> animals;
 	
-	public List<AdoptionAnimalDTO> getAnimals() {
+	public List<ReturnedAdoptionAnimalDTO> getAnimals() {
 		return animals;
 	}
-	public void setAnimals(List<AdoptionAnimalDTO> animals) {
+	public void setAnimals(List<ReturnedAdoptionAnimalDTO> animals) {
 		this.animals = animals;
-	}
-	public String getShelterName() {
-		return shelterName;
-	}
-	public void setShelterName(String shelterName) {
-		this.shelterName = shelterName;
 	}
 	
 	

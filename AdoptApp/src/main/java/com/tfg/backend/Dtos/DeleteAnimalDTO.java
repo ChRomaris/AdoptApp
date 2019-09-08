@@ -6,10 +6,8 @@ public class DeleteAnimalDTO {
 	private Long animalId;
 	
 	
-	public DeleteAnimalDTO(String userToken, Long animalId) {
+	public DeleteAnimalDTO() {
 		super();
-		this.userToken = userToken;
-		this.animalId = animalId;
 	}
 	
 	public String getUserToken() {

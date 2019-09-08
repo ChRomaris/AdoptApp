@@ -20,7 +20,7 @@ const request = (options) => {
 export function addAnimal (animalCreationRequest) {
     
     return request ({
-        url: "http://localhost:8080/animal/add",
+        url: "http://localhost:8080/shelter/animal/add",
         method: 'POST',
         body: JSON.stringify(animalCreationRequest)
     });
@@ -28,7 +28,7 @@ export function addAnimal (animalCreationRequest) {
 
 export function editAnimal(params){
     return request ({
-        url: "http://localhost:8080/animal/edit",
+        url: "http://localhost:8080/shelter/animal/edit",
         method: 'POST',
         body: JSON.stringify(params)
     });

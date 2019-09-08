@@ -1,190 +1,224 @@
-
 @font-face {
-  font-family: 'mainFont';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../../fonts/Juri Zaech - FrontageCondensed-Outline.otf'); /* IE9 Compat Modes */
-  src: local('mainFont'), local('mainFont'),
-       url('../../fonts/Juri Zaech - FrontageCondensed-Outline.otf') format('embedded-opentype'), /* IE6-IE8 */
+    font-family: 'mainFont';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../../fonts/Juri Zaech - FrontageCondensed-Outline.otf');
+    /* IE9 Compat Modes */
+    src: local('mainFont'), local('mainFont'), url('../../fonts/Juri Zaech - FrontageCondensed-Outline.otf') format('embedded-opentype'), /* IE6-IE8 */
 }
-.MainText{
-  font-family: mainFont;
-  font-size: 400%;
-  margin-left: 33%;
-  color:  #2E4158;
-}
-body{
-  margin : 0;
-  padding: 0;
-  font-family: sans-serif;
 
+.MainText {
+    font-family: mainFont;
+    font-size: 400%;
+    margin-left: 33%;
+    color: #2E4158;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
 .App {
-  height: 100vh;
-  display: flex;
-  color: #2E4158;
-  
-
+    height: 100vh;
+    display: flex;
+    color: #2E4158;
 }
 
 .App__Aside {
-  width: 50%;
-  background-color: #ABE7DB;
+    width: 50%;
+    background-color: #ABE7DB;
 }
 
 .App__Form {
-  width: 50%;
-  background-color: #2E4158;
-  padding: 25px 40px;
-  overflow: auto;
+    width: 50%;
+    background-color: #2E4158;
+    padding: 25px 40px;
+    overflow: auto;
 }
 
-.Simple_Form{
-  width: 50%;
-  background-color:white;
-  padding: 10px;
-  overflow: auto;
-  margin-left: 25%;
-  margin-top: 2%;
-  border-style: solid;
-  border-color: #2E4158;
+.Simple_Form {
+    width: 50%;
+    height: 100;
+    background-color: white;
+    padding: 10px;
+    overflow: auto;
+    margin-left: 1%;
+    margin-top: 2%;
+    border-style: solid;
+    border-color: #2E4158;
+    float: left;
+}
+
+.userEditSection {
+    width: 100%;
+    height: 110vh;
+    border-style: solid;
+    border-width: 2px;
+    overflow: hidden;
 }
 
 .PageSwitcher {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10%;
 }
 
 .PageSwitcher__Item {
-  background-color: #4C5D72;
-  color: #9DA6B1;
-  padding: 10px 25px;
-  cursor: pointer;
-  font-size: .9em;
-  border: none;
-  outline: none;
-  display: inline-block;
-  text-decoration: none;
+    background-color: #4C5D72;
+    color: #9DA6B1;
+    padding: 10px 25px;
+    cursor: pointer;
+    font-size: .9em;
+    border: none;
+    outline: none;
+    display: inline-block;
+    text-decoration: none;
 }
 
 .PageSwitcher__Item--Active {
-  background-color: #5ED0C0;
-  color: white;
+    background-color: #5ED0C0;
+    color: white;
 }
 
 .PageSwitcher__Item:first-child {
-  border-top-left-radius: 25px;
-  border-bottom-left-radius: 25px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
 }
+
 .PageSwitcher__Item:last-child {
-  border-top-right-radius: 25px;
-  border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 
 .FormCenter {
-  margin-bottom: 1%;
-  margin-left: 10%;
+    margin-bottom: 1%;
+    margin-left: 10%;
 }
 
+
 .FormTitle {
-  color: #707C8B;
-  font-weight: 300;
-  margin-bottom: 1%;
-  margin-left: 25%;
+    color: #707C8B;
+    font-weight: 300;
+    margin-bottom: 1%;
+    margin-left: 25%;
 }
 
 .FormTitle__Link {
-  color: #707C8B;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1.7em;
-  margin: 0 10px;
-  padding-bottom: 5px;
+    color: #707C8B;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.7em;
+    margin: 0 10px;
+    padding-bottom: 5px;
 }
 
 .FormTitle__Link:first-child {
-  margin-left: 0;
+    margin-left: 0;
 }
 
 .FormTitle__Link--Active {
-  color: white;
-  border-bottom: 1px solid #199087;
+    color: white;
+    border-bottom: 1px solid #199087;
 }
 
 .FormField {
-  margin-bottom: 40px;
+    margin-bottom: 40px;
 }
 
 .FormField__Label {
-  display: block;
-  text-transform: uppercase;
-  font-size: .9em;
-  color: white;
+    display: block;
+    text-transform: uppercase;
+    font-size: .9em;
+    color: #199087;
 }
+
 .FormField__Input {
-  width: 85%;
-  background-color: transparent;
-  border: none;
-  color: white;
-  outline: none;
-  border-bottom: 1px solid #445366;
-  font-size: 1em;
-  font-weight: 300;
-  padding-bottom: 10px;
-  margin-top: 10px;
+    width: 85%;
+    background-color: transparent;
+    border: none;
+    color: 2E4158;
+    outline: none;
+    border-bottom: 1px solid #445366;
+    font-size: 1em;
+    font-weight: 300;
+    text-align: center;
+    padding-bottom: 10px;
+    margin-top: 10px;
 }
 
 .FormField__Input::placeholder {
-  color: #616E7F;
+    color: #616E7F;
 }
 
 .FormField__Button {
-  background-color: #52C4B9;
-  color: white;
-  border: none;
-  outline: none;
-  border-radius: 25px;
-  padding: 15px 70px;
-  font-size: .8em;
-  font-weight: 500;
+    background-color: #52C4B9;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 25px;
+    padding: 15px 70px;
+    font-size: .8em;
+    font-weight: 500;
 }
 
 .FormField__Link {
-  color: #66707D;
-  text-decoration: none;
-  display: inline-block;
-  border-bottom: 1.5px solid #225E62;
-  padding-bottom: 5px;
+    color: #66707D;
+    text-decoration: none;
+    display: inline-block;
+    border-bottom: 1.5px solid #225E62;
+    padding-bottom: 5px;
 }
 
 .FormField__CheckboxLabel {
-  color: #646F7D;
-  font-size: .9em;
+    color: #646F7D;
+    font-size: .9em;
 }
 
 .FormField__Checkbox {
-  position: relative;
-  top: 1.5px;
+    position: relative;
+    top: 1.5px;
 }
 
 .FormField__TermsLink {
-  color: white;
-  border-bottom: 1px solid #199087;
-  text-decoration: none;
-  display: inline-block;
-  padding-bottom: 2px;
-  margin-left: 5px;
+    color: white;
+    border-bottom: 1px solid #199087;
+    text-decoration: none;
+    display: inline-block;
+    padding-bottom: 2px;
+    margin-left: 5px;
 }
 
-.sideNav{
-  background-color: blue;
+.sideNav {
+    background-color: blue;
 }
 
-.bar{
-  background-color: #2E4158;
+.bar {
+    background-color: #2E4158;
 }
 
-.animalForm{
-  margin-top: 2%;
+.animalForm {
+    margin-top: 2%;
+}
+
+.mainPositionSection{
+    border-style: solid;
+    border-width: 2px;
+    border-color: blue;
+    height: 59vh;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #d3d3d3;
+    border-radius: .5em;
+    padding: 2%;
+    overflow: hidden;
+    
+
+
+}
+
+.FormButton{
+    margin-top: 2vh;
 }

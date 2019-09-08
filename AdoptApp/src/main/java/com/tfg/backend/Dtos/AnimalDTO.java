@@ -6,25 +6,22 @@ import com.tfg.backend.Entities.Shelter;
 import com.tfg.backend.Entities.Animal.Genre;
 
 public class AnimalDTO {
-	
+	private Long id;
 	private String name;
 	private Genre genre;
 	private String description;
-	private Calendar birthDate;
-	private String health_comment;
 	private String color;
 	private String size;
-	private Boolean trained;
-	private String state;
-	private Long adoptionTime;
 	private  String image;
 	private String imageDescription;
 	private Calendar imageDateTime;
-	private String shelterName;
-	private Shelter shelter;
 	private String userToken;
+	private AdoptionAnimalInfoDTO adoptionAnimalInfoDTO;
 	
 	
+	public AnimalDTO() {
+		super();
+	}
 	
 	public String getUserToken() {
 		return userToken;
@@ -34,110 +31,13 @@ public class AnimalDTO {
 		this.userToken = userToken;
 	}
 
-	public Shelter getShelter() {
-		return shelter;
-	}
-
-	public void setShelter(Shelter shelter) {
-		this.shelter = shelter;
-	}
-
-	public String getShelterName() {
-		return shelterName;
-	}
-
-	public void setShelterName(String shelterName) {
-		this.shelterName = shelterName;
-	}
-
-	public AnimalDTO() {
-		super();
-	}
-
-	public AnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
-			String color, String size, Boolean trained, String state, Long adoptionTime) {
-		super();
-		this.name = name;
-		this.genre = genre;
-		this.description = description;
-		this.birthDate = birthDate;
-		this.health_comment = health_comment;
-		this.color = color;
-		this.size = size;
-		this.trained = trained;
-		this.state = state;
-		this.adoptionTime = adoptionTime;
-	}
-	
-	public AnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
-			String color, String size, Boolean trained, String state, Long adoptionTime, String image) {
-		super();
-		this.name = name;
-		this.genre = genre;
-		this.description = description;
-		this.birthDate = birthDate;
-		this.health_comment = health_comment;
-		this.color = color;
-		this.size = size;
-		this.trained = trained;
-		this.state = state;
-		this.adoptionTime = adoptionTime;
-		this.image = image;
-	}
-	
-	public AnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
-			String color, String size, Boolean trained, String state, String image) {
-		super();
-		this.name = name;
-		this.genre = genre;
-		this.description = description;
-		this.birthDate = birthDate;
-		this.health_comment = health_comment;
-		this.color = color;
-		this.size = size;
-		this.trained = trained;
-		this.state = state;
-		this.image = image;
-	}
-	
-	
-	
-	public AnimalDTO(String name, Genre genre, String description, Calendar birthDate, String health_comment,
-			String color, String size, Boolean trained, String state, Long adoptionTime, String image,
-			String imageDescription, String shelterName) {
-		super();
-		this.name = name;
-		this.genre = genre;
-		this.description = description;
-		this.birthDate = birthDate;
-		this.health_comment = health_comment;
-		this.color = color;
-		this.size = size;
-		this.trained = trained;
-		this.state = state;
-		this.adoptionTime = adoptionTime;
-		this.image = image;
-		this.imageDescription = imageDescription;
-		this.shelterName = shelterName;
-	}
-
 	public String getImage() {
 		return image;
 	}
 
-
-
-
-
-
 	public void setImage(String image) {
 		this.image = image;
 	}
-
-
-
-
-
 
 	public String getImageDescription() {
 		return imageDescription;
@@ -162,13 +62,6 @@ public class AnimalDTO {
 	}
 
 
-
-	public Long getAdoptionTime() {
-		return adoptionTime;
-	}
-	public void setAdoptionTime(Long adoptionTime) {
-		this.adoptionTime = adoptionTime;
-	}
 	public String getName() {
 		return name;
 	}
@@ -187,18 +80,6 @@ public class AnimalDTO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Calendar getBirthDate() {
-		return birthDate;
-	}
-	public void setBirthDate(Calendar birthDate) {
-		this.birthDate = birthDate;
-	}
-	public String getHealth_comment() {
-		return health_comment;
-	}
-	public void setHealth_comment(String health_comment) {
-		this.health_comment = health_comment;
-	}
 	public String getColor() {
 		return color;
 	}
@@ -211,17 +92,23 @@ public class AnimalDTO {
 	public void setSize(String size) {
 		this.size = size;
 	}
-	public Boolean getTrained() {
-		return trained;
+
+	public Long getId() {
+	    return id;
 	}
-	public void setTrained(Boolean trained) {
-		this.trained = trained;
+
+	public void setId(Long id) {
+	    this.id = id;
 	}
-	public String getState() {
-		return state;
+
+	public AdoptionAnimalInfoDTO getAdoptionAnimalInfoDTO() {
+	    return adoptionAnimalInfoDTO;
 	}
-	public void setState(String state) {
-		this.state = state;
+
+	public void setAdoptionAnimalInfoDTO(AdoptionAnimalInfoDTO adoptionAnimalInfoDTO) {
+	    this.adoptionAnimalInfoDTO = adoptionAnimalInfoDTO;
 	}
+	
+
 
 }

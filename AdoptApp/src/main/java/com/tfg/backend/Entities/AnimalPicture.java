@@ -13,6 +13,9 @@ import javax.persistence.ManyToOne;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class AnimalPicture {
 
@@ -29,6 +32,15 @@ public class AnimalPicture {
 	@Column 
 	private Calendar dateTime;
 	
+	@JsonBackReference
+	@ManyToOne 
+	@JoinColumn (name = "id_animal")
+	private Animal animal;
+	
+	public AnimalPicture() {
+		super();
+	}
+	
 	public String getImage() {
 		return image;
 	}
@@ -37,28 +49,6 @@ public class AnimalPicture {
 		this.image = image;
 	}
 
-	public AnimalPicture() {
-		super();
-	}
-
-	public AnimalPicture(String image, String description, Calendar dateTime, Animal animal) {
-		super();
-		this.image = image;
-		this.description = description;
-		this.dateTime = dateTime;
-		this.animal = animal;
-	}
-
-	@ManyToOne 
-	@JoinColumn (name = "id_animal")
-	private Animal animal;
-	
-	public AnimalPicture(String image, String description, Calendar dateTime) {
-		super();
-		this.image = image;
-		this.description = description;
-		this.dateTime = dateTime;
-	}
 
 	public long getAnimalPictureId() {
 		return AnimalPictureId;

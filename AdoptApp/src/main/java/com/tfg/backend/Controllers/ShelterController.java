@@ -3,6 +3,7 @@ package com.tfg.backend.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,22 +12,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimalDTOList;
+import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimal;
 import static com.tfg.backend.Dtos.AnimalConversor.toAnimalDTOList;
 import static com.tfg.backend.Dtos.ShelterConversor.toShelter;
 import static com.tfg.backend.Dtos.ShelterConversor.toShelterDTO;
 
+import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 import java.util.Locale;
 
+import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
 import com.tfg.backend.Dtos.ErrorsDTO;
+import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
 import com.tfg.backend.Dtos.SearchShelterAnimalsDTO;
 import com.tfg.backend.Dtos.ShelterAdoptionAnimalsDTO;
 import com.tfg.backend.Dtos.ShelterDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
+import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.Shelter;
 import com.tfg.backend.Exceptions.DuplicatedUserException;
 import com.tfg.backend.Exceptions.ForbiddenException;
@@ -54,47 +61,34 @@ public class ShelterController {
 	return new ErrorsDTO(errorMessage);
     }
 
-    @PostMapping("/add")
-    public ShelterDTO addShelter(@RequestBody ShelterDTO shelterDTO) throws ForbiddenException {
-	Shelter shelter = toShelter(shelterDTO);
-
-	Shelter createdShelter = shelterService.createShelter(shelter, shelterDTO.getUserToken());
-
-	return toShelterDTO(createdShelter);
-
-    }
-
-    @PostMapping("findByUser")
-    public ShelterDTO findByUser(@RequestBody String userToken) throws ForbiddenException {
-	String token2 = userToken.replace("{\"userToken\":", "");
-	String token3 = token2.replace("\"", "");
-	String token4 = token3.replace("}", "");
-	Shelter foundShelter = shelterService.findByUser(token4);
-	if (foundShelter != null) {
-	    return toShelterDTO(foundShelter);
-	} else {
-	    return new ShelterDTO();
-	}
-
-    }
-
     @PostMapping("/list")
     public ShelterAdoptionAnimalsDTO searchShelterAnimals(@RequestBody SearchShelterAnimalsDTO param) throws ForbiddenException {
 
-	List<Animal> adoptionAnimals = shelterService.getShelterAdoptionAnimals(param);
-	ShelterAdoptionAnimalsDTO shelterAdoptionAnimalsDTO = new ShelterAdoptionAnimalsDTO();
-	shelterAdoptionAnimalsDTO.setAnimals(toAnimalDTOList(adoptionAnimals));
+	ShelterAdoptionAnimalsDTO adoptionAnimals = shelterService.getShelterAdoptionAnimals(param);
 
-	return shelterAdoptionAnimalsDTO;
+	return adoptionAnimals;
+    }
+    
+//    
+    @PostMapping("/animal/add")
+    public ReturnedAdoptionAnimalDTO addAnimal(@RequestBody AnimalDTO animalDTO)
+	    throws IOException, ForbiddenException {
+	return shelterService.addAnimal(animalDTO);
+
+    }
+    
+    @PostMapping("/animal/edit")
+    public ReturnedAdoptionAnimalDTO editAnimal(@RequestBody AnimalDTO animalDTO)
+	    throws IOException, ForbiddenException {
+	return shelterService.editAnimal(animalDTO);
+
     }
 
     @PostMapping("/animal/delete")
     public ShelterAdoptionAnimalsDTO deleteAnimal(@RequestBody DeleteAnimalDTO param)
 	    throws ForbiddenException, IncorrectValueException {
-	List<Animal> adoptionAnimals = shelterService.deleteAnimal(param);
-	ShelterAdoptionAnimalsDTO shelterAdoptionAnimalsDTO = new ShelterAdoptionAnimalsDTO();
-	shelterAdoptionAnimalsDTO.setAnimals(toAnimalDTOList(adoptionAnimals));
-	return shelterAdoptionAnimalsDTO;
+	ShelterAdoptionAnimalsDTO adoptionAnimals = shelterService.deleteAnimal(param);
+	return adoptionAnimals;
     }
 
 }

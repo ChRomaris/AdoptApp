@@ -2,14 +2,14 @@ package com.tfg.backend.Dtos;
 
 public class SearchShelterAnimalsDTO {
 
-	private String userToken;
+	private String token;
 
-	public String getUserToken() {
-		return userToken;
+	public String getToken() {
+		return token;
 	}
 
-	public void setUserToken(String userToken) {
-		this.userToken = userToken;
+	public void setToken(String token) {
+		this.token = token;
 	}
 	
 	

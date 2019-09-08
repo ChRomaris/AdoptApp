@@ -9,23 +9,16 @@ public class AuthenticatedUserDTO {
 	private long id;
 	private String shelterName;
 
+
+	public AuthenticatedUserDTO() {
+	}
+	
 	public String getShelterName() {
 		return shelterName;
 	}
 
 	public void setShelterName(String shelterName) {
 		this.shelterName = shelterName;
-	}
-
-	public AuthenticatedUserDTO() {
-	}
-
-	public AuthenticatedUserDTO(String serviceToken, UserDTO userDto) {
-
-		this.serviceToken = serviceToken;
-		this.userDto = userDto;
-		this.id = userDto.getId();
-
 	}
 
 	public String getServiceToken() {

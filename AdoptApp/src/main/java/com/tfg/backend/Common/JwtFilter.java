@@ -17,6 +17,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import com.tfg.backend.Entities.RoleType;
+
 public class JwtFilter extends BasicAuthenticationFilter {
 
 	private JwtGenerator jwtGenerator;
@@ -59,7 +61,7 @@ public class JwtFilter extends BasicAuthenticationFilter {
 
 	}
 
-	private void configureSecurityContext(String userName, String role) {
+	private void configureSecurityContext(String userName, RoleType role) {
 
 		Set<GrantedAuthority> authorities = new HashSet<>();
 

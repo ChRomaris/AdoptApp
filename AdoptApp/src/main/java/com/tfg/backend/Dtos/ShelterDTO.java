@@ -3,21 +3,44 @@ package com.tfg.backend.Dtos;
 import javax.persistence.Column;
 
 public class ShelterDTO {
-	
+    
 	private String type;
 	private String name;
 	private Long phoneNumber;
 	private String email;
 	private String address;
-	private String location;
-	private String userToken;
+	private String description;
 	
-	public String getUserToken() {
-		return userToken;
+	
+	public ShelterDTO() {
+		super();
 	}
-	public void setUserToken(String userToken) {
-		this.userToken = userToken;
+	
+	
+	
+	public String getDescription() {
+	    return description;
 	}
+
+
+
+	public void setDescription(String description) {
+	    this.description = description;
+	}
+
+
+
+	public String getAddress() {
+	    return address;
+	}
+
+
+
+	public void setAddress(String address) {
+	    this.address = address;
+	}
+
+
 	public String getType() {
 		return type;
 	}
@@ -42,32 +65,6 @@ public class ShelterDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	public ShelterDTO(String type, String name, Long phoneNumber, String email, String address, String location) {
-		super();
-		this.type = type;
-		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.email = email;
-		this.address = address;
-		this.location = location;
-	}
-	public ShelterDTO() {
-		super();
-	}
-	
-	
 
 	
 	

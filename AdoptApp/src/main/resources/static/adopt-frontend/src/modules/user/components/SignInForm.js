@@ -24,6 +24,12 @@ class SignInForm extends Component {
        
     }
 
+    componentDidMount(){
+      if(sessionStorage.getItem('serviceToken')!=null){
+        this.props.history.replace("/List")
+      }
+    }
+
     handleChange(e) {
         let target = e.target;
         let value = target.type === 'checkbox' ? target.checked : target.value;
@@ -31,8 +37,10 @@ class SignInForm extends Component {
 
         this.setState({
           [name]: value
-        });
+        },()=>{console.log(this.state)});
     }
+
+
 
     handleSubmit(e) {
 
@@ -40,30 +48,16 @@ class SignInForm extends Component {
         e.preventDefault();
         
         const loginData = {
-          userName: this.state.userName,
+          username: this.state.userName,
           password: this.state.password
         };
               login(loginData)
               .then(response => {
                 
-                  sessionStorage.setItem('serviceToken', response.serviceToken);
+                  sessionStorage.setItem('serviceToken', response.token);
                   sessionStorage.setItem('userId', response.id);
-                  findShelterByUser (response.serviceToken).then(response => {
-                    if(response.name != null){
-                      sessionStorage.setItem('isAdmin', true );
-                      sessionStorage.setItem('shelterName', response.name)
-                    }else{
-                      sessionStorage.setItem('isAdmin', false ); 
-                      sessionStorage.setItem('shelterName', null)
-                    }
-                    
-                  }).catch(error => {
-                    ToastsStore.success("Error Recuperando asociación");
-                  })
                   ToastsStore.success("Logueado Correctamente");
-                  this.props.history.replace("/List")
-                 
-                
+                  this.props.history.replace("/List")   
               }).catch(error => {
                   
                      ToastsStore.error(error.globalError);

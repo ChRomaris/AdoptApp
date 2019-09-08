@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.tfg.backend.Dtos.AdoptionAnimalDTO;
+//import com.tfg.backend.Dtos.AdoptionAnimalDTO;
 import com.tfg.backend.Dtos.AllAdoptionAnimalsDTO;
+import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.ErrorsDTO;
+import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.Shelter;
@@ -26,8 +28,9 @@ import com.tfg.backend.Services.AnimalService;
 import com.tfg.backend.Services.ShelterService;
 
 import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimal;
-import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimalDTO;
-import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimalDTOList;
+import static com.tfg.backend.Dtos.AnimalConversor.toReturnedAdoptionAnimalDTOList;
+//import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimalDTO;
+//import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimalDTOList;
 import static com.tfg.backend.Dtos.UserConversor.toUserDTO;
 
 import java.io.IOException;
@@ -61,65 +64,22 @@ public class AnimalController {
 	return new ErrorsDTO(errorMessage);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<AdoptionAnimalDTO> addAdoptionAnimal(@RequestBody AdoptionAnimalDTO adoptionAnimalDTO)
-	    throws IOException, ForbiddenException {
 
-	Shelter shelter = shelterService.findByUser(adoptionAnimalDTO.getUserToken());
-
-	adoptionAnimalDTO.setShelter(shelter);
-
-	AdoptionAnimal animal = toAdoptionAnimal(adoptionAnimalDTO);
-
-	animalService.addAdoptionAnimal(animal);
-
-	if (adoptionAnimalDTO.getImage() != null && adoptionAnimalDTO.getImage().toString() != "") {
-
-	    AnimalPicture animalPicture = new AnimalPicture(adoptionAnimalDTO.getImage(),
-		    adoptionAnimalDTO.getDescription(), adoptionAnimalDTO.getImageDateTime(), animal);
-	    animalService.addAnimalPicture(animalPicture);
-	}
-
-	URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-		.buildAndExpand(animal.getId_animal()).toUri();
-
-	return ResponseEntity.created(location).body(toAdoptionAnimalDTO(animal));
-
-    }
-
-    @PostMapping("/edit")
-    public ResponseEntity<AdoptionAnimalDTO> editAdoptionAnimal(@RequestBody AdoptionAnimalDTO adoptionAnimalDTO)
-	    throws ForbiddenException {
-	try {
-	    Shelter shelter = shelterService.findByUser(adoptionAnimalDTO.getUserToken());
-
-	    adoptionAnimalDTO.setShelter(shelter);
-
-	    AdoptionAnimalDTO modifiedAdoptionAnimal = animalService.editAdoptionAnimal(adoptionAnimalDTO);
-	    URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-		    .buildAndExpand(modifiedAdoptionAnimal.getId()).toUri();
-
-	    return ResponseEntity.created(location).body(modifiedAdoptionAnimal);
-	} catch (IncorrectValueException e) {
-	    return null;
-	}
-
-    }
 
     @GetMapping("/getAll")
     public AllAdoptionAnimalsDTO getAllAdoptionAnimals() {
 	List<AdoptionAnimal> adoptionAnimals = animalService.getAllAdoptionAnimals();
 	AllAdoptionAnimalsDTO allAdoptionAnimalsDTO = new AllAdoptionAnimalsDTO();
-	allAdoptionAnimalsDTO.setAnimales(toAdoptionAnimalDTOList(adoptionAnimals));
+	allAdoptionAnimalsDTO.setAnimales(toReturnedAdoptionAnimalDTOList(adoptionAnimals));
 
 	return allAdoptionAnimalsDTO;
 
     }
 
     @PostMapping("/getInfo")
-    public AdoptionAnimalDTO getAnimalInfo(@RequestBody AdoptionAnimalDTO animal) {
+    public ReturnedAdoptionAnimalDTO getAnimalInfo(@RequestBody AnimalDTO animal) {
 	try {
-	    return animalService.getAnimalInfo(animal);
+	    return animalService.getAdoptionAnimalInfo(animal);
 	} catch (IncorrectValueException e) {
 	    return null;
 	}

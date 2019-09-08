@@ -2,7 +2,7 @@ import React,{Component}  from 'react';
 import GoogleMapReact from 'google-map-react';
 import Marker from './Marker';
 
-import '../../../styles/userStyles.css'
+import '../../styles/userStyles.css'
 
 //const AnyReactComponent = ({ text }) => <img  src= {animalMarker} alt={text} height="20px" width="5px"  ></img>;
 

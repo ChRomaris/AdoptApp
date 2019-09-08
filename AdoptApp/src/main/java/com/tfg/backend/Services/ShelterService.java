@@ -1,5 +1,11 @@
 package com.tfg.backend.Services;
 
+import static com.tfg.backend.Dtos.AnimalConversor.toAnimalDTOList;
+import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimal;
+import static com.tfg.backend.Dtos.AnimalConversor.toReturnedAdoptionAnimalDTO;
+import static com.tfg.backend.Dtos.AnimalConversor.toReturnedAdoptionAnimalDTOList;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -13,13 +19,17 @@ import com.tfg.backend.Common.JwtInfo;
 import com.tfg.backend.Daos.IAnimalDao;
 import com.tfg.backend.Daos.IShelterDAO;
 import com.tfg.backend.Daos.IUserDao;
+import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
+import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
 import com.tfg.backend.Dtos.SearchShelterAnimalsDTO;
 import com.tfg.backend.Dtos.ShelterAdoptionAnimalsDTO;
 import com.tfg.backend.Dtos.ShelterAnimalsDTO;
+import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
 import com.tfg.backend.Entities.Shelter;
-import com.tfg.backend.Entities.User;
+import com.tfg.backend.Entities.Profile;
+import com.tfg.backend.Entities.RoleType;
 import com.tfg.backend.Exceptions.ForbiddenException;
 import com.tfg.backend.Exceptions.IncorrectValueException;
 
@@ -38,64 +48,78 @@ public class ShelterService implements IShelterService {
     @Autowired
     IAnimalDao animalDao;
 
-    @Override
-    public Shelter createShelter(Shelter shelter, String userToken) throws ForbiddenException {
-	User user = validateUser(userToken);
-	shelter.setAdmin(user);
-	Shelter result = shelterDAO.save(shelter);
-	return result;
-    }
+    @Autowired
+    IProfileService profileService;
 
     @Override
-    public Shelter findByUser(String userToken) throws ForbiddenException {
-	User user = validateUser(userToken);
-	Shelter shelter = shelterDAO.findByAdmin(user);
-	return shelter;
-    }
+    public ShelterAdoptionAnimalsDTO getShelterAdoptionAnimals(SearchShelterAnimalsDTO param) throws ForbiddenException {
+	ShelterAdoptionAnimalsDTO shelterAdoptionAnimalsDTO = new ShelterAdoptionAnimalsDTO();
+	Profile profile = profileService.getProfileFromToken(param.getToken());
+	Optional <Shelter> optionalShelter = shelterDAO.findById(profile.getId());
+	Shelter shelter = optionalShelter.get();
+	shelterAdoptionAnimalsDTO.setAnimals(toReturnedAdoptionAnimalDTOList(shelter.getAnimals()));
 
-    @Override
-    public List<Animal> getShelterAdoptionAnimals(SearchShelterAnimalsDTO param) throws ForbiddenException {
-	User user = validateUser(param.getUserToken());
-	Shelter shelter = shelterDAO.findByAdmin(user);
-	return shelter.getAnimals();
-
-    }
-
-    @Override
-    public List<Animal> deleteAnimal(DeleteAnimalDTO deleteAnimalDTO)
-	    throws ForbiddenException, IncorrectValueException {
-	List<Animal> animals = new ArrayList<>();
-	User user = validateUser(deleteAnimalDTO.getUserToken());
-	Optional<Animal> animal = animalDao.findById(deleteAnimalDTO.getAnimalId());
-	Shelter shelter = shelterDAO.findByAdmin(user);
-	if (shelter != null) {
-	    if (animal.get().getShelter().getAdmin().getId() == user.getId()) {
-		animalDao.delete(animal.get());
-		SearchShelterAnimalsDTO searchShelterAnimalsDTO = new SearchShelterAnimalsDTO();
-		searchShelterAnimalsDTO.setUserToken(deleteAnimalDTO.getUserToken());
-		animals = getShelterAdoptionAnimals(searchShelterAnimalsDTO);
-	    } else {
-		throw new ForbiddenException("El usuario no es el administrador de la asociación");
-	    }
-	} else {
-	    throw new ForbiddenException("El usuario no es administrador de ninguna asociación");
-	}
 	
-	return animals;
+	return shelterAdoptionAnimalsDTO;
     }
 
-    public User validateUser(String userToken) throws ForbiddenException {
-	if (userToken != null) {
-	    JwtInfo tokenInfo = jwtGenerator.getInfo(userToken);
-	    Optional<User> optionalUser = userDAO.findById(tokenInfo.getUserId());
-	    if (!optionalUser.isPresent()) {
-		throw new ForbiddenException();
-	    } else {
-		return optionalUser.get();
+    @Override
+    public ShelterAdoptionAnimalsDTO deleteAnimal(DeleteAnimalDTO deleteAnimalDTO)
+	    throws ForbiddenException, IncorrectValueException, ForbiddenException {
+	SearchShelterAnimalsDTO searchShelterAnimalsDTO = new SearchShelterAnimalsDTO();
+	searchShelterAnimalsDTO.setToken(deleteAnimalDTO.getUserToken());
+	
+	Profile profile = profileService.getProfileFromToken(deleteAnimalDTO.getUserToken());
+	if(profile != null && profile.getRole().equals(RoleType.SHELTER)) {
+	    Optional<Shelter> optionalShelter = shelterDAO.findById(profile.getId());
+	    Shelter shelter = optionalShelter.get();
+	    Optional<Animal> animal = animalDao.findById(deleteAnimalDTO.getAnimalId());
+	    if(animal.get() != null) {
+		animalDao.delete(animal.get());
 	    }
-	} else {
+	}else {
 	    throw new ForbiddenException();
 	}
+	
+	return getShelterAdoptionAnimals(searchShelterAnimalsDTO);
+	
     }
+    
+	@Override
+	public ReturnedAdoptionAnimalDTO addAnimal(AnimalDTO animalDTO) throws IOException {
+	    	ReturnedAdoptionAnimalDTO returnedAdoptionAnimalDTO = new ReturnedAdoptionAnimalDTO();
+	    	Profile profile = profileService.getProfileFromToken(animalDTO.getUserToken());
+	    	if(profile != null && profile.getRole().equals(	RoleType.SHELTER)) {
+	    	    Optional <Shelter> optionalShelter = shelterDAO.findById(profile.getId());
+	    	    Shelter shelter = optionalShelter.get();
+	    	    animalDTO.getAdoptionAnimalInfoDTO().setShelter(shelter);
+	    	    Animal animal = toAdoptionAnimal(animalDTO);
+	    	    Animal returnedAnimal = animalDao.save(animal);
+	    	    animalDTO.setId(returnedAnimal.getId_animal());
+	    	    returnedAdoptionAnimalDTO = toReturnedAdoptionAnimalDTO(animalDTO);
+	    	}
+
+		return returnedAdoptionAnimalDTO;
+	}
+	
+	@Override
+	public ReturnedAdoptionAnimalDTO editAnimal(AnimalDTO animalDTO) throws IOException {
+	    	ReturnedAdoptionAnimalDTO returnedAdoptionAnimalDTO = new ReturnedAdoptionAnimalDTO();
+	    	Profile profile = profileService.getProfileFromToken(animalDTO.getUserToken());
+	    	if(profile != null && profile.getRole().equals(	RoleType.SHELTER)) {
+	    	    Optional <Shelter> optionalShelter = shelterDAO.findById(profile.getId());
+	    	    Shelter shelter = optionalShelter.get();
+	    	    animalDTO.getAdoptionAnimalInfoDTO().setShelter(shelter);
+	    	    Animal animal = toAdoptionAnimal(animalDTO);
+	    	    Animal returnedAnimal = animalDao.save(animal);
+	    	    animalDTO.setId(returnedAnimal.getId_animal());
+	    	    returnedAdoptionAnimalDTO = toReturnedAdoptionAnimalDTO(animalDTO);
+	    	}
+
+		return returnedAdoptionAnimalDTO;
+	}
+
+
+
 
 }
