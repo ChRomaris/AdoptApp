@@ -131,6 +131,15 @@ public class AnimalConversor {
 	return returnedAdoptionAnimalDTO;
     }
     
+    public final static AnimalMarkerDTO toAnimalMarkerDTO (AdoptionAnimal animal) {
+	AnimalMarkerDTO marker = new AnimalMarkerDTO();
+	marker.setName(animal.getName());
+	marker.setBirthDate(animal.getBirthDate());
+	return marker;
+	
+    }
+    
+    
     
 
 }

@@ -17,7 +17,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 //import com.tfg.backend.Dtos.AdoptionAnimalDTO;
 import com.tfg.backend.Dtos.AllAdoptionAnimalsDTO;
 import com.tfg.backend.Dtos.AnimalDTO;
+import com.tfg.backend.Dtos.AnimalMarkerDTO;
 import com.tfg.backend.Dtos.ErrorsDTO;
+import com.tfg.backend.Dtos.ProfileDTO;
 import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.AnimalPicture;
@@ -74,6 +76,11 @@ public class AnimalController {
 
 	return allAdoptionAnimalsDTO;
 
+    }
+    
+    @PostMapping("/nearbyAdoptionAnimals")	
+    public List<AnimalMarkerDTO> getNearbyAdoptionAnimals (@RequestBody ProfileDTO profile){
+	return animalService.getNearbyAdoptionAnimals(profile);
     }
 
     @PostMapping("/getInfo")
