@@ -7,7 +7,6 @@ import AnimalCreationForm from '../../animal/components/AnimalCreationForm';
 import UpdateAnimalForm from '../../animal/components/UpdateAnimalForm';
 import main from '../../mainList';
 import AdoptionAnimalList from '../../animal/components/AdoptionAnimalsList'
-import ShelterCreation from '../../shelter/components/ShelterCreation';
 import UpdateUser from '../../user/components/UpdateUser';
 import UpdateShelter from '../../shelter/components/UpdateShelter';
 import ShelterAnimalList from '../../shelter/components/ShelterAnimalList'
@@ -36,7 +35,6 @@ constructor(props){
               <Switch>
                 <Route exact path="/signUp" component={SignUpForm}></Route>
                 <Route exact path="/welcome" component={Welcome}></Route>
-                <Route exact path="/shelter/add" render={()=><ShelterCreation isEdit={false}/>}></Route>
                 <Route exact path="/shelter/update" component={UpdateShelter}></Route>
                 <Route exact path="/animal/add" component={AnimalCreationForm}></Route>
                 <Route exact path="/animal/edit" component={UpdateAnimalForm}></Route>
