@@ -28,6 +28,7 @@ public class AnimalConversor {
 	adoptionAnimal.setColor(animal.getColor());
 	adoptionAnimal.setDescription(animal.getDescription());
 	adoptionAnimal.setGenre(animal.getGenre());
+	adoptionAnimal.setBreed(animal.getBreed());
 	if (animal.getId() != null)
 	    adoptionAnimal.setId_animal(animal.getId());
 	adoptionAnimal.setName(animal.getName());
@@ -38,7 +39,7 @@ public class AnimalConversor {
 	adoptionAnimal.setShelter(animal.getAdoptionAnimalInfoDTO().getShelter());
 	adoptionAnimal.setState(animal.getAdoptionAnimalInfoDTO().getState());
 	adoptionAnimal.setTrained(animal.getAdoptionAnimalInfoDTO().getTrained());
-	;
+	
 
 	return adoptionAnimal;
     }
@@ -102,6 +103,7 @@ public class AnimalConversor {
 	returnedAdoptionAnimalDTO.setId(adoptionAnimal.getId_animal());
 	returnedAdoptionAnimalDTO.setName(adoptionAnimal.getName());
 	returnedAdoptionAnimalDTO.setGenre(adoptionAnimal.getGenre());
+	returnedAdoptionAnimalDTO.setBreed(adoptionAnimal.getBreed());
 	returnedAdoptionAnimalDTO.setDescription(adoptionAnimal.getDescription());
 	returnedAdoptionAnimalDTO.setColor(adoptionAnimal.getColor());
 	returnedAdoptionAnimalDTO.setSize(adoptionAnimal.getSize());
@@ -111,6 +113,9 @@ public class AnimalConversor {
 	returnedAdoptionAnimalDTO.setState(adoptionAnimal.getState());
 	returnedAdoptionAnimalDTO.setAdoptionTime(adoptionAnimal.getAdoptionTime());
 	returnedAdoptionAnimalDTO.setShelterId(adoptionAnimal.getShelter().getId());
+	if(adoptionAnimal.getImages().iterator().hasNext()) {
+	    returnedAdoptionAnimalDTO.setImage(adoptionAnimal.getImages().iterator().next().getImage());
+	}
 	
 	return returnedAdoptionAnimalDTO;
     }
@@ -133,8 +138,16 @@ public class AnimalConversor {
     
     public final static AnimalMarkerDTO toAnimalMarkerDTO (AdoptionAnimal animal) {
 	AnimalMarkerDTO marker = new AnimalMarkerDTO();
+	marker.setId(animal.getId_animal());
 	marker.setName(animal.getName());
+	marker.setBreed(animal.getBreed());
 	marker.setBirthDate(animal.getBirthDate());
+	marker.setDescription(animal.getDescription());
+	marker.setLatitude(animal.getShelter().getLatitude());
+	marker.setLongitude(animal.getShelter().getLongitude());
+	if(animal.getImages().iterator().hasNext()) {
+	    marker.setImage(animal.getImages().iterator().next().getImage());
+	}
 	return marker;
 	
     }

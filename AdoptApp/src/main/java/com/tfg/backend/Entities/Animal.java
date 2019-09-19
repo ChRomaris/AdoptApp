@@ -34,6 +34,8 @@ public class Animal {
 	@Column
 	private Genre genre;
 	@Column
+	private String breed;
+	@Column
 	private String description;
 	@Column
 	private String color;
@@ -48,6 +50,22 @@ public class Animal {
 		
 	}
 	
+	
+	
+
+	public String getBreed() {
+	    return breed;
+	}
+
+
+
+
+	public void setBreed(String breed) {
+	    this.breed = breed;
+	}
+
+
+
 
 	public Set<AnimalPicture> getImages() {
 		return images;

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.tfg.backend.Common.JwtGenerator;
 import com.tfg.backend.Common.JwtInfo;
 import com.tfg.backend.Daos.IAnimalDao;
+import com.tfg.backend.Daos.IAnimalPictureDao;
 import com.tfg.backend.Daos.IShelterDAO;
 import com.tfg.backend.Daos.IUserDao;
 import com.tfg.backend.Dtos.AnimalDTO;
@@ -27,6 +28,7 @@ import com.tfg.backend.Dtos.ShelterAdoptionAnimalsDTO;
 import com.tfg.backend.Dtos.ShelterAnimalsDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
+import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.Shelter;
 import com.tfg.backend.Entities.Profile;
 import com.tfg.backend.Entities.RoleType;
@@ -50,6 +52,10 @@ public class ShelterService implements IShelterService {
 
     @Autowired
     IProfileService profileService;
+    
+    @Autowired
+    IAnimalPictureDao animalPictureDAO;
+    
 
     @Override
     public ShelterAdoptionAnimalsDTO getShelterAdoptionAnimals(SearchShelterAnimalsDTO param) throws ForbiddenException {
@@ -96,6 +102,16 @@ public class ShelterService implements IShelterService {
 	    	    Animal animal = toAdoptionAnimal(animalDTO);
 	    	    Animal returnedAnimal = animalDao.save(animal);
 	    	    animalDTO.setId(returnedAnimal.getId_animal());
+	    	    if(animalDTO.getImage() != null) {
+	    		AnimalPicture animalPicture = new AnimalPicture();
+	    		animalPicture.setAnimal(returnedAnimal);
+	    		animalPicture.setImage(animalDTO.getImage());
+	    		animalPicture.setDateTime(animalDTO.getImageDateTime());
+	    		animalPicture.setDescription(animalDTO.getDescription());
+	    		AnimalPicture returnedAnimalPicture = animalPictureDAO.save(animalPicture);
+	    		animalDTO.setImage(returnedAnimalPicture.getImage());
+	    	    }
+	    	    
 	    	    returnedAdoptionAnimalDTO = toReturnedAdoptionAnimalDTO(animalDTO);
 	    	}
 

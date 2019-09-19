@@ -3,13 +3,85 @@ package com.tfg.backend.Dtos;
 import java.util.Calendar;
 
 public class AnimalMarkerDTO {
+    Long id;
     String name;
+    String breed;
     Calendar birthDate;
+    String description;
     double distance;
+    String image;
+    Float latitude;
+    Float longitude;
     
     public AnimalMarkerDTO() {
 	super();
     }
+    
+    
+    
+    
+    public String getBreed() {
+        return breed;
+    }
+
+
+
+
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
+
+
+
+    public String getImage() {
+        return image;
+    }
+
+
+
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+
+
+
+    public String getDescription() {
+        return description;
+    }
+
+
+
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+
+
+    public Float getLatitude() {
+        return latitude;
+    }
+
+
+    public void setLatitude(Float latitude) {
+        this.latitude = latitude;
+    }
+
+
+    public Float getLongitude() {
+        return longitude;
+    }
+
+
+    public void setLongitude(Float longitude) {
+        this.longitude = longitude;
+    }
+
+
     public String getName() {
         return name;
     }
@@ -28,6 +100,18 @@ public class AnimalMarkerDTO {
     public void setBirthDate(Calendar birthDate) {
         this.birthDate = birthDate;
     }
+
+
+    public Long getId() {
+        return id;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    
     
     
     

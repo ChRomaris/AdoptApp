@@ -9,6 +9,7 @@ public class AnimalDTO {
 	private Long id;
 	private String name;
 	private Genre genre;
+	private String breed;
 	private String description;
 	private String color;
 	private String size;
@@ -23,6 +24,20 @@ public class AnimalDTO {
 		super();
 	}
 	
+	
+	
+	public String getBreed() {
+	    return breed;
+	}
+
+
+
+	public void setBreed(String breed) {
+	    this.breed = breed;
+	}
+
+
+
 	public String getUserToken() {
 		return userToken;
 	}
