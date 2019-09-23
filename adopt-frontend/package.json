@@ -1,0 +1,49 @@
+{
+  "name": "adopt-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@trendmicro/react-sidenav": "^0.4.5",
+    "antd": "^3.23.3",
+    "axios": "^0.18.1",
+    "bootstrap": "^4.3.1",
+    "google-map-react": "^1.1.4",
+    "http-proxy-middleware": "^0.19.1",
+    "mdbootstrap": "^4.8.10",
+    "mdbreact": "^4.20.0",
+    "moment": "^2.24.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-file-base64": "^1.0.3",
+    "react-intl": "^2.9.0",
+    "react-notifications": "^1.4.3",
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "2.1.8",
+    "react-toasts": "^3.0.4",
+    "reactstrap": "^8.0.1",
+    "redux": "^4.0.4",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "debug": "node --nolazy --inspect-brk=9229 App.js"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "case-sensitive-paths-webpack-plugin": "^2.2.0",
+    "intl": "^1.2.5"
+  }
+}

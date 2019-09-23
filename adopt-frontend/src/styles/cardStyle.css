@@ -1,0 +1,29 @@
+.picture{
+    display: inline-block;
+   float: left;
+    padding: 0px;
+    width: 25vw;
+    height: 33vh;
+}
+.texts{
+    
+   
+    margin-left: 10%;
+    float: left;
+
+}
+
+.cardBody{
+    width: 100%;
+    height: 100%;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.buttons{
+    
+    display: block;
+    position: relative;
+    margin-left: 50%;
+
+}

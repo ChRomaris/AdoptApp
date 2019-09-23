@@ -16,6 +16,7 @@ import com.tfg.backend.Daos.IAnimalDao;
 import com.tfg.backend.Daos.IAnimalPictureDao;
 import com.tfg.backend.Daos.IShelterDAO;
 import com.tfg.backend.Daos.IUserDao;
+import com.tfg.backend.Dtos.AdoptionAnimalFilterDTO;
 import com.tfg.backend.Dtos.AdoptionAnimalInfoDTO;
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.AnimalMarkerDTO;
@@ -132,6 +133,16 @@ public class AnimalService implements IAnimalService {
 	    }
 	    
 	    return markers;
+	}
+
+
+
+	@Override
+	public List<Animal> searchAdoptionAnimalByFilter(AdoptionAnimalFilterDTO filter) {
+	    List<Animal> foundAnimals = new ArrayList<>();
+	    foundAnimals  = animalDao.searchAnimalsByFilter(filter.getBreed(), filter.getSize());
+	    return foundAnimals;
+	    
 	}
 
 }

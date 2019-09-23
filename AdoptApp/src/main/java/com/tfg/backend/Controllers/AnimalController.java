@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.tfg.backend.Dtos.AdoptionAnimalFilterDTO;
 //import com.tfg.backend.Dtos.AdoptionAnimalDTO;
 import com.tfg.backend.Dtos.AllAdoptionAnimalsDTO;
 import com.tfg.backend.Dtos.AnimalDTO;
@@ -22,6 +23,7 @@ import com.tfg.backend.Dtos.ErrorsDTO;
 import com.tfg.backend.Dtos.ProfileDTO;
 import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
+import com.tfg.backend.Entities.Animal;
 import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.Shelter;
 import com.tfg.backend.Exceptions.ForbiddenException;
@@ -53,7 +55,7 @@ public class AnimalController {
 
     @Autowired
     ShelterService shelterService;
-    
+
     @Autowired
     private MessageSource messageSource;
 
@@ -66,8 +68,6 @@ public class AnimalController {
 	return new ErrorsDTO(errorMessage);
     }
 
-
-
     @GetMapping("/getAll")
     public AllAdoptionAnimalsDTO getAllAdoptionAnimals() {
 	List<AdoptionAnimal> adoptionAnimals = animalService.getAllAdoptionAnimals();
@@ -77,9 +77,9 @@ public class AnimalController {
 	return allAdoptionAnimalsDTO;
 
     }
-    
-    @PostMapping("/nearbyAdoptionAnimals")	
-    public List<AnimalMarkerDTO> getNearbyAdoptionAnimals (@RequestBody ProfileDTO profile){
+
+    @PostMapping("/nearbyAdoptionAnimals")
+    public List<AnimalMarkerDTO> getNearbyAdoptionAnimals(@RequestBody ProfileDTO profile) {
 	return animalService.getNearbyAdoptionAnimals(profile);
     }
 
@@ -90,6 +90,11 @@ public class AnimalController {
 	} catch (IncorrectValueException e) {
 	    return null;
 	}
+    }
+
+    @PostMapping("/filterAdoptAnimals")
+    public List<Animal> FilterAdoptionAnimals(@RequestBody AdoptionAnimalFilterDTO filter) {
+	return animalService.searchAdoptionAnimalByFilter(filter);
     }
 
 }

@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/shelter/animal/delete").permitAll()
 				.antMatchers("/animal/edit").permitAll()
 				.antMatchers("/animal/getInfo").permitAll()
+				.antMatchers("/animal/filterAdoptAnimals").permitAll()
 				.antMatchers("/catalog/products/*").permitAll()
 				.antMatchers("/catalog/products").permitAll()
 				.antMatchers("/**").hasRole("USER");
