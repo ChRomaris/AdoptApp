@@ -4,7 +4,6 @@ import {login}  from '../actions';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 import {NavLink} from 'react-router-dom';
 import logo from '../../../images/cat2.gif';
-import {findShelterByUser} from '../../shelter/actions';
 import {FormattedMessage} from 'react-intl'
 
 

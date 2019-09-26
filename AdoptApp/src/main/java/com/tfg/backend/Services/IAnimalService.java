@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.tfg.backend.Dtos.AdoptionAnimalFilterDTO;
+import com.tfg.backend.Dtos.AdoptionAnimalFilterValuesDTO;
 import com.tfg.backend.Dtos.AdoptionAnimalInfoDTO;
 import com.tfg.backend.Dtos.AnimalMarkerDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
@@ -21,5 +22,7 @@ public interface IAnimalService {
     List<AnimalMarkerDTO> getNearbyAdoptionAnimals(ProfileDTO profile);
 
     List<Animal> searchAdoptionAnimalByFilter(AdoptionAnimalFilterDTO filter);
+    
+    AdoptionAnimalFilterValuesDTO getFilterValues ();
 
 }

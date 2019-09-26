@@ -32,6 +32,7 @@ export default{
     'form.label.age' : 'Edad',
     'form.button.moreInfo': 'Más Información',
     'form.label.distance' : 'Distancia(Km)',
+    'form.label.adoptionTime' : 'Tiempo de adopción',
     'form.button.close' : 'Cerrar',
     'form.tittle.position' : 'Posicion',
     'form.button.updateInfo' : 'Actualizar Información',
@@ -50,6 +51,8 @@ export default{
     'form.button.addLocation' : 'Añadir Localización',
     'form.link.noLocation' : 'Continuar sin añadir',
     'form.tittle.editAnimal' : 'Editar Animal',
+    'form.button.filter' : 'Filtrar',
+    'form.label.male' : 'Macho'
     
 
 

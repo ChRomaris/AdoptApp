@@ -12,14 +12,7 @@ class Buttons extends Component{
     }
     
 
-    removeAnimal(props){
-        
-        const deleteAnimalDTO ={
-            userToken : sessionStorage.getItem('serviceToken'),
-            animalId: props.animalId
-        }
-    
-        
+    removeAnimal(){        
         this.props.deleteAnimal(this.props.animalId)
         console.log("Se borra el animal");
 

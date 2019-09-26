@@ -1,6 +1,7 @@
 package com.tfg.backend.Entities;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -24,6 +25,10 @@ public class Animal {
 	
 	public enum Genre{
 		MALE, FEMALE
+	}
+	
+	public enum Size{
+		SMALL, MEDIUM, BIG
 	}
 
 	@Id
@@ -52,7 +57,6 @@ public class Animal {
 	
 	
 	
-
 	public String getBreed() {
 	    return breed;
 	}

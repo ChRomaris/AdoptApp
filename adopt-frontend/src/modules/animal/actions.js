@@ -55,3 +55,18 @@ export function getNearbyAdoptionAnimals(params){
     });
 }
 
+export function getFilterValues(){
+    return request ({
+        url: "http://localhost:8080/animal/getAdoptionFilterValues",
+        method: 'GET'
+    });
+}
+
+export function getFilteredAnimals(filterDTO){
+    return request ({
+        url: "http://localhost:8080/animal/filterAdoptAnimals",
+        method: 'POST',
+        body: JSON.stringify(filterDTO)
+    });
+}
+

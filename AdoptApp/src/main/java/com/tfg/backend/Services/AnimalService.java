@@ -2,6 +2,7 @@ package com.tfg.backend.Services;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import com.tfg.backend.Daos.IAnimalPictureDao;
 import com.tfg.backend.Daos.IShelterDAO;
 import com.tfg.backend.Daos.IUserDao;
 import com.tfg.backend.Dtos.AdoptionAnimalFilterDTO;
+import com.tfg.backend.Dtos.AdoptionAnimalFilterValuesDTO;
 import com.tfg.backend.Dtos.AdoptionAnimalInfoDTO;
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.AnimalMarkerDTO;
@@ -28,6 +30,7 @@ import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
 import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.Shelter;
+import com.tfg.backend.Entities.Animal.Genre;
 import com.tfg.backend.Entities.Profile;
 import com.tfg.backend.Exceptions.IncorrectValueException;
 import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimal;
@@ -140,9 +143,21 @@ public class AnimalService implements IAnimalService {
 	@Override
 	public List<Animal> searchAdoptionAnimalByFilter(AdoptionAnimalFilterDTO filter) {
 	    List<Animal> foundAnimals = new ArrayList<>();
-	    foundAnimals  = animalDao.searchAnimalsByFilter(filter.getBreed(), filter.getSize());
+	    foundAnimals  = animalDao.searchAnimalsByFilter(filter.getBreed(),filter.getColor(), filter.getGenre(),filter.getSize());
 	    return foundAnimals;
 	    
 	}
 
+
+
+	@Override
+	public AdoptionAnimalFilterValuesDTO getFilterValues() {
+	    AdoptionAnimalFilterValuesDTO filterValues = new AdoptionAnimalFilterValuesDTO();
+	    filterValues.setBreeds(animalDao.getBreeds());
+	    filterValues.setColors(animalDao.getColors());
+	    filterValues.setGenres(Arrays.asList(Animal.Genre.class.getEnumConstants()));
+	    filterValues.setSizes(Arrays.asList(Animal.Size.class.getEnumConstants()));
+	    
+	    return filterValues;
+	}
 }

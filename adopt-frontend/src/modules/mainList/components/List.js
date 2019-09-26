@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import CardConst from '../components/CardConst';
 import { ToastsContainer, ToastsStore } from 'react-toasts';
 import { Container } from 'reactstrap';
-import { TopMenu } from '../../app/'
+import { TopMenu } from '../../app/';
+import Filters from '../../animal/components/Filters';
 
 
 import '../../../styles/MainListStyle.css'
@@ -37,6 +38,7 @@ class List extends Component {
         return (
             <div>
             <TopMenu></TopMenu>
+            <Filters filter = {this.props.filter}></Filters>
             <div className="Main">
                 <Container>
                     <ToastsContainer store={ToastsStore} />

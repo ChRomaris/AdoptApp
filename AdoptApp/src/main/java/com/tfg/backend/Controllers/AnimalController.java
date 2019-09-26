@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.tfg.backend.Dtos.AdoptionAnimalFilterDTO;
+import com.tfg.backend.Dtos.AdoptionAnimalFilterValuesDTO;
 //import com.tfg.backend.Dtos.AdoptionAnimalDTO;
 import com.tfg.backend.Dtos.AllAdoptionAnimalsDTO;
 import com.tfg.backend.Dtos.AnimalDTO;
@@ -91,10 +92,16 @@ public class AnimalController {
 	    return null;
 	}
     }
-
+    
     @PostMapping("/filterAdoptAnimals")
     public List<Animal> FilterAdoptionAnimals(@RequestBody AdoptionAnimalFilterDTO filter) {
 	return animalService.searchAdoptionAnimalByFilter(filter);
+    }
+   
+    
+    @GetMapping("/getAdoptionFilterValues")
+    public AdoptionAnimalFilterValuesDTO getAdoptionFilterValues () {
+	return animalService.getFilterValues();
     }
 
 }
