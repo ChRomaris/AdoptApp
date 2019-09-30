@@ -37,6 +37,9 @@ export default{
     'form.button.updateInfo' : 'Actualizar Información',
     'app.name' : 'AdoptApp',
     'menu.label.adoptionAnimals' : 'Animales en adopción',
+    'menu.label.lostAnimals' : 'Animales perdidos',
+    'menu.label.addLostAnimal' : 'Añadir animal Perdido',
+    'menu.label.myAnimals' : 'Mis animales',
     'menu.label.animalList':  'Lista de animales',
     'menu.label.animalMap' : 'Mapa de animales',
     'menu.label.profile' : 'Perfil',
@@ -50,6 +53,12 @@ export default{
     'form.button.addLocation' : 'Añadir Localización',
     'form.link.noLocation' : 'Continuar sin añadir',
     'form.tittle.editAnimal' : 'Editar Animal',
+    'form.tittle.addLostAnimal' : 'Información del animal perdido',
+    'form.label.comment': 'Comentario',
+    'form.label.lostDateTime': 'Fecha perdida',
+    'form.text.description' :'Descripción mas detallada del animal',
+    'form.text.date' :'Fecha en la que se perdió el animal ',
+
     
 
 

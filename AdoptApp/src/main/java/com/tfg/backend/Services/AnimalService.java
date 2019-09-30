@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tfg.backend.Common.JwtGenerator;
@@ -14,6 +17,7 @@ import com.tfg.backend.Common.JwtInfo;
 import com.tfg.backend.Daos.IAdoptionAnimalDao;
 import com.tfg.backend.Daos.IAnimalDao;
 import com.tfg.backend.Daos.IAnimalPictureDao;
+import com.tfg.backend.Daos.ILostAnimalDAO;
 import com.tfg.backend.Daos.IShelterDAO;
 import com.tfg.backend.Daos.IUserDao;
 import com.tfg.backend.Dtos.AdoptionAnimalFilterDTO;
@@ -21,12 +25,15 @@ import com.tfg.backend.Dtos.AdoptionAnimalInfoDTO;
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.AnimalMarkerDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
+import com.tfg.backend.Dtos.EnumsDTO;
+import com.tfg.backend.Dtos.LostAnimalsPageDTO;
 import com.tfg.backend.Dtos.ProfileDTO;
 import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
 import com.tfg.backend.Dtos.ShelterAnimalsDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
 import com.tfg.backend.Entities.AnimalPicture;
+import com.tfg.backend.Entities.LostAnimal;
 import com.tfg.backend.Entities.Shelter;
 import com.tfg.backend.Entities.Profile;
 import com.tfg.backend.Exceptions.IncorrectValueException;
@@ -45,6 +52,9 @@ public class AnimalService implements IAnimalService {
 	
 	@Autowired
 	IAdoptionAnimalDao adoptionAnimalDao;
+	
+	@Autowired
+	ILostAnimalDAO lostAnimalDao;
 	
 	@Autowired
 	IProfileService profileService;
@@ -84,6 +94,18 @@ public class AnimalService implements IAnimalService {
 		Iterator<AdoptionAnimal> iteratorAnimals = adoptionAnimalDao.findAll().iterator();
 		iteratorAnimals.forEachRemaining(allAdoptionAnimals::add);
 		return allAdoptionAnimals;
+	}
+	
+	@Override
+	public LostAnimalsPageDTO getAllLostAnimals(int page){
+	    Pageable firstPage = PageRequest.of(page, 5);
+	    Page<LostAnimal> lostAnimals = lostAnimalDao.findAll(firstPage);
+	    LostAnimalsPageDTO lostAnimalPageDTO = new LostAnimalsPageDTO();
+	    lostAnimalPageDTO.setLostAnimals(lostAnimals);
+	    lostAnimalPageDTO.setActualPage(page);
+	    
+	    return lostAnimalPageDTO;
+	    
 	}
 	
 	
@@ -144,5 +166,17 @@ public class AnimalService implements IAnimalService {
 	    return foundAnimals;
 	    
 	}
+	
+	@Override
+	public EnumsDTO getEnumValues() {
+	    EnumsDTO enumsDTO = new EnumsDTO();
+	    enumsDTO.setBreeds(Animal.getBreeds());
+	    enumsDTO.setColors(Animal.getColors());
+	    enumsDTO.setGenres(Animal.getGenres());
+	    enumsDTO.setSizes(Animal.getSizes());
+	    
+	    return enumsDTO;
+	}
+	
 
 }

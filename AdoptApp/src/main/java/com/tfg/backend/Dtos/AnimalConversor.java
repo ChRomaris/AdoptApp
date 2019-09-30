@@ -7,6 +7,7 @@ import java.util.Set;
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
 import com.tfg.backend.Entities.AnimalPicture;
+import com.tfg.backend.Entities.LostAnimal;
 //import com.tfg.backend.Services.AnimalService;
 import com.tfg.backend.Entities.Shelter;
 import com.tfg.backend.Entities.Animal.Genre;
@@ -150,6 +151,26 @@ public class AnimalConversor {
 	}
 	return marker;
 	
+    }
+    
+    public final static LostAnimal toLostAnimal (AnimalDTO animalDTO) {
+	LostAnimal lostAnimal = new LostAnimal();
+	lostAnimal.setBreed(animalDTO.getBreed());
+	lostAnimal.setColor(animalDTO.getColor());
+	if(animalDTO.getLostAnimalInfoDTO().getComment() != null)
+	lostAnimal.setComment(animalDTO.getLostAnimalInfoDTO().getComment());
+	lostAnimal.setDateTime(animalDTO.getLostAnimalInfoDTO().getDateTime());
+	lostAnimal.setDescription(animalDTO.getDescription());
+	lostAnimal.setGenre(animalDTO.getGenre());
+	if(animalDTO.getId() != null)
+	lostAnimal.setId_animal(animalDTO.getId());
+	lostAnimal.setLatitude(animalDTO.getLostAnimalInfoDTO().getLatitud());
+	lostAnimal.setLongitude(animalDTO.getLostAnimalInfoDTO().getLongitud());
+	lostAnimal.setName(animalDTO.getName());
+	lostAnimal.setSize(animalDTO.getSize());
+	lostAnimal.setState(animalDTO.getLostAnimalInfoDTO().getState());
+	
+	return lostAnimal;
     }
     
     

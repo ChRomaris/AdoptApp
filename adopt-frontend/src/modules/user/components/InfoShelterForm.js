@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {register}  from '../actions';
-import {ToastsContainer, ToastsStore} from 'react-toasts';
-import {NavLink} from 'react-router-dom';
-import logo from '../../../images/cat2.gif';
 import {FormattedMessage} from 'react-intl'
 
 

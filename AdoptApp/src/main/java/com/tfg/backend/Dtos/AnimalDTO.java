@@ -3,21 +3,26 @@ package com.tfg.backend.Dtos;
 import java.util.Calendar;
 
 import com.tfg.backend.Entities.Shelter;
+import com.tfg.backend.Entities.Animal.Breed;
+import com.tfg.backend.Entities.Animal.Color;
 import com.tfg.backend.Entities.Animal.Genre;
+import com.tfg.backend.Entities.Animal.Size;
+
 
 public class AnimalDTO {
 	private Long id;
 	private String name;
 	private Genre genre;
-	private String breed;
+	private Breed breed;
 	private String description;
-	private String color;
-	private String size;
+	private Color color;
+	private Size size;
 	private  String image;
 	private String imageDescription;
 	private Calendar imageDateTime;
 	private String userToken;
 	private AdoptionAnimalInfoDTO adoptionAnimalInfoDTO;
+	private LostAnimalInfoDTO lostAnimalInfoDTO;
 	
 	
 	public AnimalDTO() {
@@ -26,13 +31,28 @@ public class AnimalDTO {
 	
 	
 	
-	public String getBreed() {
+	
+	public LostAnimalInfoDTO getLostAnimalInfoDTO() {
+	    return lostAnimalInfoDTO;
+	}
+
+
+
+
+	public void setLostAnimalInfoDTO(LostAnimalInfoDTO lostAnimalInfoDTO) {
+	    this.lostAnimalInfoDTO = lostAnimalInfoDTO;
+	}
+
+
+
+
+	public Breed getBreed() {
 	    return breed;
 	}
 
 
 
-	public void setBreed(String breed) {
+	public void setBreed(Breed breed) {
 	    this.breed = breed;
 	}
 
@@ -95,16 +115,16 @@ public class AnimalDTO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getColor() {
+	public Color getColor() {
 		return color;
 	}
-	public void setColor(String color) {
+	public void setColor(Color color) {
 		this.color = color;
 	}
-	public String getSize() {
+	public Size getSize() {
 		return size;
 	}
-	public void setSize(String size) {
+	public void setSize(Size size) {
 		this.size = size;
 	}
 

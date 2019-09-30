@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +20,9 @@ import com.tfg.backend.Dtos.AdoptionAnimalFilterDTO;
 import com.tfg.backend.Dtos.AllAdoptionAnimalsDTO;
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.AnimalMarkerDTO;
+import com.tfg.backend.Dtos.EnumsDTO;
 import com.tfg.backend.Dtos.ErrorsDTO;
+import com.tfg.backend.Dtos.LostAnimalsPageDTO;
 import com.tfg.backend.Dtos.ProfileDTO;
 import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
@@ -95,6 +98,16 @@ public class AnimalController {
     @PostMapping("/filterAdoptAnimals")
     public List<Animal> FilterAdoptionAnimals(@RequestBody AdoptionAnimalFilterDTO filter) {
 	return animalService.searchAdoptionAnimalByFilter(filter);
+    }
+    
+    @GetMapping("/getTypes")
+    public  EnumsDTO getTypes () {
+	return animalService.getEnumValues();
+    }
+    
+    @PostMapping("/getLostAnimals")
+    public LostAnimalsPageDTO getLostAnimals(@RequestParam int page) {
+	return animalService.getAllLostAnimals(page);
     }
 
 }

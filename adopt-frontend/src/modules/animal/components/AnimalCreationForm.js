@@ -53,7 +53,7 @@ class AnimalCreationForm extends Component{
         this.setState({
           [name]: value,
           [genre]: value,
-          [breed]: value,
+          [breed]: value,   
           [description] : value,
           [birthDate] : value,
           [healthComment] : value,

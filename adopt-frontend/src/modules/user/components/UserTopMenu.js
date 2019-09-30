@@ -1,6 +1,6 @@
 import React,{ Component } from "react";
 import {
-    MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBFormInline,
+    MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavbarToggler, MDBCollapse, MDBFormInline,
     MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem
     } from "mdbreact";
 
@@ -50,6 +50,17 @@ class UserTopMenu extends Component{
                       <MDBDropdownMenu>
                       <MDBDropdownItem ><a href="#/List"><FormattedMessage id="menu.label.animalList"/></a></MDBDropdownItem> 
                       <MDBDropdownItem ><a href="#/adoptionMap"><FormattedMessage id="menu.label.animalMap"/></a></MDBDropdownItem> 
+                      </MDBDropdownMenu>
+                    </MDBDropdown>
+                    <MDBDropdown>
+                      <MDBDropdownToggle nav caret>
+                        <span className="mr-2"><FormattedMessage id="menu.label.lostAnimals"/></span>
+                      </MDBDropdownToggle>
+                      <MDBDropdownMenu>
+                      <MDBDropdownItem ><a href="#/addLostAnimal"><FormattedMessage id="menu.label.addLostAnimal"/></a></MDBDropdownItem> 
+                      <MDBDropdownItem ><a href="#/List"><FormattedMessage id="menu.label.animalList"/></a></MDBDropdownItem> 
+                      <MDBDropdownItem ><a href="#/adoptionMap"><FormattedMessage id="menu.label.animalMap"/></a></MDBDropdownItem> 
+                      <MDBDropdownItem ><a href="#/"><FormattedMessage id="menu.label.myAnimals"/></a></MDBDropdownItem> 
                       </MDBDropdownMenu>
                     </MDBDropdown>
                   <MDBNavItem>

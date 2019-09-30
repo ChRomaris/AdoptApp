@@ -1,14 +1,19 @@
 package com.tfg.backend.Entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "User")
@@ -26,6 +31,10 @@ public class User extends Profile {
 	private String genre;
 	@Column
 	private String email;
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy="owner", cascade = CascadeType.ALL)
+	private List<LostAnimal> lostAnimals;
 
 	
 	public User() {

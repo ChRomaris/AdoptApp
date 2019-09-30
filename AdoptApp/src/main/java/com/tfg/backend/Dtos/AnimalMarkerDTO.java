@@ -2,10 +2,12 @@ package com.tfg.backend.Dtos;
 
 import java.util.Calendar;
 
+import com.tfg.backend.Entities.Animal.Breed;
+
 public class AnimalMarkerDTO {
     Long id;
     String name;
-    String breed;
+    Breed breed;
     Calendar birthDate;
     String description;
     double distance;
@@ -20,14 +22,14 @@ public class AnimalMarkerDTO {
     
     
     
-    public String getBreed() {
+    public Breed getBreed() {
         return breed;
     }
 
 
 
 
-    public void setBreed(String breed) {
+    public void setBreed(Breed breed) {
         this.breed = breed;
     }
 

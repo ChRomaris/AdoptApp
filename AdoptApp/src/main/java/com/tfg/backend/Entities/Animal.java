@@ -1,6 +1,8 @@
 package com.tfg.backend.Entities;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -10,9 +12,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,10 +25,32 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+@Table(name = "Animal")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Animal {
 	
-	public enum Genre{
+	public static enum Genre{
 		MALE, FEMALE
+	}
+	
+	public static enum Breed{
+	    Affenpinscher, AfghanHound,
+	    AfghanShepher,
+	    AlaskanHusky,
+	    AmericanEskimoDog,
+	    AustrianPinscher,
+	    PungsanDog,
+	    RussianSalonDog,
+	    WelshSpringerSpaniel,
+	    Whippet,
+	    YorkshireTerrier
+	}
+	public static enum Color{
+	    BLACK, GREY, WHITE, BROWN
+	}
+	
+	public static enum Size{
+	    SMALL, MEDIUM, BIG
 	}
 
 	@Id
@@ -34,13 +61,13 @@ public class Animal {
 	@Column
 	private Genre genre;
 	@Column
-	private String breed;
+	private Breed breed;
 	@Column
 	private String description;
 	@Column
-	private String color;
+	private Color color;
 	@Column
-	private String size;
+	private Size size;
 	@JsonManagedReference
 	@OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<AnimalPicture> images;
@@ -50,17 +77,30 @@ public class Animal {
 		
 	}
 	
+	public static List<Breed> getBreeds() {
+	    return Arrays.asList(Breed.class.getEnumConstants());
+	}
 	
+	public static List<Color> getColors() {
+	    return Arrays.asList(Color.class.getEnumConstants());
+	}
 	
-
-	public String getBreed() {
+	public static List<Size> getSizes() {
+	    return Arrays.asList(Size.class.getEnumConstants());
+	}
+	
+	public static List<Genre> getGenres() {
+	    return Arrays.asList(Genre.class.getEnumConstants());
+	}
+	
+	public Breed getBreed() {
 	    return breed;
 	}
 
 
 
 
-	public void setBreed(String breed) {
+	public void setBreed(Breed breed) {
 	    this.breed = breed;
 	}
 
@@ -100,16 +140,16 @@ public class Animal {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getColor() {
+	public Color getColor() {
 		return color;
 	}
-	public void setColor(String color) {
+	public void setColor(Color color) {
 		this.color = color;
 	}
-	public String getSize() {
+	public Size getSize() {
 		return size;
 	}
-	public void setSize(String size) {
+	public void setSize(Size size) {
 		this.size = size;
 	}
 	

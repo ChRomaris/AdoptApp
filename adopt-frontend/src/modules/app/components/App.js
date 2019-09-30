@@ -13,6 +13,7 @@ import ShelterAnimalList from '../../shelter/components/ShelterAnimalList'
 import AddLocationMap from '../../user/components/AddLocationMap'
 import AddLocation from '../../user/components/AddLocation'
 import AdoptionMapPage from '../../animal/components/AdoptionMapPage'
+import LostAnimalCreationForm from '../../animal/components/lostAnimals/LostAnimalCreationForm'
 
 import '../App.css';
 
@@ -45,10 +46,12 @@ constructor(props){
                 <Route exact path="/mainPage" component={main}></Route>
                 <Route exact path="/List" component = {AdoptionAnimalList}></Route>
                 <Route exact path="/user/update" component = {UpdateUser}></Route>
+                <Route exact path="/addLostAnimal" component = {LostAnimalCreationForm}></Route>
                 <Route exact path="/shelter" component = {ShelterAnimalList}></Route>
                 <Route exact path="/map" component = {AddLocationMap}></Route>
                 <Route exact path="/addLocation" component = {AddLocation}></Route>
                 <Route exact path="/adoptionMap" component = {AdoptionMapPage}></Route>
+
 
               </Switch>
       </Router>

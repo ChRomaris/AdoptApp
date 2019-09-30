@@ -55,3 +55,18 @@ export function getNearbyAdoptionAnimals(params){
     });
 }
 
+export function getTypes(){
+    return request ({
+        url: "http://localhost:8080/animal/getTypes",
+        method: 'GET',
+    });
+}
+
+export function addLostAnimal(params){
+    return request ({
+        url: "http://localhost:8080/user/addLostAnimal",
+        method: 'POST',
+        body: JSON.stringify(params)
+    });
+}
+
