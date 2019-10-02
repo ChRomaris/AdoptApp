@@ -6,3 +6,17 @@ Label {
 .file64Label{
     font-weight: bold;
 }
+
+.previousNextButtons{
+    margin-top: 2vh;
+}
+
+.nextButton{
+    float: right;
+    display: block;
+}
+
+.previousButton{
+display: block;
+float: left;
+}

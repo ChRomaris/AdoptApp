@@ -22,12 +22,16 @@ import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.AnimalMarkerDTO;
 import com.tfg.backend.Dtos.EnumsDTO;
 import com.tfg.backend.Dtos.ErrorsDTO;
+import com.tfg.backend.Dtos.LostAnimalPageDTO;
 import com.tfg.backend.Dtos.LostAnimalsPageDTO;
 import com.tfg.backend.Dtos.ProfileDTO;
 import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
+import com.tfg.backend.Dtos.ReturnedLostAnimalDTO;
+import com.tfg.backend.Dtos.SearchLostAnimalsDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
 import com.tfg.backend.Entities.AnimalPicture;
+import com.tfg.backend.Entities.LostAnimal;
 import com.tfg.backend.Entities.Shelter;
 import com.tfg.backend.Exceptions.ForbiddenException;
 import com.tfg.backend.Exceptions.IncorrectValueException;
@@ -109,5 +113,9 @@ public class AnimalController {
     public LostAnimalsPageDTO getLostAnimals(@RequestParam int page) {
 	return animalService.getAllLostAnimals(page);
     }
-
+    
+    @PostMapping("/searchByDistance")
+    public LostAnimalPageDTO searchByDistance(@RequestBody SearchLostAnimalsDTO searchLostAnimalsDTO){
+	return animalService.searchByDistance(searchLostAnimalsDTO);
+    }
 }

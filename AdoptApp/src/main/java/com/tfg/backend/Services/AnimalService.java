@@ -1,10 +1,13 @@
 package com.tfg.backend.Services;
 
+import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,9 +29,12 @@ import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.AnimalMarkerDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
 import com.tfg.backend.Dtos.EnumsDTO;
+import com.tfg.backend.Dtos.LostAnimalPageDTO;
 import com.tfg.backend.Dtos.LostAnimalsPageDTO;
 import com.tfg.backend.Dtos.ProfileDTO;
 import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
+import com.tfg.backend.Dtos.ReturnedLostAnimalDTO;
+import com.tfg.backend.Dtos.SearchLostAnimalsDTO;
 import com.tfg.backend.Dtos.ShelterAnimalsDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
@@ -103,6 +109,44 @@ public class AnimalService implements IAnimalService {
 	    LostAnimalsPageDTO lostAnimalPageDTO = new LostAnimalsPageDTO();
 	    lostAnimalPageDTO.setLostAnimals(lostAnimals);
 	    lostAnimalPageDTO.setActualPage(page);
+	    
+	    return lostAnimalPageDTO;
+	    
+	}
+	
+	@Transactional
+	public LostAnimalPageDTO searchByDistance(SearchLostAnimalsDTO searchLostAnimalsDTO){
+	    Profile profile = profileService.getProfileFromToken(searchLostAnimalsDTO.getUserToken());
+	    Float profileLatitude = profile.getLatitude();
+	    Float profileLongitude = profile.getLongitude();
+	    Pageable page = PageRequest.of(searchLostAnimalsDTO.getPage(), 5);
+	    List<ReturnedLostAnimalDTO> returnedLostAnimals = new ArrayList<>();
+	    List<LostAnimal> lostAnimals = lostAnimalDao.searchLostAnimalsByDistance(profileLatitude, profileLongitude, new Double(9000), page);
+	    List<Double> distances = lostAnimalDao.searchLostAnimalsDistances(profileLatitude, profileLongitude, new Double(9000), page);
+	    LostAnimalPageDTO lostAnimalPageDTO = new LostAnimalPageDTO();
+	    Iterator distanceIterator = distances.iterator();
+	    int numerLostAnimals = lostAnimalDao.countLostAnimals(profileLatitude, profileLongitude, new Double(9000));
+	    
+	    for(LostAnimal lostAnimal : lostAnimals) {
+		ReturnedLostAnimalDTO returnedLostAnimalDTO = new ReturnedLostAnimalDTO();
+		Double distance = (Double)distanceIterator.next();
+		returnedLostAnimalDTO.setName(lostAnimal.getName());
+		returnedLostAnimalDTO.setGenre(lostAnimal.getGenre());
+		returnedLostAnimalDTO.setDescription(lostAnimal.getDescription());
+		returnedLostAnimalDTO.setBreed(lostAnimal.getBreed());
+		returnedLostAnimalDTO.setDistance(distance);
+		returnedLostAnimalDTO.setDateTime(lostAnimal.getDateTime());
+		if(lostAnimal.getImages().iterator().hasNext()) {
+		    returnedLostAnimalDTO.setImage(lostAnimal.getImages().iterator().next().getImage());
+		}
+		
+		
+		returnedLostAnimals.add(returnedLostAnimalDTO);
+	
+	    }
+	    
+	    lostAnimalPageDTO.setLostAnimals(returnedLostAnimals);
+	    lostAnimalPageDTO.setTotalPages(numerLostAnimals/5);
 	    
 	    return lostAnimalPageDTO;
 	    

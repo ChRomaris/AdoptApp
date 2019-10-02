@@ -70,3 +70,11 @@ export function addLostAnimal(params){
     });
 }
 
+export function getLostAnimals(params){
+    return request ({
+        url: "http://localhost:8080/animal/searchByDistance",
+        method: 'POST',
+        body: JSON.stringify(params)
+    });
+}
+

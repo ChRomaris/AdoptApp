@@ -58,6 +58,10 @@ export default{
     'form.label.lostDateTime': 'Fecha perdida',
     'form.text.description' :'Descripción mas detallada del animal',
     'form.text.date' :'Fecha en la que se perdió el animal ',
+    'form.label.date' : 'Fecha',
+    'form.enum.male' : 'Macho',
+    'form.enum.female' : 'Femia',
+
 
     
 
