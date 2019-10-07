@@ -44,6 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/animal/getLostAnimals").permitAll()
 				.antMatchers("/animal/searchByDistance").permitAll()
 				.antMatchers("/animal/filterAdoptAnimals").permitAll()
+				.antMatchers("/animal/addLocation").permitAll()
+				.antMatchers("/animal/locationsPage").permitAll()
+				.antMatchers("/animal/locations").permitAll()
 				.antMatchers("/catalog/products/*").permitAll()
 				.antMatchers("/catalog/products").permitAll()
 				.antMatchers("/**").hasRole("USER");

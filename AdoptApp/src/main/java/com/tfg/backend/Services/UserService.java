@@ -6,6 +6,8 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static com.tfg.backend.Dtos.AnimalConversor.toLostAnimal;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +58,6 @@ public class UserService implements IUserService {
 	   animalPicture.setDateTime(Calendar.getInstance());
 	   animalPicture.setDescription(animalDTO.getDescription());
 	   AnimalPicture returnedAnimalPicture = animalPictureDAO.save(animalPicture);
-	   animalDTO.setImage(returnedAnimalPicture.getImage());
 	    }
 	
 	return animalDTO;

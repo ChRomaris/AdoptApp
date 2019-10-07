@@ -7,6 +7,7 @@ import com.tfg.backend.Entities.Animal.Genre;
 
 public class ReturnedLostAnimalDTO {
     
+    private Long id;
     private String name;
     private Genre genre;
     private Breed breed;
@@ -21,6 +22,18 @@ public class ReturnedLostAnimalDTO {
     
     
     
+    public Long getId() {
+        return id;
+    }
+
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+
     public String getImage() {
         return image;
     }
