@@ -1,7 +1,6 @@
 package com.tfg.backend.Services;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import com.tfg.backend.Dtos.AdoptionAnimalFilterDTO;
@@ -22,7 +21,7 @@ public interface IAnimalService {
 
     List<AdoptionAnimal> getAllAdoptionAnimals();
 
-    List<AnimalMarkerDTO> getNearbyAdoptionAnimals(ProfileDTO profile) throws UnsupportedEncodingException;
+    List<AnimalMarkerDTO> getNearbyAdoptionAnimals(ProfileDTO profile);
 
     List<Animal> searchAdoptionAnimalByFilter(AdoptionAnimalFilterDTO filter);
 

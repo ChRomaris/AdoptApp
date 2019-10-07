@@ -3,7 +3,6 @@ import {CardHeader, CardBody, CardTitle, CardText, Button, CardFooter,Card} from
 import PreviewImage from '../components/PreviewImage';
 import Buttons from '../components/Buttons';
 import Moment from 'moment';
-import 'moment/locale/es' 
 import '../../../styles/cardStyle.css'
 import {FormattedMessage} from 'react-intl'
 class CardConst extends Component  {

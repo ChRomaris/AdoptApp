@@ -9,18 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 @Entity
-@SequenceGenerator(name="LOCATION_SEQ", sequenceName="location_sequence")
 @Table(name = "Location")
 public class Location {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="LOCATION_SEQ")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long LocationId;
     
     @Column

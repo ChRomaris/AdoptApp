@@ -1,11 +1,8 @@
 package com.tfg.backend.Dtos;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
-
-import org.apache.tomcat.util.codec.binary.Base64;
 
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
@@ -16,6 +13,7 @@ import com.tfg.backend.Entities.Shelter;
 import com.tfg.backend.Entities.Animal.Genre;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
 
@@ -47,7 +45,7 @@ public class AnimalConversor {
 	return adoptionAnimal;
     }
 
-    public final static AnimalDTO toAnimalDTO(AdoptionAnimal animal) throws UnsupportedEncodingException {
+    public final static AnimalDTO toAnimalDTO(AdoptionAnimal animal) {
 	AnimalDTO animalDTO = new AnimalDTO();
 	AdoptionAnimalInfoDTO adoptionAnimalInfoDTO = new AdoptionAnimalInfoDTO();
 	String image = null;
@@ -100,7 +98,7 @@ public class AnimalConversor {
 	return returnedAdoptionAnimalDTO;
     }
     
-    public final static ReturnedAdoptionAnimalDTO toReturnedAdoptionAnimalDTO(AdoptionAnimal adoptionAnimal) throws UnsupportedEncodingException {
+    public final static ReturnedAdoptionAnimalDTO toReturnedAdoptionAnimalDTO(AdoptionAnimal adoptionAnimal) {
 
 	ReturnedAdoptionAnimalDTO returnedAdoptionAnimalDTO = new ReturnedAdoptionAnimalDTO();
 	returnedAdoptionAnimalDTO.setId(adoptionAnimal.getId_animal());
@@ -126,14 +124,7 @@ public class AnimalConversor {
     public final static List<AnimalDTO> toAnimalDTOList(List<AdoptionAnimal> adoptionAnimalList) {
 	List<AnimalDTO> adoptionAnimalDTOList = new ArrayList<>();
 
-	adoptionAnimalList.forEach((adoptionAnimal) -> {
-	    try {
-		adoptionAnimalDTOList.add(toAnimalDTO(adoptionAnimal));
-	    } catch (UnsupportedEncodingException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    }
-	});
+	adoptionAnimalList.forEach((adoptionAnimal) -> adoptionAnimalDTOList.add(toAnimalDTO(adoptionAnimal)));
 
 	return adoptionAnimalDTOList;
     }
@@ -141,19 +132,12 @@ public class AnimalConversor {
     public final static List<ReturnedAdoptionAnimalDTO> toReturnedAdoptionAnimalDTOList(List<AdoptionAnimal> adoptionAnimalList) {
 	List<ReturnedAdoptionAnimalDTO> returnedAdoptionAnimalDTO = new ArrayList<>();
 
-	adoptionAnimalList.forEach((adoptionAnimal) -> {
-	    try {
-		returnedAdoptionAnimalDTO.add(toReturnedAdoptionAnimalDTO(adoptionAnimal));
-	    } catch (UnsupportedEncodingException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    }
-	});
+	adoptionAnimalList.forEach((adoptionAnimal) -> returnedAdoptionAnimalDTO.add(toReturnedAdoptionAnimalDTO(adoptionAnimal)));
 
 	return returnedAdoptionAnimalDTO;
     }
     
-    public final static AnimalMarkerDTO toAnimalMarkerDTO (AdoptionAnimal animal) throws UnsupportedEncodingException {
+    public final static AnimalMarkerDTO toAnimalMarkerDTO (AdoptionAnimal animal) {
 	AnimalMarkerDTO marker = new AnimalMarkerDTO();
 	marker.setId(animal.getId_animal());
 	marker.setName(animal.getName());
