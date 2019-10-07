@@ -1,7 +1,5 @@
 import React,{ Component } from "react";
 import LostAnimalsList from './LostAnimalsList';
-
-import {getLostAnimals} from '../../actions';
 import {TopMenu} from '../../../app'
 
 class LostAnimalsPage extends Component{

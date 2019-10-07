@@ -72,4 +72,3 @@ class LostAnimalsList extends Component{
 }
 
 export default LostAnimalsList
-

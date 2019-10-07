@@ -54,7 +54,6 @@ constructor(props){
                 <Route exact path="/adoptionMap" component = {AdoptionMapPage}></Route>
                 <Route exat path = "/lostList" component = {LostAnimalsPage}></Route>
 
-
               </Switch>
       </Router>
 
