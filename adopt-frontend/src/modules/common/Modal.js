@@ -21,7 +21,7 @@ const modal = (props) => {
                     <PreviewImage image = {props.image}/>
                     </div>
                     <div className="modal-data">
-                        <div className="modal-data-field"><FormattedMessage id = "form.label.distance" /> : {props.distance} Km  </div> 
+                        <div className="modal-data-field"><FormattedMessage id = "form.label.distance" /> : {Math.round(props.distance)} Km  </div> 
                         <div className="modal-data-field"><FormattedMessage id = "form.label.breed" />: {props.breed}  </div> 
                         <div className="modal-data-field"><FormattedMessage id = "form.label.age" />: {props.age}  </div>  
                     </div>

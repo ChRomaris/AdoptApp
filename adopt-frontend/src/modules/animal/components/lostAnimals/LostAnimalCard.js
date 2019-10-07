@@ -33,7 +33,7 @@ class LostAnimalCard extends Component{
                         <CardTitle><FormattedMessage id='form.label.date'/> : {Moment(this.props.animal.date).format("DD-MM-YY")}</CardTitle>
                         <CardTitle><FormattedMessage id='form.label.genre'/> : {this.renderGenre()} </CardTitle>
                         <CardTitle><FormattedMessage id='form.label.breed'/> : {this.props.animal.breed} </CardTitle>
-                        <CardText><FormattedMessage id='form.label.distance'/> : {this.props.animal.distance}</CardText>
+                        <CardText><FormattedMessage id='form.label.distance'/> : {Math.round(this.props.animal.distance)}</CardText>
                     </div>  
                 </CardBody>
                 <CardFooter>

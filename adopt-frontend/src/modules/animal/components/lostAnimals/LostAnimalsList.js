@@ -2,27 +2,62 @@ import React,{ Component } from "react";
 import { ToastsContainer, ToastsStore } from 'react-toasts';
 import { Container, Button } from 'reactstrap';
 import LostAnimalCard from './LostAnimalCard';
+import AddLocationModal from './AddLocationModal';
+import {getAnimals, nextPage, previousPage} from './actions/actions';
+import {connect} from 'react-redux';
 
 import '../animalStyles.css'
 
 class LostAnimalsList extends Component{
     constructor(props){
         super()
-        this.state = {
-            animalList : []
-        }
 
         this.renderButtons = this.renderButtons.bind(this)
+        this.getAnimals = this.getAnimals.bind(this)
+        this.nextPage = this.nextPage.bind(this)
+        this.previousPage = this.previousPage.bind(this)
     }
 
+    componentDidMount(){
+        this.getAnimals()
+    }
+
+    componentWillReceiveProps (newProps){
+        //SI SE CAMBIA DE PAGINA SE REALIZA LA BUSQUEDA DE NUEVO
+        if(newProps.actualPage !== this.props.actualPage){
+            const params = {
+                userToken : sessionStorage.getItem('serviceToken'),
+                page : newProps.actualPage
+            }
+        this.props.getAnimals(params);
+        }
+    }
+
+    getAnimals(){
+        const params = {
+            userToken : sessionStorage.getItem('serviceToken'),
+            page : this.props.actualPage
+        }
+
+        this.props.getAnimals(params);
+    }
+
+    nextPage(){
+        this.props.nextPage() 
+    }
+
+    previousPage(){
+        this.props.previousPage()
+
+    }
+
+
     renderButtons(){
-        console.log("maxima" + this.props.maxPage)
-        console.log("actual" + this.props.actualPage)
         if(this.props.maxPage === this.props.actualPage)
         {
             return(
                 <div className ="previousButton">
-                <Button onClick={this.props.previousPage} >
+                <Button onClick={this.previousPage} >
                     Anterior
                 </Button>
                 </div>
@@ -30,7 +65,7 @@ class LostAnimalsList extends Component{
         }else if (this.props.actualPage === 0){
             return(
                 <div className ="previousButton">
-                <Button onClick={this.props.nextPage} >
+                <Button onClick={this.nextPage} >
                     Siguiente
                 </Button>
                 </div> 
@@ -39,12 +74,12 @@ class LostAnimalsList extends Component{
             return(
                 <div className = "previousNextButtons">
                      <div className ="previousButton">
-                        <Button onClick={this.props.previousPage} >
+                        <Button onClick={this.previousPage} >
                             Anterior
                         </Button>
                     </div>
                     <div className ="nextButton">
-                        <Button onClick={this.props.nextPage} >
+                        <Button onClick={this.nextPage} >
                             Siguiente
                         </Button>
                     </div> 
@@ -59,8 +94,8 @@ class LostAnimalsList extends Component{
             <Container>
                 <ToastsContainer store={ToastsStore} />
                 <div>
-                    {this.props.animalList.map(animal => (
-                        <LostAnimalCard key={animal.name} animal={animal}></LostAnimalCard>
+                    {this.props.lostAnimals.map(animal => (
+                        <LostAnimalCard key={animal.id} animal={animal}></LostAnimalCard>
                     ))}
                 </div>
                 {this.renderButtons()}
@@ -71,4 +106,10 @@ class LostAnimalsList extends Component{
     }
 }
 
-export default LostAnimalsList
+const mapStateToProps = state => ({
+    lostAnimals : state.lostAnimals.animals,
+    actualPage : state.lostAnimals.actualPage,
+    maxPage : state.lostAnimals.maxPage
+})
+
+export default connect (mapStateToProps, {getAnimals, nextPage, previousPage})(LostAnimalsList)

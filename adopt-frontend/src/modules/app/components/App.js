@@ -1,4 +1,6 @@
 import React from 'react';
+import {Provider} from 'react-redux';
+import store from '../../../store/store'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import SignInForm from '../../user/components/SignInForm';
 import SignUpForm from '../../user/components/SignUpForm';
@@ -16,7 +18,9 @@ import AdoptionMapPage from '../../animal/components/AdoptionMapPage'
 import LostAnimalCreationForm from '../../animal/components/lostAnimals/LostAnimalCreationForm'
 import LostAnimalsPage from '../../animal/components/lostAnimals/LostAnimalsPage'
 
+
 import '../App.css';
+
 
 
 class App extends React.Component {
@@ -35,7 +39,7 @@ constructor(props){
 
   render() {
     return (
-     
+     <Provider store = {store}>
       <Router>     
               <Switch>
                 <Route exact path="/signUp" component={SignUpForm}></Route>
@@ -53,9 +57,10 @@ constructor(props){
                 <Route exact path="/addLocation" component = {AddLocation}></Route>
                 <Route exact path="/adoptionMap" component = {AdoptionMapPage}></Route>
                 <Route exat path = "/lostList" component = {LostAnimalsPage}></Route>
-
               </Switch>
       </Router>
+
+      </Provider>
 
     );
   }
