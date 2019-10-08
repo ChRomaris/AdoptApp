@@ -138,17 +138,17 @@ public class ProfileService implements IProfileService {
 
     @Override
     public Profile getProfileFromToken(String userToken) {
-	String token2 = userToken.replace("{\"userToken\":", "");
-	String token3 = token2.replace("\"", "");
-	String token4 = token3.replace("}", "");
-	JwtInfo tokenInfo = jwtGenerator.getInfo(token4);
-	Optional<Profile> profile = profileDAO.findById(tokenInfo.getUserId());
-
-	if (profile != null) {
-	    return profile.get();
-	} else {
-	    throw new NoSuchElementException();
+	try {
+		String token2 = userToken.replace("{\"userToken\":", "");
+		String token3 = token2.replace("\"", "");
+		String token4 = token3.replace("}", "");
+		JwtInfo tokenInfo = jwtGenerator.getInfo(token4);
+		Optional<Profile> profile = profileDAO.findById(tokenInfo.getUserId());
+		return profile.get();  
+	}catch(Exception e) {
+	    throw new NoSuchElementException(); 
 	}
+
     }
 
 }

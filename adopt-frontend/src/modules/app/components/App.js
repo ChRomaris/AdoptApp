@@ -1,5 +1,7 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import {Provider} from 'react-redux';
+import store from '../../../store/store'
 import SignInForm from '../../user/components/SignInForm';
 import SignUpForm from '../../user/components/SignUpForm';
 import Welcome from './Welcome';
@@ -35,7 +37,7 @@ constructor(props){
 
   render() {
     return (
-     
+      <Provider store = {store}>
       <Router>     
               <Switch>
                 <Route exact path="/signUp" component={SignUpForm}></Route>
@@ -56,6 +58,7 @@ constructor(props){
 
               </Switch>
       </Router>
+      </Provider>
 
     );
   }

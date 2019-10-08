@@ -1,17 +1,21 @@
 package com.tfg.backend.Services;
 
+import java.beans.PropertyDescriptor;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import com.tfg.backend.Common.JwtGenerator;
 import com.tfg.backend.Common.JwtInfo;
 import com.tfg.backend.Daos.IAdoptionAnimalDao;
@@ -26,9 +30,12 @@ import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.AnimalMarkerDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
 import com.tfg.backend.Dtos.EnumsDTO;
+import com.tfg.backend.Dtos.LostAnimalPageDTO;
 import com.tfg.backend.Dtos.LostAnimalsPageDTO;
 import com.tfg.backend.Dtos.ProfileDTO;
 import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
+import com.tfg.backend.Dtos.ReturnedLostAnimalDTO;
+import com.tfg.backend.Dtos.SearchLostAnimalsDTO;
 import com.tfg.backend.Dtos.ShelterAnimalsDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
@@ -40,7 +47,6 @@ import com.tfg.backend.Exceptions.IncorrectValueException;
 import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimal;
 import static com.tfg.backend.Dtos.AnimalConversor.toReturnedAdoptionAnimalDTO;
 import static com.tfg.backend.Dtos.AnimalConversor.toAnimalMarkerDTO;
-
 @Service
 public class AnimalService implements IAnimalService {
 	
@@ -69,10 +75,10 @@ public class AnimalService implements IAnimalService {
 	JwtGenerator jwtGenerator;
 
 
-	
-	public ReturnedAdoptionAnimalDTO getAdoptionAnimalInfo(AnimalDTO animal) throws IncorrectValueException {
+
+	public ReturnedAdoptionAnimalDTO getAdoptionAnimalInfo(AnimalDTO animal) throws IncorrectValueException, UnsupportedEncodingException {
 		Optional<AdoptionAnimal> optionalAnimal = adoptionAnimalDao.findById(animal.getId());
-		
+
 		if(optionalAnimal.isPresent()) {
 			return toReturnedAdoptionAnimalDTO(optionalAnimal.get());
 		}else {
@@ -107,6 +113,46 @@ public class AnimalService implements IAnimalService {
 	    return lostAnimalPageDTO;
 	    
 	}
+
+	@Transactional
+	public LostAnimalPageDTO searchByDistance(SearchLostAnimalsDTO searchLostAnimalsDTO) throws UnsupportedEncodingException{
+	    Profile profile = profileService.getProfileFromToken(searchLostAnimalsDTO.getUserToken());
+	    Float profileLatitude = profile.getLatitude();
+	    Float profileLongitude = profile.getLongitude();
+	    Pageable page = PageRequest.of(searchLostAnimalsDTO.getPage(), 5);
+	    List<ReturnedLostAnimalDTO> returnedLostAnimals = new ArrayList<>();
+	    List<LostAnimal> lostAnimals = lostAnimalDao.searchLostAnimalsByDistance(profileLatitude, profileLongitude, new Double(9000), page);
+	    List<Double> distances = lostAnimalDao.searchLostAnimalsDistances(profileLatitude, profileLongitude, new Double(9000), page);
+	    LostAnimalPageDTO lostAnimalPageDTO = new LostAnimalPageDTO();
+	    Iterator distanceIterator = distances.iterator();
+	    int numerLostAnimals = lostAnimalDao.countLostAnimals(profileLatitude, profileLongitude, new Double(9000));
+	    
+	    for(LostAnimal lostAnimal : lostAnimals) {
+		ReturnedLostAnimalDTO returnedLostAnimalDTO = new ReturnedLostAnimalDTO();
+		Double distance = (Double)distanceIterator.next();
+		returnedLostAnimalDTO.setId(lostAnimal.getId_animal());
+		returnedLostAnimalDTO.setName(lostAnimal.getName());
+		returnedLostAnimalDTO.setGenre(lostAnimal.getGenre());
+		returnedLostAnimalDTO.setDescription(lostAnimal.getDescription());
+		returnedLostAnimalDTO.setBreed(lostAnimal.getBreed());
+		returnedLostAnimalDTO.setDistance(distance);
+		returnedLostAnimalDTO.setDateTime(lostAnimal.getDateTime());
+
+		if(lostAnimal.getImages().iterator().hasNext()) {
+		    returnedLostAnimalDTO.setImage(lostAnimal.getImages().iterator().next().getImage());
+		}
+		
+		
+		returnedLostAnimals.add(returnedLostAnimalDTO);
+	
+	    }
+	    
+	    lostAnimalPageDTO.setLostAnimals(returnedLostAnimals);
+	    lostAnimalPageDTO.setTotalPages(numerLostAnimals/5);
+	    
+	    return lostAnimalPageDTO;
+	    
+	}
 	
 	
 	
@@ -131,9 +177,8 @@ public class AnimalService implements IAnimalService {
 	}
 
 
-
 	@Override
-	public List<AnimalMarkerDTO> getNearbyAdoptionAnimals(ProfileDTO profileDTO) {
+	public List<AnimalMarkerDTO> getNearbyAdoptionAnimals(ProfileDTO profileDTO) throws UnsupportedEncodingException {
 	    Profile profile = profileService.getProfileFromToken(profileDTO.getToken());
 	    List<AnimalMarkerDTO> markers = new ArrayList<>();
 	    if(profile != null) {
@@ -156,9 +201,6 @@ public class AnimalService implements IAnimalService {
 	    
 	    return markers;
 	}
-
-
-
 	@Override
 	public List<Animal> searchAdoptionAnimalByFilter(AdoptionAnimalFilterDTO filter) {
 	    List<Animal> foundAnimals = new ArrayList<>();
@@ -178,5 +220,4 @@ public class AnimalService implements IAnimalService {
 	    return enumsDTO;
 	}
 	
-
 }
