@@ -61,6 +61,8 @@ export default{
     'form.label.date' : 'Fecha',
     'form.enum.male' : 'Macho',
     'form.enum.female' : 'Femia',
+    'form.tittle.addLocation' : 'Indique la posición en la que ha visto al animal: ',
+    'form.button.contact' : 'Contactar',
 
 
 

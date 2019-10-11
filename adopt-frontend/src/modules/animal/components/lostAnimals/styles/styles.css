@@ -1,0 +1,54 @@
+.addLocation-modal-body{
+    width:100%;
+    background-color: white;
+    height: 70vh;
+}
+.addLocation-modal-footer{
+    width:100%;
+    background-color: #2E4158;
+    position: absolute;
+}
+
+.addLocation-modal-container{
+    width: 83vw;
+    height: 100vh;
+    position:absolute;
+    z-index: 2;
+    margin-top: 50vh;
+    margin-left: 5vw;
+}
+
+.lostAnimal-modal-container{
+    width: 50vw;
+    height: 10vh;
+    position:absolute;
+    z-index: 2;
+    margin-top: 20vh;
+    margin-left: 20vw;
+}
+
+.lostAnimal-modal-body{
+    width:100%;
+    background-color: white;
+    height: 30vh;
+}
+
+
+
+.lostAnimal-modal-footer{
+    width: 100%;
+    margin-top: 0px;
+    background-color: #2E4158;
+    position: absolute;
+}
+
+.overlayActive{
+width: 94%;
+height: 310vh;
+background-color: black;
+z-index : 1;
+position: absolute;
+opacity: 0.5;
+}
+
+

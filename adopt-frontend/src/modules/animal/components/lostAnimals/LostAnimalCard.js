@@ -2,12 +2,18 @@ import React,{ Component } from "react";
 import Moment from 'moment';
 import {CardHeader, CardBody, CardTitle, CardText, Button, CardFooter,Card} from 'reactstrap';
 import PreviewImage from '../../../mainList/components/PreviewImage';
-import {FormattedMessage} from 'react-intl'
+import {FormattedMessage} from 'react-intl';
+import {showModal, getLocations} from './actions/actions';
+import {connect} from 'react-redux';
+
 class LostAnimalCard extends Component{
     constructor(props){
         super()
         this.renderGenre = this.renderGenre.bind(this)
+        this.renderFooter = this.renderFooter.bind(this)
+        this.locationsClick = this.locationsClick.bind(this)
     }
+
     renderGenre(){
         if(this.props.animal.genre === "MALE" ){
            return <FormattedMessage id='form.enum.male'/>  
@@ -15,6 +21,33 @@ class LostAnimalCard extends Component{
            return <FormattedMessage id='form.enum.female'/>  
         }       
     }
+
+    locationsClick(animalId){
+    const params = {
+        animalId :animalId ,
+        token : sessionStorage.getItem('serviceToken')
+    }   
+    
+     this.props.getLocations(params)
+     this.props.redirectLocations()
+     
+     
+    }
+
+    renderFooter(animalId){
+        if (this.props.isUserList){
+            
+            return [<Button>Editar</Button>,<Button onClick={()=>this.locationsClick(animalId)} >Localizaciones</Button>]
+
+        }else{
+            return [<Button>Mas Información</Button>,<Button onClick={()=>this.showModal(this.props.animal.id)}>Localizar</Button>]
+        }
+    }
+
+    showModal (id){
+        this.props.showModal(id)
+    }
+
     render(){
         
         return(
@@ -32,12 +65,20 @@ class LostAnimalCard extends Component{
                     </div>  
                 </CardBody>
                 <CardFooter>
-                    <Button>Mas Información</Button>
-                    <Button>Localizar</Button>
+                    
+                    {this.renderFooter(this.props.animal.id)}
                 </CardFooter>
             
             </Card>
         )
     }
 }
-export default LostAnimalCard
+
+const mapStateToProps = state =>(console.log(state),{
+    selectedAnimal : state.lostAnimals.selectedAnimal,
+    showModal : state.lostAnimals.showModal,
+    isUserList : state.lostAnimals.isUserList,
+    locations : state.lostAnimals.locations
+})
+
+export default connect (mapStateToProps, {showModal, getLocations}) (LostAnimalCard)

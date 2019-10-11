@@ -1,4 +1,4 @@
-import  { GET_LOST_ANIMALS, NEXT_PAGE, PREVIOUS_PAGE } from './types';
+import  { GET_LOST_ANIMALS, NEXT_PAGE, PREVIOUS_PAGE, SHOW_MODAL, CLOSE_MODAL, SAVE_LOCATION, SET_LOCATION, GET_USER_ANIMALS, GET_ANIMAL_LOCATIONS, SET_SELECTED_LOCATION } from './types';
 
 const request = (options) => {
     const headers = new Headers({
@@ -40,5 +40,64 @@ export const nextPage = () => dispatch => {
 export const previousPage = () => dispatch => {
     dispatch ({
         type : PREVIOUS_PAGE
+    })
+}
+
+export const showModal = (id) => dispatch => {
+    dispatch ({
+        type : SHOW_MODAL,
+        payload : id
+    })
+}
+
+export const closeModal = () => dispatch => {
+    dispatch ({
+        type : CLOSE_MODAL
+    })
+}
+
+export const saveLocation = (params) => dispatch => {
+    request ({
+        url: "http://localhost:8080/animal/addLocation",
+        method: 'POST',
+        body: JSON.stringify(params)
+    }).then(() => dispatch({
+        type : SAVE_LOCATION,
+    }));  
+}
+
+export const setLocation = (params) => dispatch => {
+    dispatch ({
+        type : SET_LOCATION,
+        payload : params
+    })
+}
+
+export const getUserAnimals = (params) => dispatch => {
+    request ({
+        url: "http://localhost:8080/user/getAnimals?userToken="+params.token+"&page="+0,
+        method: 'GET',
+    }).then(animals => dispatch({
+        type : GET_USER_ANIMALS,
+        payload : animals
+    }));
+}
+
+export const getLocations = (params) => dispatch => {
+    console.log("actions")
+    console.log(params)
+    request ({
+        url: "http://localhost:8080/animal/locations?animalId="+params.animalId+"&token="+params.token,
+        method: 'GET',
+    }).then(locations => dispatch({
+        type : GET_ANIMAL_LOCATIONS,
+        payload : locations
+    }));
+}
+
+export const setSelectedLocation = (SelectedLocation) => dispatch => {
+    dispatch ({
+        type: SET_SELECTED_LOCATION,
+        payload : SelectedLocation
     })
 }

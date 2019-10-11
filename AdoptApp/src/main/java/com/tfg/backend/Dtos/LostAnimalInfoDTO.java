@@ -2,6 +2,7 @@ package com.tfg.backend.Dtos;
 
 import java.util.Calendar;
 
+import com.tfg.backend.Entities.Animal.Breed;
 import com.tfg.backend.Entities.LostAnimal;
 import com.tfg.backend.Entities.User;
 
@@ -14,12 +15,44 @@ public class LostAnimalInfoDTO {
     	private String comment;
     	private String userName;
     	private User user;
+    	private String name;
+    	private Breed breed;
     	
 	public LostAnimalInfoDTO() {	
 	    super();
 	}
 	
 	
+	
+	
+	public String getName() {
+	    return name;
+	}
+
+
+
+
+	public void setName(String name) {
+	    this.name = name;
+	}
+
+
+
+
+	public Breed getBreed() {
+	    return breed;
+	}
+
+
+
+
+	public void setBreed(Breed breed) {
+	    this.breed = breed;
+	}
+
+
+
+
 	public String getUserName() {
 	    return userName;
 	}

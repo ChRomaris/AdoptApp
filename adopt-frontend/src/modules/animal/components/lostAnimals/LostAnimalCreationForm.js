@@ -99,7 +99,7 @@ class LostAnimalCreationForm extends Component {
         addLostAnimal(params).then(response=>{
             ToastsStore.success("Añadido Correctamente");
         }).catch(error=>{
-            ToastsStore.error("Algo ha salido mal")
+            console.log(error)
         })
     }
 
@@ -194,5 +194,7 @@ class LostAnimalCreationForm extends Component {
     )
     }
 }
+
+
 
 export default LostAnimalCreationForm;

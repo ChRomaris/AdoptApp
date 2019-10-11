@@ -17,6 +17,7 @@ class AddLocationMap extends Component {
         this.setParentLocation = this.setParentLocation.bind(this)
         
     }
+
     static defaultProps = {
         center: {
           lat: 42.09989087544122,
