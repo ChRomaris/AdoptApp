@@ -24,6 +24,7 @@ import com.tfg.backend.Dtos.ErrorsDTO;
 import com.tfg.backend.Dtos.LocationDTO;
 import com.tfg.backend.Dtos.LocationPageRequestDTO;
 import com.tfg.backend.Dtos.LostAnimalPageDTO;
+import com.tfg.backend.Dtos.LostAnimalsInAreaDTO;
 import com.tfg.backend.Dtos.LostAnimalsPageDTO;
 import com.tfg.backend.Dtos.ProfileDTO;
 import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
@@ -129,11 +130,11 @@ public class AnimalController {
     public ReturnedLocationsDTO getLocations(@RequestParam Long animalId, @RequestParam String token ) throws ForbiddenException {
 	return locationService.getLocations(animalId,token);
     }
-
-
-
+    
+    
     @PostMapping("/searchByDistance")
     public LostAnimalPageDTO searchByDistance(@RequestBody SearchLostAnimalsDTO searchLostAnimalsDTO) throws UnsupportedEncodingException{
 	return animalService.searchByDistance(searchLostAnimalsDTO);
     }
+    
 }

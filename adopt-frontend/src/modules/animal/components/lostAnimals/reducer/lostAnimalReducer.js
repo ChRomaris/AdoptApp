@@ -1,9 +1,22 @@
-import  { GET_LOST_ANIMALS, NEXT_PAGE, PREVIOUS_PAGE } from '../actions/types'
+import  { GET_LOST_ANIMALS, NEXT_PAGE, PREVIOUS_PAGE, SHOW_MODAL, CLOSE_MODAL, SAVE_LOCATION, SET_LOCATION, GET_USER_ANIMALS, GET_ANIMAL_LOCATIONS, SET_SELECTED_LOCATION} from '../actions/types'
+
 
 const initialState = {
     animals : [],
     actualPage: 0,
-    maxPage: 0
+    maxPage: 0,
+    showModal : false,
+    showLocationModal : false,
+    selectedLocation : {},
+    selectedAnimal : '',
+    selectedLatitude : '',
+    selectedLongitude : '',
+    isUserList: false,
+    locations: [],
+    locationsLoaded : false,
+    selectedLocation: ''
+
+
 }
 
 export default function (state = initialState, action) {
@@ -12,8 +25,8 @@ export default function (state = initialState, action) {
             return { 
                 ...state,   
                 animals: action.payload.lostAnimals ,
-                maxPage : action.payload.totalPages
-
+                maxPage : action.payload.totalPages,
+                isUserList: false
             };
         case NEXT_PAGE:
             var previousPage = state.actualPage
@@ -22,10 +35,54 @@ export default function (state = initialState, action) {
                 actualPage : previousPage + 1
             }
         case PREVIOUS_PAGE:
-            var previousPage = state.actualPage
+            var previousPage2 = state.actualPage
             return{
                 ...state,
-                actualPage : previousPage - 1
+                actualPage : previousPage2 - 1
+            }
+        case SHOW_MODAL:
+            return{
+                ...state,
+                showModal : true,
+                selectedAnimal : action.payload
+            }
+        case CLOSE_MODAL:
+            return{
+                ...state,
+                showModal : false
+            }
+        case SAVE_LOCATION :
+            return{
+                ...state,
+                showModal: false
+            }
+        case SET_LOCATION :
+            return{
+                ...state,
+                selectedLongitude : action.payload.longitude,
+                selectedLatitude : action.payload.latitude 
+                
+            }
+        case GET_USER_ANIMALS :
+            return{
+                ...state,
+                animals : action.payload.lostAnimals,
+                maxPage : 0,
+                isUserList: true
+            }
+        case GET_ANIMAL_LOCATIONS :
+            return{
+                ...state,
+                locations: action.payload.locations,
+                locationsLoaded : true
+            }
+        case SET_SELECTED_LOCATION :
+            console.log("SELECTED LOCATION: ")
+            console.log(action.payload)
+            return{
+                ...state,
+                selectedLocation : action.payload
+
             }
 
         default : 

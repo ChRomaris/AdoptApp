@@ -1,5 +1,6 @@
 package com.tfg.backend.Services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -7,14 +8,20 @@ import java.util.Optional;
 
 import static com.tfg.backend.Dtos.AnimalConversor.toLostAnimal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tfg.backend.Common.JwtGenerator;
 import com.tfg.backend.Common.JwtInfo;
 import com.tfg.backend.Daos.IAnimalDao;
 import com.tfg.backend.Daos.IAnimalPictureDao;
+import com.tfg.backend.Daos.ILostAnimalDAO;
 import com.tfg.backend.Daos.IUserDao;
 import com.tfg.backend.Dtos.AnimalDTO;
+import com.tfg.backend.Dtos.LostAnimalPageDTO;
+import com.tfg.backend.Dtos.ReturnedLostAnimalDTO;
 import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.LostAnimal;
 import com.tfg.backend.Entities.Profile;
@@ -31,6 +38,9 @@ public class UserService implements IUserService {
     
     @Autowired
     IAnimalDao animalDAO;
+    
+    @Autowired
+    ILostAnimalDAO lostAnimalDAO;
     
     @Autowired
     IAnimalPictureDao animalPictureDAO;
@@ -61,6 +71,38 @@ public class UserService implements IUserService {
 	
 	return animalDTO;
     }
+    
+    @Override
+    public LostAnimalPageDTO getUserLostAnimals (String userToken, int page){
+	User user = getUserFromToken(userToken);
+	Pageable firstPage = PageRequest.of(page, 5);
+	List<LostAnimal> lostAnimals = lostAnimalDAO.findByOwner(user, firstPage);
+	LostAnimalPageDTO lostAnimalPageDTO = new LostAnimalPageDTO();
+	List<ReturnedLostAnimalDTO> returnedLostAnimals = new ArrayList<>();
+	
+	    for(LostAnimal lostAnimal : lostAnimals) {
+		ReturnedLostAnimalDTO returnedLostAnimalDTO = new ReturnedLostAnimalDTO();
+		returnedLostAnimalDTO.setId(lostAnimal.getId_animal());
+		returnedLostAnimalDTO.setName(lostAnimal.getName());
+		returnedLostAnimalDTO.setGenre(lostAnimal.getGenre());
+		returnedLostAnimalDTO.setDescription(lostAnimal.getDescription());
+		returnedLostAnimalDTO.setBreed(lostAnimal.getBreed());
+		returnedLostAnimalDTO.setDateTime(lostAnimal.getDateTime());
+
+		if(lostAnimal.getImages().iterator().hasNext()) {
+		    returnedLostAnimalDTO.setImage(lostAnimal.getImages().iterator().next().getImage());
+		}
+		
+		
+		returnedLostAnimals.add(returnedLostAnimalDTO);
+	
+	    }
+	lostAnimalPageDTO.setLostAnimals(returnedLostAnimals);
+	lostAnimalPageDTO.setTotalPages(2);
+	
+	return lostAnimalPageDTO;
+    }
+    
     
     @Override
     public User getUserFromToken(String userToken) {

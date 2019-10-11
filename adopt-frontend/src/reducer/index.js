@@ -3,4 +3,5 @@ import lostAnimalReducer from '../modules/animal/components/lostAnimals/reducer/
 
 export default combineReducers ({
     lostAnimals: lostAnimalReducer
+    
 }); 

@@ -2,9 +2,7 @@ import React,{ Component } from "react";
 import { ToastsContainer, ToastsStore } from 'react-toasts';
 import { Container, Button } from 'reactstrap';
 import LostAnimalCard from './LostAnimalCard';
-
-import AddLocationModal from './AddLocationModal';
-import {getAnimals, nextPage, previousPage} from './actions/actions';
+import {getAnimals, nextPage, previousPage, getUserAnimals} from './actions/actions';
 import {connect} from 'react-redux';
 
 import '../animalStyles.css'
@@ -19,18 +17,21 @@ class LostAnimalsList extends Component{
         this.previousPage = this.previousPage.bind(this)
     }
 
-    componentDidMount(){
-        this.getAnimals()
-    }
 
     componentWillReceiveProps (newProps){
+        
         //SI SE CAMBIA DE PAGINA SE REALIZA LA BUSQUEDA DE NUEVO
         if(newProps.actualPage !== this.props.actualPage){
             const params = {
                 userToken : sessionStorage.getItem('serviceToken'),
                 page : newProps.actualPage
             }
-        this.props.getAnimals(params);
+        if (this.props.isUserList){
+            this.props.getUserAnimals(params)
+        }else{
+            this.props.getAnimals(params);
+        }
+        
         }
     }
 
@@ -53,7 +54,10 @@ class LostAnimalsList extends Component{
     }
 
     renderButtons(){
-        if(this.props.maxPage === this.props.actualPage)
+        if(this.props.maxPage === 0){
+
+        }
+        else if(this.props.maxPage === this.props.actualPage)
         {
             return(
                 <div className ="previousButton">
@@ -70,8 +74,9 @@ class LostAnimalsList extends Component{
                 </Button>
                 </div> 
             )
-        }else{
-            return(
+        }
+        else{
+        return(
                 <div className = "previousNextButtons">
                      <div className ="previousButton">
                      <Button onClick={this.previousPage} >
@@ -95,7 +100,8 @@ class LostAnimalsList extends Component{
                 <ToastsContainer store={ToastsStore} />
                 <div>
                 {this.props.lostAnimals.map(animal => (
-                        <LostAnimalCard key={animal.id} animal={animal}></LostAnimalCard>
+                    console.log(animal.id),
+                        <LostAnimalCard key={animal.id} animal={animal} redirectLocations = {this.props.redirectLocations}></LostAnimalCard>
                     ))}
                 </div>
                 {this.renderButtons()}
@@ -109,7 +115,9 @@ class LostAnimalsList extends Component{
 const mapStateToProps = state => ({
     lostAnimals : state.lostAnimals.animals,
     actualPage : state.lostAnimals.actualPage,
-    maxPage : state.lostAnimals.maxPage
+    maxPage : state.lostAnimals.maxPage,
+    isUserList : state.lostAnimals.isUserList
+
 })
 
-export default connect (mapStateToProps, {getAnimals, nextPage, previousPage})(LostAnimalsList) 
+export default connect (mapStateToProps, {getAnimals, nextPage, previousPage, getUserAnimals})(LostAnimalsList) 

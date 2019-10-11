@@ -113,6 +113,7 @@ public class AnimalService implements IAnimalService {
 	    return lostAnimalPageDTO;
 	    
 	}
+	
 
 	@Transactional
 	public LostAnimalPageDTO searchByDistance(SearchLostAnimalsDTO searchLostAnimalsDTO) throws UnsupportedEncodingException{

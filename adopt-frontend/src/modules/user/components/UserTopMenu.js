@@ -59,8 +59,8 @@ class UserTopMenu extends Component{
                       <MDBDropdownMenu>
                       <MDBDropdownItem ><a href="#/addLostAnimal"><FormattedMessage id="menu.label.addLostAnimal"/></a></MDBDropdownItem> 
                       <MDBDropdownItem ><a href="#/lostList"><FormattedMessage id="menu.label.animalList"/></a></MDBDropdownItem> 
-                      <MDBDropdownItem ><a href="#/adoptionMap"><FormattedMessage id="menu.label.animalMap"/></a></MDBDropdownItem> 
-                      <MDBDropdownItem ><a href="#/"><FormattedMessage id="menu.label.myAnimals"/></a></MDBDropdownItem> 
+                      <MDBDropdownItem ><a href="#/lostMap"><FormattedMessage id="menu.label.animalMap"/></a></MDBDropdownItem> 
+                      <MDBDropdownItem ><a href="#/user/animals"><FormattedMessage id="menu.label.myAnimals"/></a></MDBDropdownItem> 
                       </MDBDropdownMenu>
                     </MDBDropdown>
                   <MDBNavItem>
