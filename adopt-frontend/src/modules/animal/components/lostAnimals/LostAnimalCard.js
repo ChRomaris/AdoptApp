@@ -3,7 +3,7 @@ import Moment from 'moment';
 import {CardHeader, CardBody, CardTitle, CardText, Button, CardFooter,Card} from 'reactstrap';
 import PreviewImage from '../../../mainList/components/PreviewImage';
 import {FormattedMessage} from 'react-intl';
-import {showModal, getLocations} from './actions/actions';
+import {showModal, getLocations, setAnimal, deleteLost} from './actions/actions';
 import {connect} from 'react-redux';
 
 class LostAnimalCard extends Component{
@@ -12,6 +12,7 @@ class LostAnimalCard extends Component{
         this.renderGenre = this.renderGenre.bind(this)
         this.renderFooter = this.renderFooter.bind(this)
         this.locationsClick = this.locationsClick.bind(this)
+        this.deleteClick = this.deleteClick.bind(this)
     }
 
     renderGenre(){
@@ -34,15 +35,33 @@ class LostAnimalCard extends Component{
      
     }
 
+    editClick(animalId){
+        const animal = {
+            id : animalId
+        }
+
+        this.props.setAnimal(animal);
+        this.props.showForm();
+    }
+
+    deleteClick(animalId){
+        const params = {
+            userToken : sessionStorage.getItem('serviceToken'),
+            animalId : animalId
+        }
+        this.props.deleteLost (params)
+    }
+
     renderFooter(animalId){
         if (this.props.isUserList){
-            
-            return [<Button>Editar</Button>,<Button onClick={()=>this.locationsClick(animalId)} >Localizaciones</Button>]
+            return [<Button onClick = {()=>this.editClick(animalId)}>Editar</Button>,<Button onClick = {()=>this.deleteClick(animalId)}>Borrar</Button>,<Button onClick={()=>this.locationsClick(animalId)}>Localizaciones</Button>]
 
         }else{
             return [<Button>Mas Información</Button>,<Button onClick={()=>this.showModal(this.props.animal.id)}>Localizar</Button>]
         }
     }
+
+
 
     showModal (id){
         this.props.showModal(id)
@@ -81,4 +100,4 @@ const mapStateToProps = state =>(console.log(state),{
     locations : state.lostAnimals.locations
 })
 
-export default connect (mapStateToProps, {showModal, getLocations}) (LostAnimalCard)
+export default connect (mapStateToProps, {showModal, getLocations, setAnimal, deleteLost}) (LostAnimalCard)

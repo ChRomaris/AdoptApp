@@ -1,4 +1,4 @@
-import  { GET_LOST_ANIMALS, NEXT_PAGE, PREVIOUS_PAGE, SHOW_MODAL, CLOSE_MODAL, SAVE_LOCATION, SET_LOCATION, GET_USER_ANIMALS, GET_ANIMAL_LOCATIONS, SET_SELECTED_LOCATION } from './types';
+import  { GET_LOST_ANIMALS, NEXT_PAGE, PREVIOUS_PAGE, SHOW_MODAL, CLOSE_MODAL, SAVE_LOCATION, SET_LOCATION, GET_USER_ANIMALS, GET_ANIMAL_LOCATIONS, SET_SELECTED_LOCATION, GET_LOST_AREA, SET_MARKER_INFO, SET_ANIMAL, RESET_ANIMAL, DELETE_LOST} from './types';
 
 const request = (options) => {
     const headers = new Headers({
@@ -101,3 +101,45 @@ export const setSelectedLocation = (SelectedLocation) => dispatch => {
         payload : SelectedLocation
     })
 }
+
+export const getLostAnimalsInArea = (params) => dispatch => {
+    request ({
+        url: "http://localhost:8080/animal/lostAnimalsInArea?token="+params.token,
+        method: 'GET',
+    }).then(animals => dispatch({
+        type : GET_LOST_AREA,
+        payload : animals
+    }));
+}
+
+export const setMarkerInfo =  () => dispatch => {
+    dispatch ({
+        type: SET_MARKER_INFO
+    })
+}
+
+
+export const setAnimal = (animal) => dispatch => {
+    dispatch({
+        type : SET_ANIMAL,
+        payload : animal
+    })
+}
+
+export const resetAnimal = () => dispatch => {
+    dispatch({
+        type : RESET_ANIMAL
+    })
+}
+
+export const deleteLost = (params) => dispatch => {
+    request ({
+        url: "http://localhost:8080/user/deleteLost",
+        method: 'POST',
+        body: JSON.stringify(params)
+    }).then(animals => dispatch({
+        type : DELETE_LOST,
+        payload : animals
+    })); 
+}
+

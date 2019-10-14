@@ -101,7 +101,7 @@ class LostAnimalsList extends Component{
                 <div>
                 {this.props.lostAnimals.map(animal => (
                     console.log(animal.id),
-                        <LostAnimalCard key={animal.id} animal={animal} redirectLocations = {this.props.redirectLocations}></LostAnimalCard>
+                        <LostAnimalCard key={animal.id} animal={animal} redirectLocations = {this.props.redirectLocations} showForm = {this.props.showForm}></LostAnimalCard>
                     ))}
                 </div>
                 {this.renderButtons()}

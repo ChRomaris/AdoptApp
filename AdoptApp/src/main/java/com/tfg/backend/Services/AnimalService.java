@@ -30,7 +30,9 @@ import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.AnimalMarkerDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
 import com.tfg.backend.Dtos.EnumsDTO;
+import com.tfg.backend.Dtos.LostAnimalInfoDTO;
 import com.tfg.backend.Dtos.LostAnimalPageDTO;
+import com.tfg.backend.Dtos.LostAnimalsInAreaDTO;
 import com.tfg.backend.Dtos.LostAnimalsPageDTO;
 import com.tfg.backend.Dtos.ProfileDTO;
 import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
@@ -42,11 +44,15 @@ import com.tfg.backend.Entities.Animal;
 import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.LostAnimal;
 import com.tfg.backend.Entities.Shelter;
+import com.tfg.backend.Entities.User;
 import com.tfg.backend.Entities.Profile;
 import com.tfg.backend.Exceptions.IncorrectValueException;
 import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimal;
 import static com.tfg.backend.Dtos.AnimalConversor.toReturnedAdoptionAnimalDTO;
 import static com.tfg.backend.Dtos.AnimalConversor.toAnimalMarkerDTO;
+import static com.tfg.backend.Dtos.AnimalConversor.toLostAnimalInfoDTOList;
+import static com.tfg.backend.Dtos.AnimalConversor.toAnimalDTO;
+
 @Service
 public class AnimalService implements IAnimalService {
 	
@@ -64,6 +70,9 @@ public class AnimalService implements IAnimalService {
 	
 	@Autowired
 	IProfileService profileService;
+	
+	@Autowired
+	IUserService userService;
 	
 	@Autowired
 	IUserDao userDao;
@@ -155,6 +164,16 @@ public class AnimalService implements IAnimalService {
 	    
 	}
 	
+	@Override
+	public LostAnimalsInAreaDTO getAnimalsInArea (String token) {
+	    LostAnimalsInAreaDTO lostAnimalsInAreaDTO = new LostAnimalsInAreaDTO();
+	    Profile profile = profileService.getProfileFromToken(token);
+	    List<LostAnimal> lostAnimals = lostAnimalDao.searchLostAnimalsInArea(profile.getLatitude(), profile.getLongitude(), new Double (2000));
+	    List<LostAnimalInfoDTO> lostAnimalInfoDTOList = toLostAnimalInfoDTOList(lostAnimals);
+	    lostAnimalsInAreaDTO.setAnimals(lostAnimalInfoDTOList);
+	    return lostAnimalsInAreaDTO;
+	}
+	
 	
 	
 	
@@ -176,7 +195,6 @@ public class AnimalService implements IAnimalService {
 			return (dist);
 		}
 	}
-
 
 	@Override
 	public List<AnimalMarkerDTO> getNearbyAdoptionAnimals(ProfileDTO profileDTO) throws UnsupportedEncodingException {
@@ -202,6 +220,7 @@ public class AnimalService implements IAnimalService {
 	    
 	    return markers;
 	}
+	
 	@Override
 	public List<Animal> searchAdoptionAnimalByFilter(AdoptionAnimalFilterDTO filter) {
 	    List<Animal> foundAnimals = new ArrayList<>();
@@ -220,5 +239,16 @@ public class AnimalService implements IAnimalService {
 	    
 	    return enumsDTO;
 	}
+	
+	@Override
+	public AnimalDTO getLostAnimalInfo(Long animalId) throws IncorrectValueException {
+	  Optional<LostAnimal> optional =  lostAnimalDao.findById(animalId);
+	  
+	  if(optional.isPresent()) {
+	      return toAnimalDTO(optional.get());
+	  }else
+	      throw new IncorrectValueException("El animal indicado no existe");
+	}
+	
 	
 }

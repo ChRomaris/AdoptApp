@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import javax.management.InstanceNotFoundException;
+
 import static com.tfg.backend.Dtos.AnimalConversor.toLostAnimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,12 +22,15 @@ import com.tfg.backend.Daos.IAnimalPictureDao;
 import com.tfg.backend.Daos.ILostAnimalDAO;
 import com.tfg.backend.Daos.IUserDao;
 import com.tfg.backend.Dtos.AnimalDTO;
+import com.tfg.backend.Dtos.DeleteAnimalDTO;
 import com.tfg.backend.Dtos.LostAnimalPageDTO;
+import com.tfg.backend.Dtos.LostAnimalsPageDTO;
 import com.tfg.backend.Dtos.ReturnedLostAnimalDTO;
 import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.LostAnimal;
 import com.tfg.backend.Entities.Profile;
 import com.tfg.backend.Entities.User;
+import com.tfg.backend.Exceptions.ForbiddenException;
 
 @Service
 public class UserService implements IUserService {
@@ -101,6 +106,26 @@ public class UserService implements IUserService {
 	lostAnimalPageDTO.setTotalPages(2);
 	
 	return lostAnimalPageDTO;
+    }
+    
+    @Override
+    public LostAnimalPageDTO deleteLostAnimal (DeleteAnimalDTO deleteAnimalDTO ) throws InstanceNotFoundException, ForbiddenException {
+	User user = getUserFromToken(deleteAnimalDTO.getUserToken());
+	Optional<LostAnimal> optional = lostAnimalDAO.findById(deleteAnimalDTO.getAnimalId());
+	
+	if(optional.isPresent()) {
+	    LostAnimal lostAnimal = optional.get();
+	    if(lostAnimal.getOwner().getId() == user.getId()) {
+		lostAnimalDAO.delete(lostAnimal);
+		return getUserLostAnimals(deleteAnimalDTO.getUserToken(),0);
+	    }else {
+		throw new ForbiddenException("Not Owner");
+	    }
+	   
+	}
+	else {
+	    throw new InstanceNotFoundException();
+	}
     }
     
     

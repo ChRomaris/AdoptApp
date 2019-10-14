@@ -1,20 +1,23 @@
-import  { GET_LOST_ANIMALS, NEXT_PAGE, PREVIOUS_PAGE, SHOW_MODAL, CLOSE_MODAL, SAVE_LOCATION, SET_LOCATION, GET_USER_ANIMALS, GET_ANIMAL_LOCATIONS, SET_SELECTED_LOCATION} from '../actions/types'
+import  { GET_LOST_ANIMALS, NEXT_PAGE, PREVIOUS_PAGE, SHOW_MODAL, CLOSE_MODAL, SAVE_LOCATION, SET_LOCATION, GET_USER_ANIMALS, GET_ANIMAL_LOCATIONS, SET_SELECTED_LOCATION, GET_LOST_AREA, SET_MARKER_INFO, SET_ANIMAL, RESET_ANIMAL, DELETE_LOST} from '../actions/types'
 
 
 const initialState = {
     animals : [],
     actualPage: 0,
     maxPage: 0,
+    isEditing : false,
     showModal : false,
     showLocationModal : false,
     selectedLocation : {},
-    selectedAnimal : '',
+    selectedAnimal : {},
+    selectedAnimalId: '',
     selectedLatitude : '',
     selectedLongitude : '',
     isUserList: false,
     locations: [],
     locationsLoaded : false,
-    selectedLocation: ''
+    selectedLocation: '',
+    isMarkerInfo:false
 
 
 }
@@ -77,14 +80,37 @@ export default function (state = initialState, action) {
                 locationsLoaded : true
             }
         case SET_SELECTED_LOCATION :
-            console.log("SELECTED LOCATION: ")
-            console.log(action.payload)
             return{
                 ...state,
                 selectedLocation : action.payload
 
             }
+        case GET_LOST_AREA :
+            return{
+                ...state,
+                animals : action.payload.animals
+            }
+        case SET_MARKER_INFO:
+            return{
+                ...state,
+                isMarkerInfo : true
 
+            }
+        case SET_ANIMAL:
+            return{
+                ...state,
+                selectedAnimal : action.payload
+            }
+        case RESET_ANIMAL:
+            return{
+                ...state,
+                selectedAnimal : {}
+            }
+        case DELETE_LOST:
+            return{
+                ...state,
+                animals : action.payload.lostAnimals
+        }
         default : 
             return state;
     }

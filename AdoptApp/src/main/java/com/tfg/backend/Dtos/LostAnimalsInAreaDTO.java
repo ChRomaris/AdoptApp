@@ -4,17 +4,17 @@ import java.util.List;
 
 public class LostAnimalsInAreaDTO {
 
-    private List<ReturnedLostAnimalDTO> animals;
+    private List<LostAnimalInfoDTO> animals;
 
     public LostAnimalsInAreaDTO() {
 	super();
     }
 
-    public List<ReturnedLostAnimalDTO> getAnimals() {
+    public List<LostAnimalInfoDTO> getAnimals() {
         return animals;
     }
 
-    public void setAnimals(List<ReturnedLostAnimalDTO> animals) {
+    public void setAnimals(List<LostAnimalInfoDTO> animals) {
         this.animals = animals;
     }
     
