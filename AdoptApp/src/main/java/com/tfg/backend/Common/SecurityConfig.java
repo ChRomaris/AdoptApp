@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/user/update").permitAll()
 				.antMatchers("/user/addLostAnimal").permitAll()
 				.antMatchers("/user/getAnimals").permitAll()
+				.antMatchers("/user/deleteLost").permitAll()
 				.antMatchers("/shelter/list").permitAll()
 				.antMatchers("/shelter/animal/delete").permitAll()
 				.antMatchers("/animal/edit").permitAll()
@@ -48,6 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/animal/addLocation").permitAll()
 				.antMatchers("/animal/locationsPage").permitAll()
 				.antMatchers("/animal/locations").permitAll()
+				.antMatchers("/animal/lostAnimalsInArea").permitAll()
+				.antMatchers("/animal/lostAnimalInfo").permitAll()
 				.antMatchers("/catalog/products/*").permitAll()
 				.antMatchers("/catalog/products").permitAll()
 				.antMatchers("/**").hasRole("USER");

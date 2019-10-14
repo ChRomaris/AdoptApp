@@ -66,6 +66,32 @@ public class AnimalConversor {
 	animalDTO.setAdoptionAnimalInfoDTO(adoptionAnimalInfoDTO);
 	return animalDTO;
     }
+    
+    public final static AnimalDTO toAnimalDTO(LostAnimal animal) {
+	AnimalDTO animalDTO = new AnimalDTO();
+	LostAnimalInfoDTO lostAnimalInfoDTO = new LostAnimalInfoDTO();
+	String image = null;
+	if (animal.getImages() != null && !animal.getImages().isEmpty()) {
+	    Set<AnimalPicture> images = animal.getImages();
+	    image = images.iterator().next().getImage();
+	}
+	animalDTO.setColor(animal.getColor());
+	animalDTO.setDescription(animal.getDescription());
+	animalDTO.setGenre(animal.getGenre());
+	animalDTO.setId(animal.getId_animal());
+	animalDTO.setName(animal.getName());
+	animalDTO.setSize(animal.getSize());
+	lostAnimalInfoDTO.setBreed(animal.getBreed());
+	lostAnimalInfoDTO.setComment(animal.getComment());
+	lostAnimalInfoDTO.setDateTime(animal.getDateTime());
+	lostAnimalInfoDTO.setLatitude(animal.getLatitude());
+	lostAnimalInfoDTO.setLongitude(animal.getLongitude());
+	lostAnimalInfoDTO.setState(animal.getState());
+	animalDTO.setLostAnimalInfoDTO(lostAnimalInfoDTO);
+	
+	return animalDTO;
+	
+    }
     public final static ReturnedAdoptionAnimalDTO toReturnedAdoptionAnimalDTO(AnimalDTO animalDTO) {
 	ReturnedAdoptionAnimalDTO returnedAdoptionAnimalDTO = new ReturnedAdoptionAnimalDTO();
 	returnedAdoptionAnimalDTO.setId(animalDTO.getId());
@@ -167,13 +193,37 @@ public class AnimalConversor {
 	lostAnimal.setGenre(animalDTO.getGenre());
 	if(animalDTO.getId() != null)
 	lostAnimal.setId_animal(animalDTO.getId());
-	lostAnimal.setLatitude(animalDTO.getLostAnimalInfoDTO().getLatitud());
-	lostAnimal.setLongitude(animalDTO.getLostAnimalInfoDTO().getLongitud());
+	lostAnimal.setLatitude(animalDTO.getLostAnimalInfoDTO().getLatitude());
+	lostAnimal.setLongitude(animalDTO.getLostAnimalInfoDTO().getLongitude());
 	lostAnimal.setName(animalDTO.getName());
 	lostAnimal.setSize(animalDTO.getSize());
 	lostAnimal.setState(animalDTO.getLostAnimalInfoDTO().getState());
 	
 	return lostAnimal;
+    }
+    
+    public final static LostAnimalInfoDTO toLostAnimalInfoDTO (LostAnimal lostAnimal) {
+	LostAnimalInfoDTO lostAnimalInfoDTO = new LostAnimalInfoDTO();
+	lostAnimalInfoDTO.setId(lostAnimal.getId_animal());
+	lostAnimalInfoDTO.setName(lostAnimal.getName());
+	lostAnimalInfoDTO.setBreed(lostAnimal.getBreed());
+	lostAnimalInfoDTO.setUserName(lostAnimal.getOwner().getUsername());
+	lostAnimalInfoDTO.setDateTime(lostAnimal.getDateTime());
+	lostAnimalInfoDTO.setLatitude(lostAnimal.getLatitude());
+	lostAnimalInfoDTO.setLongitude(lostAnimal.getLongitude());
+	if(!lostAnimal.getImages().isEmpty()) {
+	    lostAnimalInfoDTO.setImage(lostAnimal.getImages().iterator().next().getImage()); 
+	}
+	return lostAnimalInfoDTO;
+    }
+    
+    public final static List<LostAnimalInfoDTO> toLostAnimalInfoDTOList (List<LostAnimal> lostAnimalList){
+	List<LostAnimalInfoDTO> lostAnimalInfoDTOList = new ArrayList<>();
+	lostAnimalList.forEach((lostAnimal) -> {
+	    lostAnimalInfoDTOList.add(toLostAnimalInfoDTO(lostAnimal));
+	});
+	
+	return lostAnimalInfoDTOList;
     }
     
 

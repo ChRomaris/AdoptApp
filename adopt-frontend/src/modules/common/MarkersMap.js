@@ -1,6 +1,8 @@
 import React,{ Component } from "react";
 import GoogleMapReact from 'google-map-react';
 import Marker from './Marker';
+import {setAnimal} from '../animal/components/lostAnimals/actions/actions';
+import {connect} from 'react-redux';
 
 import '../../styles/userStyles.css'
 import './styles/common.css'
@@ -73,7 +75,7 @@ class MarkersMap extends Component{
             
             {this.props.markers.map(marker => (
         
-            <Marker toggleModal={()=>this.props.toggleModal(marker.id,marker.name,marker.birthDate, marker.distance, marker.image, marker.breed)}
+            <Marker toggleModal={()=>(this.props.toggleModal(marker.id,marker.name,marker.birthDate, marker.distance, marker.image, marker.breed),this.props.setAnimal(marker))}
               key={marker.id}
               lat={marker.latitude}
              lng={marker.longitude}
@@ -90,4 +92,8 @@ class MarkersMap extends Component{
 
 }
 
-export default MarkersMap;
+const mapStateToProps = state => (console.log(state),{
+  selectedAnimal : state.lostAnimals.selectedAnimal
+})
+
+export default connect (mapStateToProps,{setAnimal})(MarkersMap);

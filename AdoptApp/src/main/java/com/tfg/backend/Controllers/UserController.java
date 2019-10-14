@@ -3,6 +3,8 @@ package com.tfg.backend.Controllers;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 
+import javax.management.InstanceNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tfg.backend.Dtos.AnimalDTO;
+import com.tfg.backend.Dtos.DeleteAnimalDTO;
 import com.tfg.backend.Dtos.ErrorsDTO;
 import com.tfg.backend.Dtos.LostAnimalPageDTO;
 import com.tfg.backend.Exceptions.ForbiddenException;
@@ -53,15 +56,10 @@ public class UserController {
     public LostAnimalPageDTO getLostAnimals (@RequestParam String userToken, @RequestParam int page) {
 	return userService.getUserLostAnimals(userToken, page);
     }
-   
     
-    
-    
-    
-    
-    
-    
-    
-    
+    @PostMapping("deleteLost")
+    public LostAnimalPageDTO deleteLostAnimal (@RequestBody DeleteAnimalDTO deleteAnimalDTO) throws InstanceNotFoundException, ForbiddenException {
+	return userService.deleteLostAnimal(deleteAnimalDTO);
+    }
     
 }

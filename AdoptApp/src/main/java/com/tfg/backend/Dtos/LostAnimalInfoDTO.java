@@ -7,9 +7,9 @@ import com.tfg.backend.Entities.LostAnimal;
 import com.tfg.backend.Entities.User;
 
 public class LostAnimalInfoDTO {
-    
-    	private Float latitud;
-    	private Float longitud;
+    	private Long id;
+    	private Float latitude;
+    	private Float longitude;
     	private LostAnimal.AdoptionState state;
     	private Calendar dateTime;
     	private String comment;
@@ -17,6 +17,10 @@ public class LostAnimalInfoDTO {
     	private User user;
     	private String name;
     	private Breed breed;
+    	private String image;
+    	
+    	
+    
     	
 	public LostAnimalInfoDTO() {	
 	    super();
@@ -25,6 +29,36 @@ public class LostAnimalInfoDTO {
 	
 	
 	
+	
+	public String getImage() {
+	    return image;
+	}
+
+
+
+
+
+	public void setImage(String image) {
+	    this.image = image;
+	}
+
+
+
+
+
+	public Long getId() {
+	    return id;
+	}
+
+
+
+	public void setId(Long id) {
+	    this.id = id;
+	}
+
+
+
+
 	public String getName() {
 	    return name;
 	}
@@ -73,17 +107,17 @@ public class LostAnimalInfoDTO {
 	}
 
 
-	public Float getLatitud() {
-	    return latitud;
+	public Float getLatitude() {
+	    return latitude;
 	}
-	public void setLatitud(Float latitud) {
-	    this.latitud = latitud;
+	public void setLatitude(Float latitud) {
+	    this.latitude = latitud;
 	}
-	public Float getLongitud() {
-	    return longitud;
+	public Float getLongitude() {
+	    return longitude;
 	}
-	public void setLongitud(Float longitud) {
-	    this.longitud = longitud;
+	public void setLongitude(Float longitud) {
+	    this.longitude = longitud;
 	}
 	public LostAnimal.AdoptionState getState() {
 	    return state;

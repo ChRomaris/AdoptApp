@@ -1,7 +1,9 @@
 package com.tfg.backend.Dtos;
 import java.util.Calendar;
 import com.tfg.backend.Entities.Animal.Breed;
+import com.tfg.backend.Entities.Animal.Color;
 import com.tfg.backend.Entities.Animal.Genre;
+import com.tfg.backend.Entities.Animal.Size;
 
 public class ReturnedLostAnimalDTO {
 
@@ -13,6 +15,7 @@ public class ReturnedLostAnimalDTO {
     private Double distance;
     private Calendar dateTime;
     private String image;
+    
     
     public ReturnedLostAnimalDTO() {
 	super();

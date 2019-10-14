@@ -70,3 +70,11 @@ export function addLostAnimal(params){
     });
 }
 
+
+export function getLostAnimalInfo(animalId){
+    return request ({
+        url: "http://localhost:8080/animal/lostAnimalInfo?animalId="+animalId,
+        method: 'GET',
+    });
+}
+

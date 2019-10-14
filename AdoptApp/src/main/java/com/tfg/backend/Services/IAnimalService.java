@@ -6,9 +6,11 @@ import java.util.List;
 
 import com.tfg.backend.Dtos.AdoptionAnimalFilterDTO;
 import com.tfg.backend.Dtos.AdoptionAnimalInfoDTO;
+import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.AnimalMarkerDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
 import com.tfg.backend.Dtos.EnumsDTO;
+import com.tfg.backend.Dtos.LostAnimalsInAreaDTO;
 import com.tfg.backend.Dtos.LostAnimalsPageDTO;
 import com.tfg.backend.Dtos.ProfileDTO;
 import com.tfg.backend.Dtos.ShelterAnimalsDTO;
@@ -27,5 +29,12 @@ public interface IAnimalService {
     List<Animal> searchAdoptionAnimalByFilter(AdoptionAnimalFilterDTO filter);
 
     EnumsDTO getEnumValues();
+    
     LostAnimalsPageDTO getAllLostAnimals(int page);
+
+
+    LostAnimalsInAreaDTO getAnimalsInArea(String token);
+
+
+    AnimalDTO getLostAnimalInfo(Long animalId) throws IncorrectValueException;
 }

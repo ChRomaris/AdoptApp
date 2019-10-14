@@ -4,11 +4,13 @@ import {Container, Button, Form, FormGroup, Label, Input,FormText} from 'reactst
 import { TopMenu } from '../../../app';
 import {FormattedMessage} from 'react-intl'
 import {getTypes} from '../../actions'
-import {addLostAnimal} from '../../actions'
+import {addLostAnimal, getLostAnimalInfo} from '../../actions'
+import {resetAnimal} from './actions/actions'
 import PositionSection from '../../../common/PositionSection'
 import "react-datepicker/dist/react-datepicker.css";
 import "../animalStyles.css"
 import FileBase64 from 'react-file-base64';
+import {connect} from 'react-redux';
 
 class LostAnimalCreationForm extends Component {
     constructor(){
@@ -18,6 +20,7 @@ class LostAnimalCreationForm extends Component {
             genres:[],
             colors:[],
             sizes:[],
+            id : null,
             latitude : '',
             longitude : '',
             name : '',
@@ -27,7 +30,7 @@ class LostAnimalCreationForm extends Component {
             color : '',
             size : '',
             date : '',
-            image : '',
+            image : null,
             imageDescription: '',
             comment : ''
         }
@@ -40,6 +43,21 @@ class LostAnimalCreationForm extends Component {
     }
 
     componentDidMount(){
+        if(this.props.animalId){
+            getLostAnimalInfo(this.props.animalId).then(response =>{
+                this.setState({
+                    id   : response.id,
+                    name : response.name,
+                    genre : response.genre,
+                    breed : response.lostAnimalInfoDTO.breed,
+                    description : response.description,
+                    color : response.color,
+                    size: response.size,
+                    imageDescription : response.description,
+                    comment : response.lostAnimalInfoDTO.comment
+                })
+            })
+        }
         this.fillTypes()
         this.setDefaultValues()
     }
@@ -67,7 +85,6 @@ class LostAnimalCreationForm extends Component {
     handleChange (event){
         let target = event.target
         let value = target.value
-
         this.setState ({
             [target.name] : value,
         })
@@ -77,6 +94,7 @@ class LostAnimalCreationForm extends Component {
     handleSubmit(event){
         event.preventDefault();
         const params = {
+            id   : this.state.id,
             name : this.state.name,
             breed : this.state.breed,
             genre : this.state.genre,
@@ -86,8 +104,8 @@ class LostAnimalCreationForm extends Component {
             image : this.state.image,
             imageDescription : this.state.imageDescription,
             lostAnimalInfoDTO : {
-                latitud : this.state.latitude,
-                longitud : this.state.longitude,
+                latitude : this.state.latitude,
+                longitude : this.state.longitude,
                 state : 'LOST',
                 dateTime : this.state.date,
                 comment : this.state.comment
@@ -95,15 +113,20 @@ class LostAnimalCreationForm extends Component {
             userToken : sessionStorage.getItem('serviceToken')    
         }
         
-
+        console.log(params)
         addLostAnimal(params).then(response=>{
             ToastsStore.success("Añadido Correctamente");
+            if(this.props.hideForm){
+                this.props.hideForm();
+            }
         }).catch(error=>{
             console.log(error)
         })
     }
 
     setPosition(latitude, longitude){
+        console.log(latitude)
+        console.log(longitude)
         this.setState({
             latitude : latitude,
             longitude : longitude
@@ -196,5 +219,9 @@ class LostAnimalCreationForm extends Component {
 }
 
 
+const mapStateToProps  = state => ({
+    animalId : state.lostAnimals.selectedAnimal.id
+})
 
-export default LostAnimalCreationForm;
+
+export default connect(mapStateToProps, {resetAnimal})(LostAnimalCreationForm);
