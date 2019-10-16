@@ -1,6 +1,8 @@
 package com.tfg.backend.Dtos;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import com.tfg.backend.Entities.Shelter;
 import com.tfg.backend.Entities.Animal.Breed;
@@ -17,7 +19,8 @@ public class AnimalDTO {
 	private String description;
 	private Color color;
 	private Size size;
-	private  String image;
+	private String image;
+	private List<ImageDTO> images;	
 	private String imageDescription;
 	private Calendar imageDateTime;
 	private String userToken;
@@ -29,9 +32,26 @@ public class AnimalDTO {
 		super();
 	}
 	
+
 	
-	
-	
+
+
+	public List<ImageDTO> getImages() {
+	    return images;
+	}
+
+
+
+
+
+	public void setImages(List<ImageDTO> images) {
+	    this.images = images;
+	}
+
+
+
+
+
 	public LostAnimalInfoDTO getLostAnimalInfoDTO() {
 	    return lostAnimalInfoDTO;
 	}

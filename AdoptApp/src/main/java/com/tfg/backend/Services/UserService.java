@@ -26,6 +26,7 @@ import com.tfg.backend.Daos.IPreferencesDAO;
 import com.tfg.backend.Daos.IUserDao;
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
+import com.tfg.backend.Dtos.ImageDTO;
 import com.tfg.backend.Dtos.LostAnimalPageDTO;
 import com.tfg.backend.Dtos.LostAnimalsPageDTO;
 import com.tfg.backend.Dtos.ReturnedLostAnimalDTO;
@@ -71,15 +72,19 @@ public class UserService implements IUserService {
 	
 	animalDTO.setId(lostAnimal.getId_animal());
 	animalDTO.getLostAnimalInfoDTO().setUser(user);
-	if(animalDTO.getImage() != null) {
-	   AnimalPicture animalPicture = new AnimalPicture();
-	   animalPicture.setAnimal(lostAnimal);
-	   animalPicture.setImage(animalDTO.getImage());
-	   animalPicture.setDateTime(Calendar.getInstance());
-	   animalPicture.setDescription(animalDTO.getDescription());
-	   AnimalPicture returnedAnimalPicture = animalPictureDAO.save(animalPicture);
-	   animalDTO.setImage(returnedAnimalPicture.getImage());
+	if(!animalDTO.getImages().isEmpty()) {
+	    for (ImageDTO imageDTO : animalDTO.getImages()) {
+		AnimalPicture animalPicture = new AnimalPicture();
+		animalPicture.setAnimal(lostAnimal);
+		   animalPicture.setImage(imageDTO.getBase64());
+		   animalPicture.setDateTime(Calendar.getInstance());
+		   animalPicture.setDescription(animalDTO.getDescription());
+		   animalPictureDAO.save(animalPicture);
+		  
 	    }
+	    
+	    animalDTO.setImage(animalDTO.getImages().get(0).getBase64());
+	}
 	
 	return animalDTO;
     }

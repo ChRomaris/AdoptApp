@@ -12,6 +12,7 @@ import static com.tfg.backend.Dtos.ShelterConversor.toShelterDTOList;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -31,6 +32,7 @@ import com.tfg.backend.Daos.IShelterDAO;
 import com.tfg.backend.Daos.IUserDao;
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
+import com.tfg.backend.Dtos.ImageDTO;
 import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
 import com.tfg.backend.Dtos.SearchShelterAnimalsDTO;
 import com.tfg.backend.Dtos.ShelterAdoptionAnimalsDTO;
@@ -120,15 +122,19 @@ public class ShelterService implements IShelterService {
 	    	    Animal animal = toAdoptionAnimal(animalDTO);
 	    	    Animal returnedAnimal = animalDao.save(animal);
 	    	    animalDTO.setId(returnedAnimal.getId_animal());
-	    	    if(animalDTO.getImage() != null) {
-	    		AnimalPicture animalPicture = new AnimalPicture();
-	    		animalPicture.setAnimal(returnedAnimal);
-	    		animalPicture.setImage(animalDTO.getImage());
-	    		animalPicture.setDateTime(animalDTO.getImageDateTime());
-	    		animalPicture.setDescription(animalDTO.getDescription());
-	    		AnimalPicture returnedAnimalPicture = animalPictureDAO.save(animalPicture);
-	    		animalDTO.setImage(returnedAnimalPicture.getImage());
-	    	    }
+	    	if(!animalDTO.getImages().isEmpty()) {
+		    for (ImageDTO imageDTO : animalDTO.getImages()) {
+			 AnimalPicture animalPicture = new AnimalPicture();
+			   animalPicture.setAnimal(returnedAnimal);
+			   animalPicture.setImage(imageDTO.getBase64());
+			   animalPicture.setDateTime(Calendar.getInstance());
+			   animalPicture.setDescription(animalDTO.getDescription());
+			   animalPictureDAO.save(animalPicture);
+			  
+		    }
+		    
+		    animalDTO.setImage(animalDTO.getImages().get(0).getBase64());
+		}
 	    	    
 	    	    returnedAdoptionAnimalDTO = toReturnedAdoptionAnimalDTO(animalDTO);
 	    	}

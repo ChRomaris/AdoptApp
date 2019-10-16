@@ -29,6 +29,7 @@ class AnimalCreationForm extends Component{
             trained: '',
             state: '',
             image: '',
+            images: [],
             imageDescription: ''
         };
 
@@ -102,7 +103,7 @@ class AnimalCreationForm extends Component{
     }
 
     getFiles(files){
-        this.setState({ image: files[0].base64})
+        this.setState({ images: files})
       }
 
     handleSubmit(e){
@@ -118,6 +119,7 @@ class AnimalCreationForm extends Component{
             color : this.state.color,
             size : this.state.size,
             image : this.state.image,
+            images : this.state.images,
             imageDescription : this.state.imageDescription,
             userToken : sessionStorage.getItem('serviceToken'),
             adoptionAnimalInfoDTO : {

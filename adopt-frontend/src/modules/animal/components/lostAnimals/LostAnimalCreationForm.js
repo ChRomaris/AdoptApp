@@ -30,7 +30,7 @@ class LostAnimalCreationForm extends Component {
             color : '',
             size : '',
             date : '',
-            image : null,
+            images : [],
             imageDescription: '',
             comment : ''
         }
@@ -87,6 +87,7 @@ class LostAnimalCreationForm extends Component {
             color : this.state.color,
             size : this.state.size,
             image : this.state.image,
+            images : this.state.images,
             imageDescription : this.state.imageDescription,
             lostAnimalInfoDTO : {
                 latitude : this.state.latitude,
@@ -118,7 +119,7 @@ class LostAnimalCreationForm extends Component {
 
 
     getFiles(files){
-        this.setState({ image: files[0].base64})
+        this.setState({ images: files},(console.log(this.state.images)))
       }
 
 
