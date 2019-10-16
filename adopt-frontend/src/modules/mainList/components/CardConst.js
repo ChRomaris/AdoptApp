@@ -26,7 +26,7 @@ render(){
     console.log(this.props);
     return(
         <Card>
-        <CardHeader>{this.props.name}</CardHeader>
+        <CardHeader>{this.props.animal.name}</CardHeader>
         <CardBody className="cardBody">
             <div className="picture">
                 <PreviewImage image = {this.props.animal.image}/>

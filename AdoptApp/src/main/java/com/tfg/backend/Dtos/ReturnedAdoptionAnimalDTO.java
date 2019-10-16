@@ -3,6 +3,7 @@ package com.tfg.backend.Dtos;
 import java.util.Calendar;
 
 import com.tfg.backend.Entities.Shelter;
+import com.tfg.backend.Entities.AdoptionAnimal.AdoptionState;
 import com.tfg.backend.Entities.Animal.Breed;
 import com.tfg.backend.Entities.Animal.Color;
 import com.tfg.backend.Entities.Animal.Genre;
@@ -22,7 +23,7 @@ public class ReturnedAdoptionAnimalDTO {
 	private Calendar birthDate;
 	private String health_comment;
 	private Boolean trained;
-	private String state;
+	private AdoptionState state;
 	private Long adoptionTime;
 	private Long shelterId;
 	
@@ -115,12 +116,14 @@ public class ReturnedAdoptionAnimalDTO {
 	public void setTrained(Boolean trained) {
 	    this.trained = trained;
 	}
-	public String getState() {
+	public AdoptionState getState() {
 	    return state;
 	}
-	public void setState(String state) {
+
+	public void setState(AdoptionState state) {
 	    this.state = state;
 	}
+
 	public Long getAdoptionTime() {
 	    return adoptionTime;
 	}

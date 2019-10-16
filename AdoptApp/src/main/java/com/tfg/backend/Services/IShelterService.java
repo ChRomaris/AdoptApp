@@ -1,9 +1,12 @@
 package com.tfg.backend.Services;
 
 import com.tfg.backend.Dtos.ShelterDTO;
+import com.tfg.backend.Dtos.ShelterPreferencesDTO;
 
 import java.io.IOException;
 import java.util.List;
+
+import javax.management.InstanceNotFoundException;
 
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
@@ -26,5 +29,12 @@ public interface IShelterService {
 		throws ForbiddenException, IncorrectValueException;
 
 	ReturnedAdoptionAnimalDTO editAnimal(AnimalDTO animalDTO) throws IOException;
+
+	Shelter getShelterFromToken(String userToken);
+
+	ShelterPreferencesDTO editPreferences(ShelterPreferencesDTO shelterPreferencesDTO)
+		throws ForbiddenException, InstanceNotFoundException;
+
+	ShelterPreferencesDTO getPreferences(String token);
 
 }

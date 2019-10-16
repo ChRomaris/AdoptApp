@@ -9,6 +9,8 @@ import java.util.Optional;
 import javax.management.InstanceNotFoundException;
 
 import static com.tfg.backend.Dtos.AnimalConversor.toLostAnimal;
+import static com.tfg.backend.Dtos.PreferencesConversor.toUserPreferencesDTO;
+import static com.tfg.backend.Dtos.PreferencesConversor.toPreferences;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,14 +22,17 @@ import com.tfg.backend.Common.JwtInfo;
 import com.tfg.backend.Daos.IAnimalDao;
 import com.tfg.backend.Daos.IAnimalPictureDao;
 import com.tfg.backend.Daos.ILostAnimalDAO;
+import com.tfg.backend.Daos.IPreferencesDAO;
 import com.tfg.backend.Daos.IUserDao;
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
 import com.tfg.backend.Dtos.LostAnimalPageDTO;
 import com.tfg.backend.Dtos.LostAnimalsPageDTO;
 import com.tfg.backend.Dtos.ReturnedLostAnimalDTO;
+import com.tfg.backend.Dtos.UserPreferencesDTO;
 import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.LostAnimal;
+import com.tfg.backend.Entities.Preferences;
 import com.tfg.backend.Entities.Profile;
 import com.tfg.backend.Entities.User;
 import com.tfg.backend.Exceptions.ForbiddenException;
@@ -49,6 +54,8 @@ public class UserService implements IUserService {
     
     @Autowired
     IAnimalPictureDao animalPictureDAO;
+    @Autowired
+    IPreferencesDAO preferencesDAO;
 
     
     @Override
@@ -124,6 +131,33 @@ public class UserService implements IUserService {
 	   
 	}
 	else {
+	    throw new InstanceNotFoundException();
+	}
+    }
+    
+    @Override
+    public UserPreferencesDTO getPreferences(String token) {
+	User user = getUserFromToken(token);
+	Preferences preferences = user.getPreferences();
+	
+	return toUserPreferencesDTO(preferences);
+	
+    }
+    
+    @Override
+    public UserPreferencesDTO editPreferences(UserPreferencesDTO userPreferencesDTO) throws ForbiddenException, InstanceNotFoundException {
+	User user = getUserFromToken(userPreferencesDTO.getUserToken());
+	Optional<Preferences> optional = preferencesDAO.findById(userPreferencesDTO.getPreferencesId());
+	if(optional.isPresent()) {
+		Preferences preferences = toPreferences(userPreferencesDTO);
+		if(optional.get().getProfile().getId() == user.getId()) {
+		    	preferences.setProfile(user);
+			preferencesDAO.save(preferences);
+			return toUserPreferencesDTO(preferences);
+		}else {
+		    throw new ForbiddenException("Usuario Invalido");
+		}
+	}else {
 	    throw new InstanceNotFoundException();
 	}
     }

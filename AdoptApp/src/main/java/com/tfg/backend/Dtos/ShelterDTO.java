@@ -3,13 +3,16 @@ package com.tfg.backend.Dtos;
 import javax.persistence.Column;
 
 public class ShelterDTO {
-    
+    	private Long id;
 	private String type;
 	private String name;
 	private Long phoneNumber;
 	private String email;
 	private String address;
 	private String description;
+	private Float latitude;
+	private Float longitude;
+	private Double distance;
 	
 	
 	public ShelterDTO() {
@@ -18,6 +21,107 @@ public class ShelterDTO {
 	
 	
 	
+	
+	
+
+
+
+	public Double getDistance() {
+	    return distance;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	public void setDistance(Double distance) {
+	    this.distance = distance;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	public Float getLatitude() {
+	    return latitude;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	public void setLatitude(Float latitude) {
+	    this.latitude = latitude;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	public Float getLongitude() {
+	    return longitude;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	public void setLongitude(Float longitude) {
+	    this.longitude = longitude;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	public Long getId() {
+	    return id;
+	}
+
+
+
+	public void setId(Long id) {
+	    this.id = id;
+	}
+
+
+
 	public String getDescription() {
 	    return description;
 	}

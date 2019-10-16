@@ -36,12 +36,8 @@ class LostAnimalCard extends Component{
     }
 
     editClick(animalId){
-        const animal = {
-            id : animalId
-        }
-
-        this.props.setAnimal(animal);
-        this.props.showForm();
+        this.props.editAnimal(animalId)
+        console.log("LostAnimalCard - edit")
     }
 
     deleteClick(animalId){

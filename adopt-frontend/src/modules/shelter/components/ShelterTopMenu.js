@@ -66,19 +66,11 @@ class ShelterTopMenu extends Component {
                   <span className="mr-2"><FormattedMessage id="menu.label.profile"/></span>
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
+                <MDBDropdownItem ><a href="#/shelter/preferences"><FormattedMessage id="menu.label.preferences"/></a></MDBDropdownItem>
                   <MDBDropdownItem ><a href="#/shelter/update"><FormattedMessage id="menu.label.shelterInfo"/></a></MDBDropdownItem>
                   <MDBDropdownItem   onClick={this.logout} ><a href="/"><FormattedMessage id="menu.label.logout"/></a></MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
-            </MDBNavItem>
-          </MDBNavbarNav>
-          <MDBNavbarNav right>
-            <MDBNavItem>
-              <MDBFormInline waves>
-                <div className="md-form my-0">
-                  <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
-                </div>
-              </MDBFormInline>
             </MDBNavItem>
           </MDBNavbarNav>
         </MDBCollapse>

@@ -4,8 +4,10 @@ import {getLostAnimalsInArea, showModal, setMarkerInfo} from './actions/actions'
 import MarkerMapMain from '../../../common/MarkerMapMain';
 import TopMenu from '../../../app/components/TopMenu';
 import LostAnimalInfoModal from './LostAnimalInfoModal';
+import AddLocationModal from './AddLocationModal';
 
 class LostMapPage extends Component{
+
 
     componentDidMount (){
         const params = {
@@ -14,6 +16,10 @@ class LostMapPage extends Component{
         this.props.setMarkerInfo();
         this.props.getLostAnimalsInArea(params);
     }
+
+
+
+
 
     render(){
         return(

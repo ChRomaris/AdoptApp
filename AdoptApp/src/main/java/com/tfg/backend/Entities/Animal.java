@@ -60,13 +60,14 @@ public class Animal {
 	private String name;
 	@Column
 	private Genre genre;
-	@Column
+	@Column	
 	private Breed breed;
 	@Column
 	private String description;
 	@Column
 	private Color color;
 	@Column
+	
 	private Size size;
 	@JsonManagedReference
 	@OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

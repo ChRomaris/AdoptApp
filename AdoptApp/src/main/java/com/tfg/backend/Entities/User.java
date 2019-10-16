@@ -36,11 +36,21 @@ public class User extends Profile {
 	@OneToMany(mappedBy="owner", cascade = CascadeType.ALL)
 	private List<LostAnimal> lostAnimals;
 
+
 	
 	public User() {
 	    setRole(RoleType.USER);
 	}
 	
+
+	public List<LostAnimal> getLostAnimals() {
+	    return lostAnimals;
+	}
+
+	public void setLostAnimals(List<LostAnimal> lostAnimals) {
+	    this.lostAnimals = lostAnimals;
+	}
+
 
 	public String getEmail() {
 		return email;

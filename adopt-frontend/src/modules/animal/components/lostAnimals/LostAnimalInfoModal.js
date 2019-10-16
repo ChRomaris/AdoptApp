@@ -32,6 +32,26 @@ function renderMarkerInfo(props){
         )
     }
 }
+
+function renderButtons(props){
+    if(props.isMarkerInfo){
+        console.log(props)
+        return(
+            <div className="lostAnimal-modal-footer">
+            <button className="btn-cancel" onClick={props.closeModal}><FormattedMessage id = "form.button.close" /></button>
+            <button className="btn-cancel" onClick={props.closeModal}><FormattedMessage id = "form.button.contact" /></button>
+            <button className="btn-cancel" ><FormattedMessage id = "form.button.locate" /></button>
+        </div>
+    )
+    }else{
+        return (
+            <div className="lostAnimal-modal-footer">
+            <button className="btn-cancel" onClick={props.closeModal}><FormattedMessage id = "form.button.close" /></button>
+            <button className="btn-cancel" onClick={props.closeModal}><FormattedMessage id = "form.button.contact" /></button>
+        </div>
+        )
+    }
+}
 const LostAnimalInfoModal = (props) => {
     return(
         <div>
@@ -45,10 +65,7 @@ const LostAnimalInfoModal = (props) => {
                 {renderMarkerInfo(props)}
 
             </div>
-            <div className="lostAnimal-modal-footer">
-                <button className="btn-cancel" onClick={props.closeModal}><FormattedMessage id = "form.button.close" /></button>
-                <button className="btn-cancel" onClick={props.closeModal}><FormattedMessage id = "form.button.contact" /></button>
-            </div>
+                {renderButtons(props)}
         </div>
     </div>
     )

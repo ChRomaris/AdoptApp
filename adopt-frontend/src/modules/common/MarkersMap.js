@@ -31,11 +31,7 @@ class MarkersMap extends Component{
 
       if(this.props.markers.length){
         this.setState({
-          markers : this.props.markers,
-          center :{
-           lat : this.props.markers[0].latitude,
-           lng : this.props.markers[0].longitude
-          } 
+          markers : this.props.markers
 
         })
 
@@ -74,8 +70,8 @@ class MarkersMap extends Component{
             >
             
             {this.props.markers.map(marker => (
-        
-            <Marker toggleModal={()=>(this.props.toggleModal(marker.id,marker.name,marker.birthDate, marker.distance, marker.image, marker.breed),this.props.setAnimal(marker))}
+    
+            <Marker toggleModal={()=>(this.props.toggleModal(marker),this.props.setAnimal(marker))}
               key={marker.id}
               lat={marker.latitude}
              lng={marker.longitude}

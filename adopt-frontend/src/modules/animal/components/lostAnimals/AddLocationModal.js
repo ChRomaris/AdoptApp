@@ -18,7 +18,7 @@ const AddLocationModal = (props) => {
                 <span className="close-modal-btn" onClick={props.close}>×</span>
             </div>
             <div className="addLocation-modal-body">
-                <p><AddLocationMap setParentLocationState = {props.set}></AddLocationMap></p>
+                <AddLocationMap setParentLocationState = {props.set}></AddLocationMap>
                 <div>
                 <Form >
                     <FormGroup>

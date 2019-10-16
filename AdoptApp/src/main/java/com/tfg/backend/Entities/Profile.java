@@ -8,8 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "Profile")
@@ -29,10 +31,33 @@ public abstract class Profile {
     private Float longitude;
     @Column
     private RoleType role;
+    @OneToOne(mappedBy = "profile")
+    private Preferences preferences;
+    
 
     public Profile() {
 	super();
     }
+    
+    
+    
+
+  
+    public Preferences getPreferences() {
+        return preferences;
+    }
+
+
+
+
+
+    public void setPreferences(Preferences preferences) {
+        this.preferences = preferences;
+    }
+
+
+
+
 
     public RoleType getRole() {
 	return role;

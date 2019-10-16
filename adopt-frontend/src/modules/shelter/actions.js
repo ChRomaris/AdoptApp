@@ -65,4 +65,19 @@ export function deleteShelterAnimal (param){
                 body: JSON.stringify(shelterInfo)
             });
         }
+
+        export function getShelterPreferences (userToken){
+            return request ({
+                url: "http://localhost:8080/shelter/preferences?userToken="+userToken,
+                method: 'GET',
+            });
+        }
+
+        export function setShelterPreferences(params){
+            return request ({
+                url: "http://localhost:8080/shelter/preferences",
+                method: 'POST',
+                body: JSON.stringify(params)
+            });
+        }
         

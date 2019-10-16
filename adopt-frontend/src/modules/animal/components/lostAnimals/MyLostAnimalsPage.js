@@ -4,21 +4,22 @@ import {TopMenu} from '../../../app';
 import {connect} from 'react-redux';
 import {getUserAnimals} from './actions/actions'
 import AnimalCreationForm from "../AnimalCreationForm";
-import LostAnimalCreationForm from "./LostAnimalCreationForm";
+import LostAnimalUpdateForm from "./LostAnimalCreationForm";
 
 class MyLostAnimalsPage extends Component{
     constructor(){
         super()
 
         this.state = {
-            isFormShowing : false
+            isFormShowing : false,
+            selectedAnimalId: ''
         }
-        this.showForm = this.showForm.bind(this)
         this.hideForm = this.hideForm.bind(this)
         this.renderListForm = this.renderListForm.bind(this)
         this.locationsClick = this.locationsClick.bind(this)
         this.renderListForm = this.renderListForm.bind(this)
         this.getAnimals = this.getAnimals.bind(this)
+        this.editAnimal = this.editAnimal.bind(this)
     }
 
     componentDidMount(){ 
@@ -34,16 +35,14 @@ class MyLostAnimalsPage extends Component{
         this.props.getUserAnimals(params)
     }
 
-    showForm () {
-        this.setState({
-            isFormShowing : true
-        })
+    editAnimal(animalId){
+        this.props.history.replace("/user/animals/"+animalId)
     }
 
     hideForm(){
         
         this.setState({
-            isFormShowing : false
+            selectedAnimalId : ''
         },this.getAnimals())
     }
 
@@ -52,12 +51,11 @@ class MyLostAnimalsPage extends Component{
     }
 
     renderListForm(){
-        if(this.state.isFormShowing){
-            console.log(this.props.selectedAnimal)
-            return <LostAnimalCreationForm hideForm = {this.hideForm} ></LostAnimalCreationForm>
+        if(this.state.selectedAnimalId != ''){
+            return <LostAnimalUpdateForm></LostAnimalUpdateForm>
         }
         else{
-            return <LostAnimalsList redirectLocations={this.locationsClick} showForm = {this.showForm}></LostAnimalsList>
+            return <LostAnimalsList redirectLocations={this.locationsClick} editAnimal = {this.editAnimal} ></LostAnimalsList>
         }
     }
 

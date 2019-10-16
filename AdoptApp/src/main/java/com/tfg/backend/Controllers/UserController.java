@@ -22,6 +22,7 @@ import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
 import com.tfg.backend.Dtos.ErrorsDTO;
 import com.tfg.backend.Dtos.LostAnimalPageDTO;
+import com.tfg.backend.Dtos.UserPreferencesDTO;
 import com.tfg.backend.Exceptions.ForbiddenException;
 import com.tfg.backend.Services.IUserService;
 
@@ -61,5 +62,17 @@ public class UserController {
     public LostAnimalPageDTO deleteLostAnimal (@RequestBody DeleteAnimalDTO deleteAnimalDTO) throws InstanceNotFoundException, ForbiddenException {
 	return userService.deleteLostAnimal(deleteAnimalDTO);
     }
+    
+    @GetMapping("/preferences")
+    public UserPreferencesDTO getPreferences (@RequestParam String userToken) {
+	return userService.getPreferences(userToken);
+    }
+    
+    
+    @PostMapping("/preferences")
+    public UserPreferencesDTO editPreferences (@RequestBody UserPreferencesDTO userPreferencesDTO) throws InstanceNotFoundException, ForbiddenException {
+	return userService.editPreferences(userPreferencesDTO);
+    }
+    
     
 }

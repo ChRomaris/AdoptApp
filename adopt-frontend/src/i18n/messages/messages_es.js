@@ -63,8 +63,21 @@ export default{
     'form.enum.female' : 'Femia',
     'form.tittle.addLocation' : 'Indique la posición en la que ha visto al animal: ',
     'form.button.contact' : 'Contactar',
-
-
+    'menu.label.preferences' : 'Preferencias',
+    'form.tittle.distancePreferences': 'Preferencias distancia',
+    'form.label.lostDistance': 'Distancia maxima animales perdidos (KM)',
+    'form.label.adoptionDistance': 'Distancia maxima animales adopcion (KM)',
+    'form.tittle.animalPreferences': 'Preferencias animales adopción',
+    'form.button.edit':'Editar',
+    'form.field.selectBreed': 'Seleccionar una raza',
+    'form.field.selectGenre': 'Seleccionar un genero',
+    'form.field.selectColor': 'Seleccionar una color',
+    'form.field.selectSize': 'Seleccionar un tamaño',
+    'form.info.animalPreferences' : 'A continuación puede indicar información acerca del animal en adopción que este buscando para que se notifique en caso de que se añadan animales que cumplan los requisitos: ',
+    'form.info.distancePreferences' : 'A continuación puede indicar la distancia máxima a la que se encontraran los animales resultado de las búsquedas: ',
+    'form.info.summary': 'Marcar para recibir boletines semanales con los animales en adopcion añadidos ',
+    'form.button.locate':'Localizar',
+    'form.button.animal': 'Ver animales'
 
 
 }

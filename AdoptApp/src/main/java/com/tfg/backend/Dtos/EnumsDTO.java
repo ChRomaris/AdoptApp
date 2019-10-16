@@ -2,6 +2,7 @@ package com.tfg.backend.Dtos;
 
 import java.util.List;
 
+import com.tfg.backend.Entities.AdoptionAnimal.AdoptionState;
 import com.tfg.backend.Entities.Animal.Breed;
 import com.tfg.backend.Entities.Animal.Color;
 import com.tfg.backend.Entities.Animal.Genre;
@@ -13,6 +14,7 @@ public class EnumsDTO {
     public List<Genre> genres;
     public List<Color> colors;
     public List<Size> sizes;
+    public List<AdoptionState> adoptionStates;
     
     
     public EnumsDTO() {
@@ -43,6 +45,13 @@ public class EnumsDTO {
     public void setSizes(List<Size> sizes) {
         this.sizes = sizes;
     }
-    
+
+    public List<AdoptionState> getAdoptionStates() {
+        return adoptionStates;
+    }
+
+    public void setAdoptionStates(List<AdoptionState> adoptionStates) {
+        this.adoptionStates = adoptionStates;
+    }    
     
 }

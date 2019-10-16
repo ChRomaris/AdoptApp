@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tfg.backend.Common.JwtGenerator;
 import com.tfg.backend.Common.JwtInfo;
+import com.tfg.backend.Daos.IPreferencesDAO;
 import com.tfg.backend.Daos.IProfileDao;
 import com.tfg.backend.Daos.IShelterDAO;
 import com.tfg.backend.Daos.IUserDao;
@@ -27,6 +28,7 @@ import com.tfg.backend.Dtos.ProfileDTO;
 import com.tfg.backend.Dtos.ShelterDTO;
 import com.tfg.backend.Dtos.UserDTO;
 import com.tfg.backend.Entities.User;
+import com.tfg.backend.Entities.Preferences;
 import com.tfg.backend.Entities.Profile;
 import com.tfg.backend.Entities.RoleType;
 import com.tfg.backend.Entities.Shelter;
@@ -44,13 +46,25 @@ public class ProfileService implements IProfileService {
     JwtGenerator tokenProvider;
     @Autowired
     private JwtGenerator jwtGenerator;
+    @Autowired
+    private IPreferencesDAO preferencesDAO;
 
     @Override
     @Transactional
     public ProfileDTO registerProfile(ProfileDTO profileDTO) {
+	//Guardamos el perfil
 	Profile profile = toProfile(profileDTO);
 	profileDAO.save(profile);
-
+	
+	// Creamos las preferencias por defecto del usuario
+	Preferences preferences = new Preferences();
+	preferences.setMaxAdoptionDistance(new Double(100));
+	preferences.setMaxLostDistance(new Double(100));
+	preferences.setSummary(true);
+	preferences.setProfile(profile);
+	
+	preferencesDAO.save(preferences);
+	
 	// Generamos el token del perfil
 	JwtInfo jwtInfo = new JwtInfo(profile.getId(), profile.getUsername(), profile.getRole());
 	String token = jwtGenerator.generate(jwtInfo);
@@ -150,5 +164,7 @@ public class ProfileService implements IProfileService {
 	}
 
     }
+    
+    
 
 }

@@ -6,6 +6,8 @@ import logo from '../../../images/cat2.gif';
 import InfoUserForm from '../components/InfoUserForm';
 import InfoShelterForm from '../components/InfoShelterForm';
 import {FormattedMessage} from 'react-intl'
+import {getPreferences} from '../actions/actions';
+import {connect} from 'react-redux'
 
 
 class SignUpForm extends Component {
@@ -86,7 +88,8 @@ class SignUpForm extends Component {
             this.props.history.replace("/addLocation")
             sessionStorage.setItem('serviceToken', response.token);
             sessionStorage.setItem('userId', response.id);
-            ToastsStore.success("Registrado Correctamente");   
+            ToastsStore.success("Registrado Correctamente");
+
         }).catch(error => {
           ToastsStore.error(error.globalError);
         });
@@ -114,6 +117,7 @@ class SignUpForm extends Component {
             sessionStorage.setItem('serviceToken', response.token);
             sessionStorage.setItem('userId', response.id);
             ToastsStore.success("Registrado Correctamente");
+            this.props.getPreferences(response.token);
             this.props.history.replace("/addLocation")
 
         }).catch(error => {
@@ -171,4 +175,4 @@ class SignUpForm extends Component {
           </div> );
     }
 }
-export default SignUpForm;
+export default connect(null, {getPreferences})(SignUpForm);

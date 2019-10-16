@@ -1,6 +1,6 @@
 import React,{ Component } from "react";
 import MarkerMapMain from "../../common/MarkerMapMain";
-import {getNearbyAdoptionAnimals} from "../actions";
+import {getSheltersInArea} from "../actions";
 import { TopMenu } from '../../app';
 import Modal from '../../common/Modal';
 import Moment from 'moment';
@@ -15,13 +15,7 @@ class AdoptionMapPage extends Component{
         this.state={
             markers:[],
             modalIsShowing:false,
-            animalInfo : {
-                name:"",
-                breed:"",
-                distance:"",
-                image:"",
-                birthDate:""
-            }
+            shelter : {}
         }
 
         this.toggleModal = this.toggleModal.bind(this)
@@ -30,18 +24,13 @@ class AdoptionMapPage extends Component{
 
     }
 
-    toggleModal (id,name,birthdate,distance,image,breed){
+    toggleModal (shelter){
             
-        
+        console.log("ToggleModal")
+        console.log(shelter)
             this.setState({
                 modalIsShowing: true,
-                animalInfo : {
-                    name:name,
-                    breed:breed,
-                    birthDate:Moment(birthdate).fromNow(true),
-                    distance: distance,
-                    image: image
-                }
+                shelter : shelter
                 
             });
     }
@@ -56,20 +45,16 @@ class AdoptionMapPage extends Component{
 
 
     componentDidMount(){
-        this.getAnimals();
+        this.getShelters();
        
     }
 
-    getAnimals(){
-        const params = {
-            token : sessionStorage.getItem('serviceToken')
-        }
-        getNearbyAdoptionAnimals(params).then(response=>{
+    getShelters(){
+        getSheltersInArea(sessionStorage.getItem('serviceToken')).then(response =>{
             this.setState({
-                markers: response
+                markers : response.shelters
             })
         })
-
     }
 
     render(){
@@ -78,14 +63,10 @@ class AdoptionMapPage extends Component{
         <TopMenu/>
         <div>
         <Modal
-            className="modal"
-            show={this.state.modalIsShowing}
+             className="modal"
+             show={this.state.modalIsShowing}
              close={this.closeModal}
-             name={this.state.animalInfo.name}
-             age={this.state.animalInfo.birthDate}
-             distance={this.state.animalInfo.distance}
-             image = {this.state.animalInfo.image}
-             breed = {this.state.animalInfo.breed}>
+             shelter = {this.state.shelter}>
         </Modal>
             </div>
         <div className="Overlay">

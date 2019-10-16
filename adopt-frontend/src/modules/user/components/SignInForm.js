@@ -4,7 +4,9 @@ import {login}  from '../actions';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 import {NavLink} from 'react-router-dom';
 import logo from '../../../images/cat2.gif';
-import {FormattedMessage} from 'react-intl'
+import {FormattedMessage} from 'react-intl';
+import {connect} from 'react-redux';
+import {getPreferences} from '../actions/actions';
 
 
 import '../../app/App.css';
@@ -57,9 +59,10 @@ class SignInForm extends Component {
                   sessionStorage.setItem('serviceToken', response.token);
                   sessionStorage.setItem('userId', response.id);
                   ToastsStore.success("Logueado Correctamente");
+                  this.props.getPreferences(response.token);
                   this.props.history.replace("/List")   
               }).catch(error => {
-                  
+                      console.log(error)
                      ToastsStore.error(error.globalError);
               });
 
@@ -113,6 +116,8 @@ class SignInForm extends Component {
         );}}
 
     
+const mapStateToProps = state =>(console.log(state),{
+  profilePreferences : state.user.profilePreferences
+})
 
-
-export default SignInForm;
+export default connect(mapStateToProps,{getPreferences})(SignInForm);

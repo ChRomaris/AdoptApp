@@ -9,18 +9,19 @@ import com.tfg.backend.Entities.User;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 public interface ILostAnimalDAO extends PagingAndSortingRepository<LostAnimal, Long> {
-    @Query("Select a From LostAnimal a  WHERE (6371 * acos (cos ( radians(:latitude) )* cos( radians( latitude ) )* cos( radians( longitude ) - radians(:longitude) )+ sin ( radians(:latitude) )* sin( radians( latitude ) )))< :maxDistance ORDER BY (6371 * acos (cos ( radians(:latitude) )* cos( radians( latitude ) )* cos( radians( longitude ) - radians(:longitude) )+ sin ( radians(:latitude) )* sin( radians( latitude ) ))) ")
+    @Query("Select a From LostAnimal a  WHERE (ST_Distance_Sphere(point(longitude, latitude), point(:longitude,:latitude )) * 0.001)<= :maxDistance "+
+	    "ORDER BY (ST_Distance_Sphere(point(longitude, latitude), point(:longitude,:latitude )) * 0.001) ")
     List<LostAnimal> searchLostAnimalsByDistance(Float latitude, Float longitude, Double maxDistance, Pageable pageRequest);
     
-    @Query("Select a From LostAnimal a  WHERE (6371 * acos (cos ( radians(:latitude) )* cos( radians( latitude ) )* cos( radians( longitude ) - radians(:longitude) )+ sin ( radians(:latitude) )* sin( radians( latitude ) )))< :maxDistance ")
+    @Query("Select a From LostAnimal a  WHERE (ST_Distance_Sphere(point(longitude, latitude), point(:longitude,:latitude )) * 0.001)<= :maxDistance ")
     List<LostAnimal> searchLostAnimalsInArea(Float latitude, Float longitude, Double maxDistance);
 
-    @Query("Select (6371 * acos (cos ( radians(:latitude) )* cos( radians( latitude ) )* cos( radians( longitude ) - radians(:longitude) )+ sin ( radians(:latitude) )* sin( radians( latitude ) ))) AS distance From LostAnimal a  "+
-	    "WHERE (6371 * acos (cos ( radians(:latitude) )* cos( radians( latitude ) )* cos( radians( longitude ) - radians(:longitude) )+ sin ( radians(:latitude) )* sin( radians( latitude ) )))< :maxDistance ORDER BY distance ")
+    @Query("Select (ST_Distance_Sphere(point(longitude, latitude), point(:longitude,:latitude )) * 0.001) AS distance From LostAnimal a  "+
+	    "WHERE (ST_Distance_Sphere(point(longitude, latitude), point(:longitude,:latitude )) * 0.001)<= :maxDistance ORDER BY distance ")
     List<Double> searchLostAnimalsDistances(Float latitude, Float longitude, Double maxDistance, Pageable pageRequest);
     
     @Query("Select Count (a)  From LostAnimal a  "+
-	    "WHERE (6371 * acos (cos ( radians(:latitude) )* cos( radians( latitude ) )* cos( radians( longitude ) - radians(:longitude) )+ sin ( radians(:latitude) )* sin( radians( latitude ) )))< :maxDistance ")
+	    "WHERE (ST_Distance_Sphere(point(longitude, latitude), point(:longitude,:latitude )) * 0.001)<= :maxDistance ")
     int countLostAnimals(Float latitude, Float longitude, Double maxDistance);
     
     List<LostAnimal> findByOwner (User user, Pageable pageRequest);

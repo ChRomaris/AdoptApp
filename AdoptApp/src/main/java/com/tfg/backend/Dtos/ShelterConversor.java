@@ -1,5 +1,9 @@
 package com.tfg.backend.Dtos;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.tfg.backend.Entities.Shelter;
 
 public class ShelterConversor {
@@ -24,9 +28,29 @@ public class ShelterConversor {
 	shelterDTO.setEmail(shelter.getEmail());
 	shelterDTO.setAddress(shelter.getAddress());
 	shelterDTO.setDescription(shelter.getDescription());
+	shelterDTO.setId(shelter.getId());
+	shelterDTO.setLatitude(shelter.getLatitude());
+	shelterDTO.setLongitude(shelter.getLongitude());
 
 	return shelterDTO;
 
     }
+    
+    public final static ShelterListDTO toShelterDTOList(List<Shelter> shelters) {
+	List<ShelterDTO> shelterList = new ArrayList<>();
+	ShelterListDTO shelterListDTO = new ShelterListDTO();
+	
+	shelters.forEach((shelter) -> {
+	 
+		shelterList.add(toShelterDTO(shelter));
+	});
+	
+	shelterListDTO.setShelters(shelterList);
+	
+	
+	return shelterListDTO;
+
+    }
+    
    
 }

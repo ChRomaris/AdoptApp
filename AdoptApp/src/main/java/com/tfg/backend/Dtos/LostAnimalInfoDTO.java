@@ -4,13 +4,14 @@ import java.util.Calendar;
 
 import com.tfg.backend.Entities.Animal.Breed;
 import com.tfg.backend.Entities.LostAnimal;
+import com.tfg.backend.Entities.LostAnimal.LostState;
 import com.tfg.backend.Entities.User;
 
 public class LostAnimalInfoDTO {
     	private Long id;
     	private Float latitude;
     	private Float longitude;
-    	private LostAnimal.AdoptionState state;
+    	private LostState state;
     	private Calendar dateTime;
     	private String comment;
     	private String userName;
@@ -119,10 +120,10 @@ public class LostAnimalInfoDTO {
 	public void setLongitude(Float longitud) {
 	    this.longitude = longitud;
 	}
-	public LostAnimal.AdoptionState getState() {
+	public LostState getState() {
 	    return state;
 	}
-	public void setState(LostAnimal.AdoptionState state) {
+	public void setState(LostState state) {
 	    this.state = state;
 	}
 	public Calendar getDateTime() {

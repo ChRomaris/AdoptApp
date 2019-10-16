@@ -1,0 +1,65 @@
+.PreferencesContainer{
+    margin-top: 2vh;
+    text-align: center;
+}
+
+.PreferencesContainer Input{
+width: 50vw;
+text-align: center;
+margin-left: 22vw;
+
+}
+
+.PreferencesContainer Select{
+    width: 50vw;
+    margin-left: 22vw;
+    text-align: center;
+    
+    }
+
+.animalPreferences
+{
+   border-width: 1px;
+   border-style: solid;
+   border-radius: 10px;
+   padding: 2vh;
+   margin-top: 2vh;
+}
+
+.animalPreferences p  {
+    font-weight: bold;
+    background-color:#D8F6F6 ;
+    border-radius: 10px;
+    font-size: 1.8vh;
+}
+.distancePreferences {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 2vh;
+}
+
+.distancePreferences p {
+font-weight: bold;
+background-color:#D8F6F6 ;
+border-radius: 10px;
+font-size: 1.8vh;
+}
+
+.checkSection{
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 2vh;
+    margin-top: 2vh;
+    height: 10vh;
+    text-align: left;
+}
+.checkSection Label {
+
+    float:left;
+}
+.react-switch{
+margin-left: 2vw;
+display: inline-block;
+}

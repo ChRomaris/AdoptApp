@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tfg.backend.Entities.AdoptionAnimal.AdoptionState;
 import com.tfg.backend.Entities.Animal.Genre;
 import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.Shelter;
@@ -14,7 +15,7 @@ public class AdoptionAnimalInfoDTO {
 	private Calendar birthDate;
 	private String health_comment;
 	private Boolean trained;
-	private String state;
+	private AdoptionState state;
 	private Long adoptionTime;
 	private Shelter shelter;
 	
@@ -56,13 +57,16 @@ public class AdoptionAnimalInfoDTO {
 	public void setTrained(Boolean trained) {
 		this.trained = trained;
 	}
-	public String getState() {
-		return state;
+
+	public AdoptionState getState() {
+	    return state;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+
+	public void setState(AdoptionState state) {
+	    this.state = state;
 	}
+
 	
 	
 	

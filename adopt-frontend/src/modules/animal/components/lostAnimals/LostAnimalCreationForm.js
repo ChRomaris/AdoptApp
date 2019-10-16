@@ -43,21 +43,6 @@ class LostAnimalCreationForm extends Component {
     }
 
     componentDidMount(){
-        if(this.props.animalId){
-            getLostAnimalInfo(this.props.animalId).then(response =>{
-                this.setState({
-                    id   : response.id,
-                    name : response.name,
-                    genre : response.genre,
-                    breed : response.lostAnimalInfoDTO.breed,
-                    description : response.description,
-                    color : response.color,
-                    size: response.size,
-                    imageDescription : response.description,
-                    comment : response.lostAnimalInfoDTO.comment
-                })
-            })
-        }
         this.fillTypes()
         this.setDefaultValues()
     }
@@ -116,9 +101,7 @@ class LostAnimalCreationForm extends Component {
         console.log(params)
         addLostAnimal(params).then(response=>{
             ToastsStore.success("Añadido Correctamente");
-            if(this.props.hideForm){
-                this.props.hideForm();
-            }
+            this.props.history.replace("/user/animals")
         }).catch(error=>{
             console.log(error)
         })
@@ -140,10 +123,14 @@ class LostAnimalCreationForm extends Component {
 
 
 
+
     render(){
+        console.log("Estado renderizado")
+        console.log(this.state)
         return(
             <div>
-            <TopMenu/>
+            <TopMenu></TopMenu>
+    
             <div className ="animalFormPage">
             <PositionSection className = "positionSection" setParentLocation = {this.setPosition} ></PositionSection>
             <Container className="animalForm">
@@ -187,6 +174,7 @@ class LostAnimalCreationForm extends Component {
                 <FormGroup>
                     <Label for="exampleSize"><FormattedMessage id='form.label.size'/></Label>
                     <Input type="select" name="size" id="exampleSize"  value={this.state.size } onChange={this.handleChange}>
+
                     {this.state.sizes.map(size => {
                             return <option key = {size}>{size}</option>
                         })}
@@ -220,7 +208,8 @@ class LostAnimalCreationForm extends Component {
 
 
 const mapStateToProps  = state => ({
-    animalId : state.lostAnimals.selectedAnimal.id
+    animalId : state.lostAnimals.selectedAnimal.id,
+    isUserList : state.lostAnimals.isUserList
 })
 
 

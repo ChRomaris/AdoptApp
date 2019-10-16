@@ -1,6 +1,8 @@
 package com.tfg.backend.Entities;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -9,9 +11,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.tfg.backend.Entities.Animal.Breed;
 
 @Entity
 public class AdoptionAnimal extends Animal {
+    
+    public static enum AdoptionState{
+	IN_ADOPTION, ADOPTED
+    }
+    
     @Column
     private Long adoptionTime;
     @Column
@@ -21,7 +29,7 @@ public class AdoptionAnimal extends Animal {
     @Column
     private Boolean trained;
     @Column
-    private String state;
+    private AdoptionState state;
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "shelter", referencedColumnName = "id")
@@ -30,6 +38,11 @@ public class AdoptionAnimal extends Animal {
     public AdoptionAnimal() {
 
     }
+    
+    public static List<AdoptionState> getAdoptionStates() {
+	return Arrays.asList(AdoptionState.class.getEnumConstants());
+    }
+	
 
     public Long getAdoptionTime() {
 	return adoptionTime;
@@ -63,11 +76,13 @@ public class AdoptionAnimal extends Animal {
         this.trained = trained;
     }
 
-    public String getState() {
+
+
+    public AdoptionState getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(AdoptionState state) {
         this.state = state;
     }
 

@@ -36,10 +36,11 @@ public class Shelter extends Profile {
     @JsonManagedReference
     @OneToMany(mappedBy = "shelter", cascade = CascadeType.ALL)
     private List<AdoptionAnimal> animals;
-
+    
     public Shelter() {
 	setRole(RoleType.SHELTER);
     }
+  
 
     public String getType() {
 	return type;

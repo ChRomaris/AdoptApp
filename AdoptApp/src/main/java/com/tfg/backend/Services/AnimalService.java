@@ -43,6 +43,7 @@ import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
 import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.LostAnimal;
+import com.tfg.backend.Entities.Preferences;
 import com.tfg.backend.Entities.Shelter;
 import com.tfg.backend.Entities.User;
 import com.tfg.backend.Entities.Profile;
@@ -97,12 +98,6 @@ public class AnimalService implements IAnimalService {
 	}
 	
 	
-	
-//	@Override
-//	public void addAnimalPicture (AnimalPicture animalPicture) {
-//		animalPictureDao.save(animalPicture);
-//	}
-//	
 	@Override
 	public List<AdoptionAnimal> getAllAdoptionAnimals (){
 		List<AdoptionAnimal> allAdoptionAnimals = new ArrayList<>();
@@ -168,7 +163,9 @@ public class AnimalService implements IAnimalService {
 	public LostAnimalsInAreaDTO getAnimalsInArea (String token) {
 	    LostAnimalsInAreaDTO lostAnimalsInAreaDTO = new LostAnimalsInAreaDTO();
 	    Profile profile = profileService.getProfileFromToken(token);
-	    List<LostAnimal> lostAnimals = lostAnimalDao.searchLostAnimalsInArea(profile.getLatitude(), profile.getLongitude(), new Double (2000));
+	    Double maxDistance = null;
+	    maxDistance = profile.getPreferences().getMaxLostDistance();
+	    List<LostAnimal> lostAnimals = lostAnimalDao.searchLostAnimalsInArea(profile.getLatitude(), profile.getLongitude(), new Double (maxDistance));
 	    List<LostAnimalInfoDTO> lostAnimalInfoDTOList = toLostAnimalInfoDTOList(lostAnimals);
 	    lostAnimalsInAreaDTO.setAnimals(lostAnimalInfoDTOList);
 	    return lostAnimalsInAreaDTO;
@@ -236,7 +233,7 @@ public class AnimalService implements IAnimalService {
 	    enumsDTO.setColors(Animal.getColors());
 	    enumsDTO.setGenres(Animal.getGenres());
 	    enumsDTO.setSizes(Animal.getSizes());
-	    
+	    enumsDTO.setAdoptionStates(AdoptionAnimal.getAdoptionStates());
 	    return enumsDTO;
 	}
 	

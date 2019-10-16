@@ -52,7 +52,7 @@ class LostAnimalsPage extends Component{
     renderModal (){
         if(this.props.showModal){
 
-            return <AddLocationModal show={window.scrollTo(0,250),true} close={this.props.closeModal} save = {this.saveLocation} set = {this.setLocation} ></AddLocationModal>
+            return <AddLocationModal show={window.scrollTo(0,500),true} close={this.props.closeModal} save = {this.saveLocation} set = {this.setLocation} ></AddLocationModal>
         }
     }
 

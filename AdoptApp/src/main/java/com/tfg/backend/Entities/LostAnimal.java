@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "LostAnimal")
 public class LostAnimal extends Animal{
     
-    public enum AdoptionState {
+    public enum LostState {
 	LOST, FOUND
     }
     
@@ -30,7 +30,7 @@ public class LostAnimal extends Animal{
     private Float longitude;
     
     @Column
-    private AdoptionState state;
+    private LostState state;
     
     @Column
     private Calendar dateTime;
@@ -84,10 +84,11 @@ public class LostAnimal extends Animal{
     public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
-    public AdoptionState getState() {
+
+    public LostState getState() {
         return state;
     }
-    public void setState(AdoptionState state) {
+    public void setState(LostState state) {
         this.state = state;
     }
     public Calendar getDateTime() {

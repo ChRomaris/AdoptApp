@@ -78,3 +78,10 @@ export function getLostAnimalInfo(animalId){
     });
 }
 
+export function getSheltersInArea(userToken){
+    return request ({
+        url: "http://localhost:8080/shelter/sheltersDistance?userToken="+userToken,
+        method: 'GET',
+    });
+}
+

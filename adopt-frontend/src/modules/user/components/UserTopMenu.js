@@ -71,17 +71,9 @@ class UserTopMenu extends Component{
                       <MDBDropdownMenu>
                         <MDBDropdownItem ><a href="#/user/update"><FormattedMessage id="menu.label.personalInfo"/></a></MDBDropdownItem>
                         <MDBDropdownItem   onClick={this.logout} ><a href="/"><FormattedMessage id="menu.label.logout"/></a></MDBDropdownItem>
+                        <MDBDropdownItem ><a href="#/user/preferences"><FormattedMessage id="menu.label.preferences"/></a></MDBDropdownItem>
                       </MDBDropdownMenu>
                     </MDBDropdown>
-                  </MDBNavItem>
-                </MDBNavbarNav>
-                <MDBNavbarNav right>
-                  <MDBNavItem>
-                    <MDBFormInline waves>
-                      <div className="md-form my-0">
-                        <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
-                      </div>
-                    </MDBFormInline>
                   </MDBNavItem>
                 </MDBNavbarNav>
               </MDBCollapse>
