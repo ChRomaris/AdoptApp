@@ -23,6 +23,7 @@ import LostMapPage from '../../animal/components/lostAnimals/LostMapPage';
 import UserPreferences from '../../user/components/UserPreferences';
 import ShelterPreferences from '../../shelter/components/ShelterPreferences';
 import LostAnimalInfoPage from '../../animal/components/lostAnimals/LostAnimalInfoPage';
+import AdoptionAnimalInfoPage from '../../animal/components/AdoptionAnimalInfoPage';
 
 
 import '../App.css';
@@ -69,6 +70,7 @@ constructor(props){
                 <Route exact path = "/animal/locations" component = {LocationsPage}></Route>
                 <Route exact path = "/lostMap" component ={LostMapPage}></Route>
                 <Route exact path = "/lost/:animalId" component ={LostAnimalInfoPage}></Route>
+                <Route exact path = "/adoption/:animalId" component = {AdoptionAnimalInfoPage}></Route>
               </Switch>
       </Router>
       </Provider>

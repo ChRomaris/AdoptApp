@@ -28,6 +28,7 @@ class LostAnimalsPage extends Component{
 
     componentDidMount(){
         this.getAnimals()
+        this.props.closeModal()
     }
 
     getAnimals(){

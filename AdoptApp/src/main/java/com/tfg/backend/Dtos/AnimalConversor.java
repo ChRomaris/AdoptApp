@@ -151,12 +151,17 @@ public class AnimalConversor {
 	returnedAdoptionAnimalDTO.setState(adoptionAnimal.getState());
 	returnedAdoptionAnimalDTO.setAdoptionTime(adoptionAnimal.getAdoptionTime());
 	returnedAdoptionAnimalDTO.setShelterId(adoptionAnimal.getShelter().getId());
+	returnedAdoptionAnimalDTO.setLatitude(adoptionAnimal.getShelter().getLatitude());
+	returnedAdoptionAnimalDTO.setLongitude(adoptionAnimal.getShelter().getLongitude());
 	if(adoptionAnimal.getImages().iterator().hasNext()) {
+	    Set<AnimalPicture> imageSet = adoptionAnimal.getImages();
 	    returnedAdoptionAnimalDTO.setImage(adoptionAnimal.getImages().iterator().next().getImage());
+	    List<AnimalPicture> imageList = new ArrayList<AnimalPicture>(imageSet);
+	    returnedAdoptionAnimalDTO.setImages(toImageDTOList(imageList));
 	}
-	
 	return returnedAdoptionAnimalDTO;
     }
+    
     public final static List<AnimalDTO> toAnimalDTOList(List<AdoptionAnimal> adoptionAnimalList) {
 	List<AnimalDTO> adoptionAnimalDTOList = new ArrayList<>();
 

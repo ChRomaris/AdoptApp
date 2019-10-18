@@ -44,7 +44,7 @@ render(){
         </div>
         </CardBody>
         
-        <CardFooter><Button onClick ={this.props.showEditingForm}><FormattedMessage id ="form.button.moreInfo"/></Button></CardFooter>
+        <CardFooter><Button onClick ={()=>this.props.showInfo(this.props.animal.id)}><FormattedMessage id ="form.button.moreInfo"/></Button></CardFooter>
         
     </Card>
     )

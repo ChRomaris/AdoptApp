@@ -1,0 +1,22 @@
+.adoptionAnimalDetailContainer{
+    width: 50vw;
+    height: 35vh;
+    margin-top: 14vh;
+    padding : 3vh;
+    background-color: #D8F6F6;
+    margin-left: 40vw;
+    
+}
+
+.singleMarkerMapContainer{
+    width: 38vw;
+    height: 50vh;
+    margin-top: 2vh;
+    float: left;
+}
+
+.markersMap{
+    width: 100%;
+    height: 100%;
+    
+}

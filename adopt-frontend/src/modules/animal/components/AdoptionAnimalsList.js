@@ -9,6 +9,8 @@ class AdoptionAnimalList extends Component{
         this.state = {
             animales : []
         }
+
+        this.showInfo = this.showInfo.bind(this);
     }
     
     componentDidMount(){
@@ -22,13 +24,17 @@ class AdoptionAnimalList extends Component{
             console.log("Error al recuperar el listado completo de animales")
         })
     }
+
+    showInfo(animalId){
+        this.props.history.replace("/adoption/"+animalId);
+    }
     
 
 
     
     render(){
         return(
-      <List animales={this.state.animales} edit = {this.editAnimal} showButtons = {false}></List>
+      <List animales={this.state.animales} edit = {this.editAnimal} showButtons = {false} showInfo = {this.showInfo}></List>
            
         )
     }

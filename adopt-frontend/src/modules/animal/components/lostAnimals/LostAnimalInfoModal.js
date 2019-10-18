@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Moment from 'moment';
 import {closeModal} from './actions/actions';
 import PreviewImage from '../../../mainList/components/PreviewImage'
+
 import './styles/styles.css';
 
 function renderMarkerInfo(props){
@@ -38,9 +39,10 @@ function renderButtons(props){
         console.log(props)
         return(
             <div className="lostAnimal-modal-footer">
-            <button className="btn-cancel" onClick={props.closeModal}><FormattedMessage id = "form.button.close" /></button>
-            <button className="btn-cancel" onClick={props.closeModal}><FormattedMessage id = "form.button.contact" /></button>
-            <button className="btn-cancel" ><FormattedMessage id = "form.button.locate" /></button>
+            <button className="btn btn-danger" onClick={props.closeModal}><FormattedMessage id = "form.button.close" /></button>
+            <button className="btn btn-primary" onClick={props.closeModal}><FormattedMessage id = "form.button.contact" /></button>
+            <button className="btn btn-primary" onClick={()=>props.showInfo(props.selectedAnimal.id)}><FormattedMessage id = "form.button.moreInfo" /></button>
+            <button className="btn btn-primary" ><FormattedMessage id = "form.button.locate" /></button>
         </div>
     )
     }else{
