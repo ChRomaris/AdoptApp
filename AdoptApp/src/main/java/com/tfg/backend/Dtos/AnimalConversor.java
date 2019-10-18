@@ -22,6 +22,24 @@ import java.util.List;
 public class AnimalConversor {
     private AnimalConversor() {
     }
+    
+    public final static ImageDTO toImageDTO(AnimalPicture animalPicture) {
+	ImageDTO imageDTO = new ImageDTO();
+	imageDTO.setBase64(animalPicture.getImage());
+	
+	return imageDTO;
+    }
+    
+    public final static List<ImageDTO> toImageDTOList (List<AnimalPicture> animalPictureList){
+	
+	List<ImageDTO> imageDTOList = new ArrayList<>();
+	animalPictureList.forEach((animalPicture) -> {
+	    imageDTOList.add(toImageDTO(animalPicture));
+	});
+	
+	return imageDTOList;
+    }
+    
     public final static AdoptionAnimal toAdoptionAnimal(AnimalDTO animal) throws IOException {
 	AdoptionAnimal adoptionAnimal = new AdoptionAnimal();
 	adoptionAnimal.setColor(animal.getColor());
@@ -47,8 +65,10 @@ public class AnimalConversor {
 	AdoptionAnimalInfoDTO adoptionAnimalInfoDTO = new AdoptionAnimalInfoDTO();
 	String image = null;
 	if (animal.getImages() != null && !animal.getImages().isEmpty()) {
-	    Set<AnimalPicture> images = animal.getImages();
-	    image = images.iterator().next().getImage();
+	    Set<AnimalPicture> imageSet = animal.getImages();
+	    image = imageSet.iterator().next().getImage();
+	    List<AnimalPicture> imageList = new ArrayList<AnimalPicture>(imageSet);
+	    animalDTO.setImages(toImageDTOList(imageList));
 	}
 	animalDTO.setColor(animal.getColor());
 	animalDTO.setDescription(animal.getDescription());
@@ -72,8 +92,10 @@ public class AnimalConversor {
 	LostAnimalInfoDTO lostAnimalInfoDTO = new LostAnimalInfoDTO();
 	String image = null;
 	if (animal.getImages() != null && !animal.getImages().isEmpty()) {
-	    Set<AnimalPicture> images = animal.getImages();
-	    image = images.iterator().next().getImage();
+	    Set<AnimalPicture> imageSet = animal.getImages();
+	    image = imageSet.iterator().next().getImage();
+	    List<AnimalPicture> imageList = new ArrayList<AnimalPicture>(imageSet);
+	    animalDTO.setImages(toImageDTOList(imageList));
 	}
 	animalDTO.setColor(animal.getColor());
 	animalDTO.setDescription(animal.getDescription());
@@ -212,8 +234,12 @@ public class AnimalConversor {
 	lostAnimalInfoDTO.setLatitude(lostAnimal.getLatitude());
 	lostAnimalInfoDTO.setLongitude(lostAnimal.getLongitude());
 	if(!lostAnimal.getImages().isEmpty()) {
-	    lostAnimalInfoDTO.setImage(lostAnimal.getImages().iterator().next().getImage()); 
+	    Set<AnimalPicture> imageSet = lostAnimal.getImages();
+	    lostAnimalInfoDTO.setImage(imageSet.iterator().next().getImage()); 
+	    List<AnimalPicture> imageList = new ArrayList<AnimalPicture>(imageSet);
+	    lostAnimalInfoDTO.setImages(toImageDTOList(imageList));
 	}
+	
 	return lostAnimalInfoDTO;
     }
     

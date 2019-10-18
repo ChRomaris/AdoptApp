@@ -12,6 +12,7 @@ class LostAnimalsPage extends Component{
         this.saveLocation = this.saveLocation.bind(this)
         this.setLocation = this.setLocation.bind(this)
         this.renderModal = this.renderModal.bind(this)
+        this.showInfo = this.showInfo.bind(this)
     }
 
     saveLocation (){
@@ -48,6 +49,10 @@ class LostAnimalsPage extends Component{
         this.props.setLocation (params)
     }
 
+    showInfo(animalId){
+        this.props.history.replace("/lost/"+animalId)
+    }
+
     //Método para renderizar el modal, de esta forma no se guarda el estado al cerrarlo
     renderModal (){
         if(this.props.showModal){
@@ -63,7 +68,7 @@ class LostAnimalsPage extends Component{
             <TopMenu></TopMenu>
             {this.renderModal()}
             <div className={this.props.showModal ? 'overlayActive' : 'overlayInactive'}></div>
-            <LostAnimalsList></LostAnimalsList>
+            <LostAnimalsList showInfo = {this.showInfo}></LostAnimalsList>
             
         </div>
         )
