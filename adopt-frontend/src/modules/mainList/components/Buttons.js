@@ -14,7 +14,8 @@ class Buttons extends Component{
 
     removeAnimal(props){
     
-        
+        console.log("Id del animal en el boton")
+        console.log(this.props.animalId)
         this.props.deleteAnimal(this.props.animalId)
         console.log("Se borra el animal");
 
@@ -29,6 +30,7 @@ class Buttons extends Component{
 
 
     render(){
+        console.log("Props en los botones")
         console.log(this.props)
         return(
             <div  className= "buttons">

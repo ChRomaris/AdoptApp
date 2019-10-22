@@ -62,13 +62,14 @@ class MarkersMap extends Component{
 
     render(){
         return(
+          <div className ="bigMapContainer">
             <div className="markersMap" >
+            {console.log(this.props)}
             <GoogleMapReact 
               bootstrapURLKeys={{ key: 'AIzaSyAREV4WoFuo_aAjetmOHXmr9ulKepuYKRo'}}
-              defaultCenter={this.state.center}
+              defaultCenter={this.props.center}
               defaultZoom={this.props.zoom}
             >
-            
             {this.props.markers.map(marker => (
     
             <Marker toggleModal={()=>(this.props.toggleModal(marker),this.props.setAnimal(marker))}
@@ -82,6 +83,7 @@ class MarkersMap extends Component{
             ))}
             </GoogleMapReact>
             
+          </div>
           </div>
         )
     }

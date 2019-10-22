@@ -1,6 +1,7 @@
 package com.tfg.backend.Dtos;
 
 import java.util.Calendar;
+import java.util.List;
 
 import com.tfg.backend.Entities.Shelter;
 import com.tfg.backend.Entities.AdoptionAnimal.AdoptionState;
@@ -18,6 +19,7 @@ public class ReturnedAdoptionAnimalDTO {
 	private Color color;
 	private Size size;
 	private  String image;
+	private List<ImageDTO> images;
 	private String imageDescription;
 	private Calendar imageDateTime;
 	private Calendar birthDate;
@@ -26,6 +28,8 @@ public class ReturnedAdoptionAnimalDTO {
 	private AdoptionState state;
 	private Long adoptionTime;
 	private Long shelterId;
+	private Float latitude;
+	private Float longitude;
 	
 	
 	
@@ -33,7 +37,51 @@ public class ReturnedAdoptionAnimalDTO {
 	    super();
 	}
 	
+
 	
+	public List<ImageDTO> getImages() {
+	    return images;
+	}
+
+
+
+	public void setImages(List<ImageDTO> images) {
+	    this.images = images;
+	}
+
+
+
+
+
+
+	public Float getLatitude() {
+	    return latitude;
+	}
+
+
+
+
+	public void setLatitude(Float latitude) {
+	    this.latitude = latitude;
+	}
+
+
+
+
+	public Float getLongitude() {
+	    return longitude;
+	}
+
+
+
+
+	public void setLongitude(Float longitude) {
+	    this.longitude = longitude;
+	}
+
+
+
+
 	public Breed getBreed() {
 	    return breed;
 	}

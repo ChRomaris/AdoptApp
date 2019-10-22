@@ -77,7 +77,8 @@ export default{
     'form.info.distancePreferences' : 'A continuación puede indicar la distancia máxima a la que se encontraran los animales resultado de las búsquedas: ',
     'form.info.summary': 'Marcar para recibir boletines semanales con los animales en adopcion añadidos ',
     'form.button.locate':'Localizar',
-    'form.button.animal': 'Ver animales'
+    'form.button.animal': 'Ver animales',
+    'form.label.adoptionTime': 'Tiempo en adopción'
 
 
 }

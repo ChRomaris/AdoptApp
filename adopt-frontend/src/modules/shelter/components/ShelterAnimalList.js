@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { getShelterAnimals } from '../actions';
 import List from '../../mainList/components/List';
 import UpdateAnimalForm from "../../animal/components/UpdateAnimalForm";
-
+import { Button } from 'reactstrap';
 import {deleteShelterAnimal} from '../actions'
 
 
@@ -17,6 +17,7 @@ function RenderEditingForm(props) {
   }
 
   function RenderListForm(props) {
+    console.log("Props del renderList")
     console.log( props);
     const isEdition = props.isEdition;
     if (isEdition) {
@@ -36,30 +37,100 @@ class ShelterAnimalList extends Component {
             animals: [],
             shelterName: '',
             isEditing:false,
-            editingAnimalId : ''
+            editingAnimalId : '',
+            page : 0,
+            totalPages : 0,
+            actualPage : 0
 
         }
         this.ShowEditingForm = this.ShowEditingForm.bind(this);
         this.ShowList = this.ShowList.bind(this);
         this.DeleteAnimal = this.DeleteAnimal.bind(this);
+        this.previousPage = this.previousPage.bind(this);
+        this.nextPage = this.nextPage.bind(this);
        
         
         
 
     }
 
+    previousPage(actual){
+        console.log("previous")
+        console.log(actual)
+        this.setState({
+            actualPage : actual - 1
+        },()=>this.getAnimalList()
+            
+        )
+        
+    }
+
+    nextPage(actual){
+        console.log("next")
+        console.log(actual)
+        this.setState({
+        
+            actualPage : actual + 1
+        },()=>this.getAnimalList()
+            
+        )
+        
+    }
+
+
+    renderButtons(){
+        if(!this.state.isEditing){
+
+        
+        if(this.state.actualPage > 0 && this.state.actualPage < this.state.totalPages)
+        {
+            return(
+                [<div className ="previousButton">
+                 <Button onClick={()=>this.previousPage(this.state.actualPage)} >
+                    Anterior
+                </Button>
+                </div>,
+                <div className ="nextButton">
+                    <Button onClick={()=>this.nextPage(this.state.actualPage)} >
+                            Siguiente
+                    </Button>
+                </div>]
+            )
+        }else if(this.state.actualPage > 0){
+            return(
+                <div className ="previousButton">
+                 <Button onClick={()=>this.previousPage(this.state.actualPage)} >
+                    Anterior
+                </Button>
+                </div>
+            )}else if (this.state.actualPage< this.state.totalPages){
+                return(
+                    <div className ="nextButton">
+                    <Button onClick={()=>this.nextPage(this.state.actualPage)} >
+                            Siguiente
+                    </Button>
+                </div>
+                )
+            }
+        }
+        }
+
     getAnimalList() {
 
         const searchShelterAnimalsDTO = {
-            token: sessionStorage.getItem('serviceToken')
+            token: sessionStorage.getItem('serviceToken'),
+            page: this.state.actualPage
         }
+        console.log("searchShelterAnimalsDTO:")
+        console.log(searchShelterAnimalsDTO)
             getShelterAnimals(searchShelterAnimalsDTO).then(response => {
-                if (response.animals != null) {
+                if (response.adoptionAnimals != null) {
                     this.setState({
-                        animals: response.animals
+                        animals: response.adoptionAnimals,
+                        totalPages : response.totalPages
                     })
                 }
-
+                console.log(this.state);
                 console.log("bien")
 
             }).catch(error => {
@@ -105,9 +176,16 @@ class ShelterAnimalList extends Component {
         this.getAnimalList();
     }
 
+    
+
 
     render() {
-      return   <RenderListForm isEdition={this.state.isEditing} animals={this.state.animals} showEditingForm={this.ShowEditingForm} animalId={this.state.editingAnimalId} deleteAnimal = {this.DeleteAnimal} showList={this.ShowList}  />
+      return   (
+        <div>
+        <RenderListForm isEdition={this.state.isEditing} animals={this.state.animals} showEditingForm={this.ShowEditingForm} animalId={this.state.editingAnimalId} deleteAnimal = {this.DeleteAnimal} showList={this.ShowList}/>
+        {this.renderButtons()}
+      </div>
+      )
     }  
 }
 

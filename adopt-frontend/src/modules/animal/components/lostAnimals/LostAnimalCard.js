@@ -13,6 +13,7 @@ class LostAnimalCard extends Component{
         this.renderFooter = this.renderFooter.bind(this)
         this.locationsClick = this.locationsClick.bind(this)
         this.deleteClick = this.deleteClick.bind(this)
+        this.moreInfoClick = this.moreInfoClick.bind(this)
     }
 
     renderGenre(){
@@ -48,12 +49,16 @@ class LostAnimalCard extends Component{
         this.props.deleteLost (params)
     }
 
+    moreInfoClick(animalId){
+        this.props.showInfo(animalId);
+    }
+
     renderFooter(animalId){
         if (this.props.isUserList){
             return [<Button onClick = {()=>this.editClick(animalId)}>Editar</Button>,<Button onClick = {()=>this.deleteClick(animalId)}>Borrar</Button>,<Button onClick={()=>this.locationsClick(animalId)}>Localizaciones</Button>]
 
         }else{
-            return [<Button>Mas Información</Button>,<Button onClick={()=>this.showModal(this.props.animal.id)}>Localizar</Button>]
+            return [<Button onClick = {()=>this.moreInfoClick(animalId)} >Mas Información</Button>,<Button onClick={()=>this.showModal(this.props.animal.id)}>Localizar</Button>]
         }
     }
 

@@ -42,18 +42,18 @@ class LocationsMap extends Component{
 
     render(){
         return(
-            <div className="markersMap" >
+            <div className="locationsMarkersMap" >
            <LostAnimalInfoModal show = {this.state.showModal} marker = {this.state.selectedMarker} close={this.closeModal}></LostAnimalInfoModal>
             <GoogleMapReact 
               bootstrapURLKeys={{ key: 'AIzaSyAREV4WoFuo_aAjetmOHXmr9ulKepuYKRo'}}
               defaultCenter={this.props.center}
               defaultZoom={this.props.zoom}
             >
-            
+
             {this.props.locations.map(marker => (
               console.log(marker.LocationId),
             <LocationMarker toggleModal={()=>this.showModal(marker)}
-              key={marker.LocationId}
+              key={marker.locationId}
               lat={marker.latitude}
              lng={marker.longitude}
              name="My Marker"

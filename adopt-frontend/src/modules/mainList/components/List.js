@@ -42,7 +42,7 @@ class List extends Component {
                     <ToastsContainer store={ToastsStore} />
                     <div>
                         {this.props.animales.map(item => (
-                            <CardConst classname="card" showEditingForm={this.showForm} animal={item} key={item.name} deleteAnimal = {this.props.deleteAnimal} showButtons = {this.props.showButtons}  ></CardConst>
+                            <CardConst classname="card" showEditingForm={this.showForm} animal={item} key={item.name} deleteAnimal = {this.props.deleteAnimal} showButtons = {this.props.showButtons} showInfo = {this.props.showInfo} ></CardConst>
                         ))}
                     </div>
 

@@ -27,6 +27,7 @@ import java.util.Locale;
 
 import javax.management.InstanceNotFoundException;
 
+import com.tfg.backend.Dtos.AdoptionAnimalsPageDTO;
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
 import com.tfg.backend.Dtos.ErrorsDTO;
@@ -68,9 +69,9 @@ public class ShelterController {
     }
 
     @PostMapping("/list")
-    public ShelterAdoptionAnimalsDTO searchShelterAnimals(@RequestBody SearchShelterAnimalsDTO param) throws ForbiddenException {
+    public AdoptionAnimalsPageDTO searchShelterAnimals(@RequestBody SearchShelterAnimalsDTO param) throws ForbiddenException {
 
-	ShelterAdoptionAnimalsDTO adoptionAnimals = shelterService.getShelterAdoptionAnimals(param);
+	AdoptionAnimalsPageDTO adoptionAnimals = shelterService.getShelterAdoptionAnimals(param);
 
 	return adoptionAnimals;
     }
@@ -90,9 +91,9 @@ public class ShelterController {
     }
 
     @PostMapping("/animal/delete")
-    public ShelterAdoptionAnimalsDTO deleteAnimal(@RequestBody DeleteAnimalDTO param)
+    public AdoptionAnimalsPageDTO deleteAnimal(@RequestBody DeleteAnimalDTO param)
 	    throws ForbiddenException, IncorrectValueException {
-	ShelterAdoptionAnimalsDTO adoptionAnimals = shelterService.deleteAnimal(param);
+	AdoptionAnimalsPageDTO adoptionAnimals = shelterService.deleteAnimal(param);
 	return adoptionAnimals;
     }
 

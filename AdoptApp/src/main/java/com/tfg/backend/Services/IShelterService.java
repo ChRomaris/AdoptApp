@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.management.InstanceNotFoundException;
 
+import com.tfg.backend.Dtos.AdoptionAnimalsPageDTO;
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
 import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
@@ -23,9 +24,9 @@ public interface IShelterService {
 
 	ReturnedAdoptionAnimalDTO addAnimal(AnimalDTO animalDTO) throws IOException;
 
-	ShelterAdoptionAnimalsDTO getShelterAdoptionAnimals(SearchShelterAnimalsDTO param) throws ForbiddenException;
+	AdoptionAnimalsPageDTO getShelterAdoptionAnimals(SearchShelterAnimalsDTO param) throws ForbiddenException;
 
-	ShelterAdoptionAnimalsDTO deleteAnimal(DeleteAnimalDTO deleteAnimalDTO)
+	AdoptionAnimalsPageDTO deleteAnimal(DeleteAnimalDTO deleteAnimalDTO)
 		throws ForbiddenException, IncorrectValueException;
 
 	ReturnedAdoptionAnimalDTO editAnimal(AnimalDTO animalDTO) throws IOException;
