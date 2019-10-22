@@ -257,8 +257,28 @@ public class AnimalConversor {
 	return lostAnimalInfoDTOList;
     }
     
-
+    public final static ReducedAdoptionAnimalDTO toReducedAdoptionAnimalDTO(AdoptionAnimal adoptionAnimal) {
+	ReducedAdoptionAnimalDTO reducedAdoptionAnimalDTO = new ReducedAdoptionAnimalDTO();
+	reducedAdoptionAnimalDTO.setId(adoptionAnimal.getId_animal());
+	reducedAdoptionAnimalDTO.setName(adoptionAnimal.getName());
+	reducedAdoptionAnimalDTO.setImage(adoptionAnimal.getImages().iterator().next().getImage());
+	reducedAdoptionAnimalDTO.setGenre(adoptionAnimal.getGenre());
+	reducedAdoptionAnimalDTO.setBirthDate(adoptionAnimal.getBirthDate());
+	reducedAdoptionAnimalDTO.setDescription(adoptionAnimal.getDescription());
+	reducedAdoptionAnimalDTO.setBreed(adoptionAnimal.getBreed());
+	
+	return reducedAdoptionAnimalDTO;
+    }
     
+    public final static List<ReducedAdoptionAnimalDTO> toReducedAdoptionAnimalDTOList(List<AdoptionAnimal> adoptionAnimals) {
+    List<ReducedAdoptionAnimalDTO> reducedAdoptionAnimalDTOList = new ArrayList<>();
     
+    adoptionAnimals.forEach((adoptionAnimal) ->{
+	reducedAdoptionAnimalDTOList.add(toReducedAdoptionAnimalDTO(adoptionAnimal));
+    });
+    
+    return reducedAdoptionAnimalDTOList;
+}
+	    
     
 }

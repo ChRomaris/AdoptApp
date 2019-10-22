@@ -21,15 +21,19 @@ import java.util.Optional;
 import javax.management.InstanceNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tfg.backend.Common.JwtGenerator;
 import com.tfg.backend.Common.JwtInfo;
+import com.tfg.backend.Daos.IAdoptionAnimalDao;
 import com.tfg.backend.Daos.IAnimalDao;
 import com.tfg.backend.Daos.IAnimalPictureDao;
 import com.tfg.backend.Daos.IPreferencesDAO;
 import com.tfg.backend.Daos.IShelterDAO;
 import com.tfg.backend.Daos.IUserDao;
+import com.tfg.backend.Dtos.AdoptionAnimalsPageDTO;
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
 import com.tfg.backend.Dtos.ImageDTO;
@@ -51,6 +55,7 @@ import com.tfg.backend.Entities.Profile;
 import com.tfg.backend.Entities.RoleType;
 import com.tfg.backend.Exceptions.ForbiddenException;
 import com.tfg.backend.Exceptions.IncorrectValueException;
+import static com.tfg.backend.Dtos.AnimalConversor.toReducedAdoptionAnimalDTOList;
 
 @Service
 public class ShelterService implements IShelterService {
@@ -76,24 +81,34 @@ public class ShelterService implements IShelterService {
     @Autowired 
     IPreferencesDAO preferencesDAO;
     
+    @Autowired
+    IAdoptionAnimalDao adoptionAnimalDAO;
+    
 
     @Override
-    public ShelterAdoptionAnimalsDTO getShelterAdoptionAnimals(SearchShelterAnimalsDTO param) throws ForbiddenException {
-	ShelterAdoptionAnimalsDTO shelterAdoptionAnimalsDTO = new ShelterAdoptionAnimalsDTO();
-	Profile profile = profileService.getProfileFromToken(param.getToken());
-	Optional <Shelter> optionalShelter = shelterDAO.findById(profile.getId());
-	Shelter shelter = optionalShelter.get();
-	shelterAdoptionAnimalsDTO.setAnimals(toReturnedAdoptionAnimalDTOList(shelter.getAnimals()));
-
+    public AdoptionAnimalsPageDTO getShelterAdoptionAnimals(SearchShelterAnimalsDTO param) throws ForbiddenException {
+	AdoptionAnimalsPageDTO adoptionAnimalsPageDTO = new AdoptionAnimalsPageDTO();
+	Shelter shelter = getShelterFromToken(param.getToken());
+	Pageable page = PageRequest.of(param.getPage(), 5);
+	List<AdoptionAnimal> adoptionAnimals = adoptionAnimalDAO.searchAdoptionAnimalsByShelter(shelter.getId(), page);
+	int totalPages = 0;
+	if(adoptionAnimalDAO.countAdoptionAnimalsByShelter(shelter.getId())==5) {
+	  totalPages = 0;
+	}else {
+	   totalPages = (adoptionAnimalDAO.countAdoptionAnimalsByShelter(shelter.getId())/5);
+	}
 	
-	return shelterAdoptionAnimalsDTO;
+	adoptionAnimalsPageDTO.setAdoptionAnimals(toReducedAdoptionAnimalDTOList(adoptionAnimals));
+	adoptionAnimalsPageDTO.setTotalPages(totalPages);
+	return adoptionAnimalsPageDTO;
     }
 
     @Override
-    public ShelterAdoptionAnimalsDTO deleteAnimal(DeleteAnimalDTO deleteAnimalDTO)
+    public AdoptionAnimalsPageDTO deleteAnimal(DeleteAnimalDTO deleteAnimalDTO)
 	    throws ForbiddenException, IncorrectValueException, ForbiddenException {
 	SearchShelterAnimalsDTO searchShelterAnimalsDTO = new SearchShelterAnimalsDTO();
 	searchShelterAnimalsDTO.setToken(deleteAnimalDTO.getUserToken());
+	searchShelterAnimalsDTO.setPage(0);
 	
 	Profile profile = profileService.getProfileFromToken(deleteAnimalDTO.getUserToken());
 	if(profile != null && profile.getRole().equals(RoleType.SHELTER)) {

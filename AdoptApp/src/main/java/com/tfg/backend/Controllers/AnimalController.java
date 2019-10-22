@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.tfg.backend.Dtos.AdoptionAnimalFilterDTO;
+import com.tfg.backend.Dtos.AdoptionAnimalsPageDTO;
 import com.tfg.backend.Dtos.AllAdoptionAnimalsDTO;
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.AnimalMarkerDTO;
@@ -26,6 +27,7 @@ import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
 import com.tfg.backend.Dtos.ReturnedLocationDTO;
 import com.tfg.backend.Dtos.ReturnedLocationsDTO;
 import com.tfg.backend.Dtos.ReturnedLocationsPageDTO;
+import com.tfg.backend.Dtos.SearchAdoptionAnimalsDTO;
 import com.tfg.backend.Dtos.SearchLostAnimalsDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
@@ -62,12 +64,9 @@ public class AnimalController {
 		locale);
 	return new ErrorsDTO(errorMessage);
     }
-    @GetMapping("/getAll")
-    public AllAdoptionAnimalsDTO getAllAdoptionAnimals() {
-	List<AdoptionAnimal> adoptionAnimals = animalService.getAllAdoptionAnimals();
-	AllAdoptionAnimalsDTO allAdoptionAnimalsDTO = new AllAdoptionAnimalsDTO();
-	allAdoptionAnimalsDTO.setAnimales(toReturnedAdoptionAnimalDTOList(adoptionAnimals));
-	return allAdoptionAnimalsDTO;
+    @PostMapping("/getAll")
+    public AdoptionAnimalsPageDTO getAllAdoptionAnimals(@RequestBody SearchAdoptionAnimalsDTO searchAdoptionAnimalsDTO) {
+	return animalService.getAdoptionAnimals(searchAdoptionAnimalsDTO);
     }
 
     @PostMapping("/nearbyAdoptionAnimals")

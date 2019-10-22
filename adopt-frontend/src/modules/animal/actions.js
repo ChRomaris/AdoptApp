@@ -40,10 +40,13 @@ export function getAnimalInfo(params){
         body: JSON.stringify(params)
     });
 }
-export function getAllAdoptionAnimals () {
+export function getAllAdoptionAnimals (params) {
+    console.log("param en actions : ")
+    console.log(params)
     return request ({
         url: "http://localhost:8080/animal/getAll",
-        method: 'GET'
+        method: 'POST',
+        body: JSON.stringify(params)
     })
 }
 

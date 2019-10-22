@@ -18,6 +18,8 @@ showForm(){
 }
 renderButtons(){
     if(this.props.showButtons){
+        console.log("Valor del animal en card")
+        console.log(this.props.animal)
         return( <Buttons animalId = {this.props.animal.id} showEditingForm = {this.showForm} deleteAnimal = {this.props.deleteAnimal} ></Buttons>   )
     }
 }

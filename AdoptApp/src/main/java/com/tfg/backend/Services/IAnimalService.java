@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.tfg.backend.Dtos.AdoptionAnimalFilterDTO;
 import com.tfg.backend.Dtos.AdoptionAnimalInfoDTO;
+import com.tfg.backend.Dtos.AdoptionAnimalsPageDTO;
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.AnimalMarkerDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
@@ -13,6 +14,7 @@ import com.tfg.backend.Dtos.EnumsDTO;
 import com.tfg.backend.Dtos.LostAnimalsInAreaDTO;
 import com.tfg.backend.Dtos.LostAnimalsPageDTO;
 import com.tfg.backend.Dtos.ProfileDTO;
+import com.tfg.backend.Dtos.SearchAdoptionAnimalsDTO;
 import com.tfg.backend.Dtos.ShelterAnimalsDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
@@ -37,4 +39,10 @@ public interface IAnimalService {
 
 
     AnimalDTO getLostAnimalInfo(Long animalId) throws IncorrectValueException;
+
+
+    AdoptionAnimalsPageDTO getAdoptionAnimals(SearchAdoptionAnimalsDTO searchAdoptionAnimalsDTO);
+
+
+//   AdoptionAnimalsPageDTO getAdoptionAnimals(SearchAdoptionAnimalsDTO searchAdoptionAnimalsDTO);
 }

@@ -26,6 +26,7 @@ import com.tfg.backend.Daos.IShelterDAO;
 import com.tfg.backend.Daos.IUserDao;
 import com.tfg.backend.Dtos.AdoptionAnimalFilterDTO;
 import com.tfg.backend.Dtos.AdoptionAnimalInfoDTO;
+import com.tfg.backend.Dtos.AdoptionAnimalsPageDTO;
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.AnimalMarkerDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
@@ -35,8 +36,10 @@ import com.tfg.backend.Dtos.LostAnimalPageDTO;
 import com.tfg.backend.Dtos.LostAnimalsInAreaDTO;
 import com.tfg.backend.Dtos.LostAnimalsPageDTO;
 import com.tfg.backend.Dtos.ProfileDTO;
+import com.tfg.backend.Dtos.ReducedAdoptionAnimalDTO;
 import com.tfg.backend.Dtos.ReturnedAdoptionAnimalDTO;
 import com.tfg.backend.Dtos.ReturnedLostAnimalDTO;
+import com.tfg.backend.Dtos.SearchAdoptionAnimalsDTO;
 import com.tfg.backend.Dtos.SearchLostAnimalsDTO;
 import com.tfg.backend.Dtos.ShelterAnimalsDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
@@ -48,11 +51,13 @@ import com.tfg.backend.Entities.Shelter;
 import com.tfg.backend.Entities.User;
 import com.tfg.backend.Entities.Profile;
 import com.tfg.backend.Exceptions.IncorrectValueException;
+import static com.tfg.backend.Dtos.AnimalConversor.toReducedAdoptionAnimalDTOList;
 import static com.tfg.backend.Dtos.AnimalConversor.toAdoptionAnimal;
 import static com.tfg.backend.Dtos.AnimalConversor.toReturnedAdoptionAnimalDTO;
 import static com.tfg.backend.Dtos.AnimalConversor.toAnimalMarkerDTO;
 import static com.tfg.backend.Dtos.AnimalConversor.toLostAnimalInfoDTOList;
 import static com.tfg.backend.Dtos.AnimalConversor.toAnimalDTO;
+
 
 @Service
 public class AnimalService implements IAnimalService {
@@ -105,6 +110,33 @@ public class AnimalService implements IAnimalService {
 		iteratorAnimals.forEachRemaining(allAdoptionAnimals::add);
 		return allAdoptionAnimals;
 	}
+	
+	@Override
+	public AdoptionAnimalsPageDTO getAdoptionAnimals(SearchAdoptionAnimalsDTO searchAdoptionAnimalsDTO) {
+	    AdoptionAnimalsPageDTO adoptionAnimalsPageDTO = new AdoptionAnimalsPageDTO();
+	    if(searchAdoptionAnimalsDTO.getUserToken()!=null) {
+		Profile profile = profileService.getProfileFromToken(searchAdoptionAnimalsDTO.getUserToken());
+		Pageable page = PageRequest.of(searchAdoptionAnimalsDTO.getPage(), 5);
+		List <AdoptionAnimal> adoptionAnimals = adoptionAnimalDao.searchAdoptionAnimalsByDistance(profile.getLatitude(), profile.getLongitude(), profile.getPreferences().getMaxAdoptionDistance(), page);
+		List <Double> distances = adoptionAnimalDao.searchAdoptionAnimalsDistances(profile.getLatitude(), profile.getLongitude(), profile.getPreferences().getMaxAdoptionDistance(), page);
+		List<ReducedAdoptionAnimalDTO> reducedAdoptionAnimals = toReducedAdoptionAnimalDTOList(adoptionAnimals);
+		Iterator distanceIterator = distances.iterator();
+		reducedAdoptionAnimals.forEach((reducedAdoptionAnimal)->{
+		    Double distance = (Double)distanceIterator.next();
+		    reducedAdoptionAnimal.setDistance(distance); 
+		});
+		
+		adoptionAnimalsPageDTO.setAdoptionAnimals(reducedAdoptionAnimals);
+		adoptionAnimalsPageDTO.setTotalPages(adoptionAnimalDao.countAdoptionAnimalsByDistance(profile.getLatitude(), profile.getLongitude(), profile.getPreferences().getMaxAdoptionDistance())/5);
+	    }else {
+		adoptionAnimalsPageDTO.setAdoptionAnimals(toReducedAdoptionAnimalDTOList(getAllAdoptionAnimals()));
+		adoptionAnimalsPageDTO.setTotalPages(adoptionAnimalDao.countAdoptionAnimals()/5);
+	    }
+	    
+	    return adoptionAnimalsPageDTO;
+	}
+	
+	
 	
 	@Override
 	public LostAnimalsPageDTO getAllLostAnimals(int page){

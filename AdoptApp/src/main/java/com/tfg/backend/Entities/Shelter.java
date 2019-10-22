@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class Shelter extends Profile {
     private String type;
     @Column
     private String name;
-    @Column
+    @Column	
     private String email;
     @Column
     private Long phoneNumber;
@@ -34,7 +35,8 @@ public class Shelter extends Profile {
     private String address;
     
     @JsonManagedReference
-    @OneToMany(mappedBy = "shelter", cascade = CascadeType.ALL)
+    
+    @OneToMany(mappedBy = "shelter", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     private List<AdoptionAnimal> animals;
     
     public Shelter() {
