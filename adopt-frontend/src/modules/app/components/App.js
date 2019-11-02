@@ -24,6 +24,9 @@ import LostAnimalInfoPage from '../../animal/components/lostAnimals/LostAnimalIn
 import AdoptionAnimalInfoPage from '../../animal/components/AdoptionAnimalInfoPage';
 import ChatPage from '../../Chat/ChatPage';
 import ActiveChatsPage from '../../Chat/ActiveChatsPage';
+import Notification from '../../common/Notification';
+import UserNotifications from '../../user/components/UserNotifications';
+import ShelterNotifications from '../../shelter/components/ShelterNotifications';
 
 
 import '../App.css';
@@ -81,8 +84,11 @@ componentDidMount(){
                 <Route exact path = "/lostMap" component ={LostMapPage}></Route>
                 <Route exact path = "/lost/:animalId" component ={LostAnimalInfoPage}></Route>
                 <Route exact path = "/adoption/:animalId" component = {AdoptionAnimalInfoPage}></Route>
-                <Route exact path = "/chat/:username" component = {ChatPage}></Route>ç
-                <Route exact path = "/chat/" component = {ActiveChatsPage}></Route>
+                <Route exact path = "/chat/:username" component = {ChatPage}></Route>
+                <Route exact path = "/notification/" component = {Notification}></Route>
+                <Route exact path = "/shelter/notifications" component = {ShelterNotifications}></Route>
+                <Route exact path = "/user/notifications" component = {UserNotifications}></Route>
+                <Route exact path = "/chat" component = {ActiveChatsPage}></Route>
               </Switch>
       </Router>
       </Provider>

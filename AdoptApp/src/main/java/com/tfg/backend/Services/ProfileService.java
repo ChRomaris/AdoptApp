@@ -98,9 +98,11 @@ public class ProfileService implements IProfileService {
 	ProfileDTO returnedProfileDTO = new ProfileDTO();
 	// Buscamos el perfil de usuario a traves del token
 	Profile profile = getProfileFromToken(profileDTO.getToken());
+	String username = profile.getUsername();
 	if (profile != null) {
 	    Profile newProfile = toProfile(profileDTO);
 	    newProfile.setId(profile.getId());
+	    newProfile.setUsername(username);
 	    Profile returnedProfile = profileDAO.save(newProfile);
 	    returnedProfileDTO = new ProfileDTO();
 	    returnedProfileDTO = toProfileDTO(returnedProfile);

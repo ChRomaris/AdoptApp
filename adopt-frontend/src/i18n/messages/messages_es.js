@@ -78,7 +78,13 @@ export default{
     'form.info.summary': 'Marcar para recibir boletines semanales con los animales en adopcion añadidos ',
     'form.button.locate':'Localizar',
     'form.button.animal': 'Ver animales',
-    'form.label.adoptionTime': 'Tiempo en adopción'
+    'form.label.adoptionTime': 'Tiempo en adopción',
+    'notification.text.adoption': 'Se ha añadido un animal en adopción que le puede interesar: ',
+    'notification.text.lost': 'Se ha perdido un animal cerca: ',
+    'form.button.animal' : 'Ver animal',
+    'form.button.notificationDelete' : 'Borrar notificación',
+    'menu.label.shelterList' : 'Lista de asociaciones',
+    'menu.label.shelterMap': 'Mapa de asociaciones'
 
 
 }

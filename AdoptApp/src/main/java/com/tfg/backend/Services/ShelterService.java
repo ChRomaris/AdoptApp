@@ -30,6 +30,7 @@ import com.tfg.backend.Common.JwtInfo;
 import com.tfg.backend.Daos.IAdoptionAnimalDao;
 import com.tfg.backend.Daos.IAnimalDao;
 import com.tfg.backend.Daos.IAnimalPictureDao;
+import com.tfg.backend.Daos.INotificationDAO;
 import com.tfg.backend.Daos.IPreferencesDAO;
 import com.tfg.backend.Daos.IShelterDAO;
 import com.tfg.backend.Daos.IUserDao;
@@ -48,6 +49,8 @@ import com.tfg.backend.Dtos.UserPreferencesDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
 import com.tfg.backend.Entities.AnimalPicture;
+import com.tfg.backend.Entities.Notification;
+import com.tfg.backend.Entities.Notification.Type;
 import com.tfg.backend.Entities.Preferences;
 import com.tfg.backend.Entities.Shelter;
 import com.tfg.backend.Entities.User;
@@ -83,6 +86,9 @@ public class ShelterService implements IShelterService {
     
     @Autowired
     IAdoptionAnimalDao adoptionAnimalDAO;
+    
+    @Autowired
+    INotificationDAO notificationDAO;
     
 
     @Override
@@ -145,6 +151,20 @@ public class ShelterService implements IShelterService {
 	    	    animalDTO.getAdoptionAnimalInfoDTO().setShelter(shelter);
 	    	    Animal animal = toAdoptionAnimal(animalDTO);
 	    	    Animal returnedAnimal = animalDao.save(animal);
+	    	    
+	    	    List<User> usersToNotify = userDAO.findByAnimalPreferences(profile.getLatitude(), profile.getLongitude(), animal.getBreed(), animal.getSize(), animal.getColor(), animal.getGenre());
+	    	    
+	    	    usersToNotify.forEach((user)->{
+	    		Notification notification = new Notification();
+	    		notification.setAnimal(returnedAnimal);
+	    		notification.setProfile(profile);
+	    		notification.setType(Type.ADOPTION_ADDED);
+	    		notification.setDate(Calendar.getInstance());
+	    		
+	    		notificationDAO.save(notification);
+	    	    });
+	    	    
+	    	    
 	    	    animalDTO.setId(returnedAnimal.getId_animal());
 	    	if(!animalDTO.getImages().isEmpty()) {
 		    for (ImageDTO imageDTO : animalDTO.getImages()) {
@@ -206,6 +226,7 @@ public class ShelterService implements IShelterService {
 	return shelterListDTO;
 	
     }
+    
     
     @Override
     public ShelterPreferencesDTO getPreferences(String token) {
