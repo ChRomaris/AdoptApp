@@ -76,9 +76,8 @@ renderText(notifications){
 
 
     render(){
-        return(
+        return(  
            <div className = "notificationSection">
-               
                {this.renderText(this.state.notifications)}
                <table>
                    <tbody>

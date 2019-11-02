@@ -68,7 +68,7 @@ class UserTopMenu extends Component{
                   <a className="nav-link" href="#/chat">Chats Activos</a>
                      </li>
                     <li className="nav-item">
-                  <a className="nav-link" href="#/user/Notifications">Notificaciones</a>
+                  <a className="nav-link" href="#/notifications">Notificaciones</a>
                      </li>
                   <MDBNavItem>
 
