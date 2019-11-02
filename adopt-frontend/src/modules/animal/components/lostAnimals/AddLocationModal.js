@@ -1,7 +1,7 @@
 import React from "react";
 import {FormattedMessage} from "react-intl";
 import AddLocationMap from '../../../common/AddLocationMap';
-import {Container, Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import {Form, FormGroup, Label, Input} from 'reactstrap';
 import './styles/styles.css';
 
 

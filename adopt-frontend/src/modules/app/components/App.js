@@ -1,8 +1,6 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import {Provider} from 'react-redux';
-import {connect} from 'react-redux';
-import {getPreferences} from  '../actions/actions';
+import {Provider, connect} from 'react-redux';
 import store from '../../../store/store';
 import SignInForm from '../../user/components/SignInForm';
 import SignUpForm from '../../user/components/SignUpForm';
@@ -24,6 +22,8 @@ import UserPreferences from '../../user/components/UserPreferences';
 import ShelterPreferences from '../../shelter/components/ShelterPreferences';
 import LostAnimalInfoPage from '../../animal/components/lostAnimals/LostAnimalInfoPage';
 import AdoptionAnimalInfoPage from '../../animal/components/AdoptionAnimalInfoPage';
+import ChatPage from '../../Chat/ChatPage';
+import ActiveChatsPage from '../../Chat/ActiveChatsPage';
 
 
 import '../App.css';
@@ -39,14 +39,23 @@ constructor(props){
     isAuthenticated: false,
     isLoading: false
   }
+
+
   
 
- 
+ }
+componentDidMount(){
+  console.log("aplicacion montada")
+  document.body.style = 'background: #D8F6F6;';
+
 }
 
 
+
   render() {
+    
     return (
+
       <Provider store = {store}>
       <Router>     
               <Switch>
@@ -58,6 +67,7 @@ constructor(props){
                 <Route exact path="/animal/edit" component={UpdateAnimalForm}></Route>
                 <Route exact path="/"  component={SignInForm}></Route>
                 <Route exact path="/List" component = {AdoptionAnimalList}></Route>
+                <Route exact path="/List/:shelterId" component = {AdoptionAnimalList}></Route>
                 <Route exact path="/user/update" component = {UpdateUser}></Route>
                 <Route preferences = {this.props.profilePreferences} exact path="/user/preferences" component = {UserPreferences}></Route>
                 <Route exact path="/addLostAnimal" component = {LostAnimalCreationForm}></Route>
@@ -71,6 +81,8 @@ constructor(props){
                 <Route exact path = "/lostMap" component ={LostMapPage}></Route>
                 <Route exact path = "/lost/:animalId" component ={LostAnimalInfoPage}></Route>
                 <Route exact path = "/adoption/:animalId" component = {AdoptionAnimalInfoPage}></Route>
+                <Route exact path = "/chat/:username" component = {ChatPage}></Route>ç
+                <Route exact path = "/chat/" component = {ActiveChatsPage}></Route>
               </Switch>
       </Router>
       </Provider>

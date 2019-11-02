@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import {FormattedMessage} from 'react-intl'
+
+import {FormattedMessage} from 'react-intl';
+import {connect} from 'react-redux';
 
 
 class InfoUserForm extends Component {
@@ -8,8 +9,6 @@ class InfoUserForm extends Component {
         super();
 
         this.state = {
-            userName: '',
-            password: '',
             name:'',
             email: '',
             address:'',
@@ -23,35 +22,30 @@ class InfoUserForm extends Component {
 
     }
 
-    componentDidMount(){
-
-    }
 
     handleChange(e) {
      
-        let target = e.target;
-        this.setState({
-          [target.name] : target.value,
-        },()=>{console.log(this.state)});
+      this.props.handleChange(e)
     }
 
 
     handleSubmit(e) {
         e.preventDefault();
-        this.props.handleSubmitUser(this.state.name, this.state.lastname, this.state.lastname2, this.state.email, this.state.genre, this.state.address);
+        this.props.handleSubmitUser();
     
     };
 
 
 
     render() {
-      
+      console.log("render")
         return (
           
         <div className="FormCenter">
             <div className="UserInfoSectionTittle">
              <h4><FormattedMessage id='form.tittle.personalInfo'/></h4>
              </div>
+             
              <div className="FormField">
                 <label className="FormField__Label" htmlFor="name"><FormattedMessage id='form.label.name'/></label>
                 <input type="text" id="name" className="FormField__Input" placeholder="Introducir nombre Asociación" name="name" defaultValue={this.state.name} onChange={this.handleChange} required />
@@ -70,21 +64,27 @@ class InfoUserForm extends Component {
                 <label className="FormField__Label" htmlFor="email"><FormattedMessage id='form.label.email'/></label>
                 <input type="email" id="email" className="FormField__Input" placeholder="Introducir Correo Electónico" name="email" defaultValue={this.state.email} onChange={this.handleChange} required />
               </div>
-              <div className="FormField">
-                <label className="FormField__Label" htmlFor="genre"><FormattedMessage id='form.label.genre'/></label>
-                <input type="text" id="genre" className="FormField__Input" placeholder="Introducir el género" name="genre" defaultValue={this.state.genre} onChange={this.handleChange} required />
-              </div>
+                            <div className="FormField">
+              <label className="FormField__Label" htmlFor="genre"><FormattedMessage id='form.label.genre'/></label>
+              <select id="genre" className="FormField__Input" name="genre" defaultValue={this.state.genre} onChange={this.handleChange} required >
+              {this.props.enumValues.genres.map(genre => {
+                            return <option key = {genre}>{genre}</option>
+                        })}  
+              </select>
+              </div> 
+              <div className="FormField"></div>
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="address"><FormattedMessage id='form.label.address'/></label>
                 <input type="text" id="address" className="FormField__Input" placeholder="Introducir dirección" name="address" defaultValue={this.state.address} onChange={this.handleChange} required />
               </div>
-            <form ref={node => this.form = node} onSubmit={(e) => this.handleSubmit(e)} className="FormFields">
-              <div className="FormField">
-                  <button type ="submit" className="FormField__Button mr-20"><FormattedMessage id='form.button.register'/></button> <Link to="/" className="FormField__Link"><FormattedMessage id='form.link.haveAccount'/></Link>
-              </div>
-            </form>
+            
+
           </div>
            );
     }
 }
-export default InfoUserForm;
+const mapStateToProps = state => (console.log(state),{
+  enumValues : state.user.userSelectorValues
+})
+
+export default connect(mapStateToProps,{})(InfoUserForm);

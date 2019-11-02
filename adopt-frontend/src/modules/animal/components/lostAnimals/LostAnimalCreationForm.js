@@ -4,7 +4,7 @@ import {Container, Button, Form, FormGroup, Label, Input,FormText} from 'reactst
 import { TopMenu } from '../../../app';
 import {FormattedMessage} from 'react-intl'
 import {getTypes} from '../../actions'
-import {addLostAnimal, getLostAnimalInfo} from '../../actions'
+import {addLostAnimal} from '../../actions'
 import {resetAnimal} from './actions/actions'
 import PositionSection from '../../../common/PositionSection'
 import "react-datepicker/dist/react-datepicker.css";

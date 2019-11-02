@@ -6,6 +6,9 @@ import {Container, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import { TopMenu } from '../../app';
 import {getAnimalInfo} from '../actions';
 import {FormattedMessage} from 'react-intl';
+import {connect} from 'react-redux';
+import {getAnimalEnums} from '../actions/actions';
+
 class UpdateAnimalForm extends Component{
     constructor(){
         super();
@@ -30,7 +33,8 @@ class UpdateAnimalForm extends Component{
     }
 
     componentDidMount(){
-        console.log("id edicion :" + this.props.animalId)
+       console.log("Formulario de edicion montado")
+       this.props.getAnimalEnums();
        const getAnimalInfoParams = {
            id: this.props.animalId
        }
@@ -51,6 +55,8 @@ class UpdateAnimalForm extends Component{
        }).catch(error => {
         ToastsStore.error("fallo recuperando info");
        })
+
+       
 
         
     }
@@ -105,7 +111,8 @@ class UpdateAnimalForm extends Component{
       }
 
     render(){
-
+     
+        console.log("render de formulario")
         return (
             <div>
             <TopMenu/>
@@ -119,43 +126,69 @@ class UpdateAnimalForm extends Component{
                     <Input type="text" name="name" id="exampleName" placeholder="Nombre de la asociación" value={this.state.name || ''} onChange={this.handleChange}></Input>     
                 </FormGroup>
                 <FormGroup>
-                    <Label for="exampleEmail"><FormattedMessage id = "form.label.genre"/></Label>
-                    <Input type="text" name="genre" id="exampleGenre" placeholder="Introducir Genero" value={this.state.genre || ''} onChange={this.handleChange}></Input>     
+                    <Label for="exampleBreed"><FormattedMessage id='form.label.breed'/></Label>
+                    <Input type="select" name="breed" id="exampleBreed"  value={this.state.breed } onChange={this.handleChange}>
+                        {this.props.enumValues.breeds.map(breed => {
+                            return <option key = {breed}>{breed}</option>
+                        })}
+                    </Input>     
+                </FormGroup>
+                <FormGroup>
+                    <Label for="exampleEmail"><FormattedMessage id='form.label.genre'/></Label>
+                    <Input type="select" name="genre" id="exampleGenre"  value={this.state.genre} onChange={this.handleChange}>
+                    {this.props.enumValues.genres.map(genre => {
+                            return <option key = {genre}>{genre}</option>
+                        })}   
+                    </Input>     
                 </FormGroup>
                 <FormGroup>
                     <Label for="exampleDescription"><FormattedMessage id = "form.label.description" /></Label>
                     <Input type="text" name="description" id="exampleDescription" placeholder="Introducir Descripción" value={this.state.description || ''} onChange={this.handleChange}></Input>     
                 </FormGroup>
                 <FormGroup>
-                    <Label for="exampleBirthDate"><FormattedMessage id = "form.lalel.birthDate" /></Label>
+                    <Label for="exampleBirthDate"><FormattedMessage id = "form.label.birthDate" /></Label>
                     <Input type="date" name="birthDate" id="exampleBirthDate" placeholder="Introducir Fecha de nacimiento" value={this.state.birthDate || ''} onChange={this.handleChange}></Input>     
                 </FormGroup> 
                 <FormGroup>
-                    <Label for="exampleHealthComment"><FormattedMessage id = "form.lalel.healthComment" /></Label>
+                    <Label for="exampleHealthComment"><FormattedMessage id = "form.label.healthComment" /></Label>
                     <Input type="text" name="healthComment" id="exampleHealthComment" placeholder="Introducir Comentario sobre salud" value={this.state.healthComment || ''} onChange={this.handleChange}></Input>     
                 </FormGroup>
                 <FormGroup>
-                    <Label for="exampleColor"><FormattedMessage id = "form.lalel.color" /></Label>
-                    <Input type="text" name="color" id="exampleColor" placeholder="Introducir Color" value={this.state.color || ''} onChange={this.handleChange}></Input>     
+                    <Label for="exampleColor"><FormattedMessage id='form.label.color'/></Label>
+                    <Input type="select" name="color" id="exampleColor"  value={this.state.color} onChange={this.handleChange}>
+                    {this.props.enumValues.colors.map(color => {
+                            return <option key = {color}>{color}</option>
+                        })}
+                    </Input>     
                 </FormGroup>
                 <FormGroup>
-                    <Label for="exampleSize"><FormattedMessage id = "form.lalel.size" /></Label>
-                    <Input type="text" name="size" id="exampleSize" placeholder="Introducir Tamaño" value={this.state.size || ''} onChange={this.handleChange}></Input>     
+                    <Label for="exampleSize"><FormattedMessage id='form.label.size'/></Label>
+                    <Input type="select" name="size" id="exampleSize"  value={this.state.size } onChange={this.handleChange}>
+
+                    {this.props.enumValues.sizes.map(size => {
+                            return <option key = {size}>{size}</option>
+                        })}
+                    </Input>     
                 </FormGroup>
                 <FormGroup>
-                    <Label for="exampleTrained"><FormattedMessage id = "form.lalel.trained" /></Label>
+                    <Label for="exampleTrained"><FormattedMessage id = "form.label.trained" /></Label>
                     <Input type="checkbox" name="trained" id="exampleTrained" placeholder="Esta entrenado" value={this.state.trained || ''} onChange={this.handleChange}></Input>     
                 </FormGroup>
                 <FormGroup>
-                    <Label for="exampleState"><FormattedMessage id = "form.label.adoptionState" /></Label>
-                    <Input type="text" name="state" id="exampleState" placeholder="Introducir Estado" value={this.state.state || ''} onChange={this.handleChange}></Input>     
+                    <Label for="exampleState"><FormattedMessage id='form.label.adoptionState'/></Label>
+                    <Input type="select" name="state" id="exampleState"  value={this.state.state } onChange={this.handleChange}>
+
+                    {this.props.enumValues.adoptionStates.map(state => {
+                            return <option key = {state}>{state}</option>
+                        })}
+                    </Input>     
                 </FormGroup>
                 <FormGroup>
-                    <Label for="exampleImage"><FormattedMessage id = "form.lalel.image" /></Label>
+                    <Label for="exampleImage"><FormattedMessage id = "form.label.image" /></Label>
                  { /*<FileBase64 multiple={ true } onDone={ this.getFiles.bind(this) } /> */}
                 </FormGroup>
                 <FormGroup>
-                    <Label for="exampleImageDescription"><FormattedMessage id = "form.lalel.imageDescription" /></Label>
+                    <Label for="exampleImageDescription"><FormattedMessage id = "form.label.imageDescription" /></Label>
                     <Input type="text" name="imageDescription" id="exampleImageDescription" placeholder="Introducir Descripcion de la imagen" value={this.state.imageDescription || ''} onChange={this.handleChange}></Input>     
                 </FormGroup>
                     <Button><FormattedMessage id = "form.button.updateInfo" /></Button>
@@ -168,4 +201,8 @@ class UpdateAnimalForm extends Component{
 
 }
 
-export default UpdateAnimalForm;
+const mapStateToProps = state => (console.log(state),{
+    enumValues : state.animal.animalSelectorValues
+})
+
+export default connect(mapStateToProps, {getAnimalEnums})(UpdateAnimalForm);

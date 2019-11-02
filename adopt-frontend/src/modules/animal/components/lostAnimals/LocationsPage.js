@@ -5,9 +5,6 @@ import LocationsMap from './LocationsMap';
 import LostAnimalInfoModal from './LostAnimalInfoModal';
 
 class LocationsPage extends Component{
-    constructor (){
-        super()
-    }
 
     render(){
 
@@ -23,7 +20,7 @@ class LocationsPage extends Component{
     }
 }
 
-const mapStateToProps = state =>(console.log(state),{
+const mapStateToProps = state =>({
     locations : state.lostAnimals.locations,
     animal : state.lostAnimals.selectedAnimal,
     showModal : state.lostAnimals.showLocationModal,

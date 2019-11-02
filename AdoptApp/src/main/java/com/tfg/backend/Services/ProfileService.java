@@ -25,6 +25,7 @@ import com.tfg.backend.Daos.IUserDao;
 import com.tfg.backend.Dtos.AuthenticatedUserDTO;
 import com.tfg.backend.Dtos.LocationDTO;
 import com.tfg.backend.Dtos.ProfileDTO;
+import com.tfg.backend.Dtos.ProfileEnumsDTO;
 import com.tfg.backend.Dtos.ShelterDTO;
 import com.tfg.backend.Dtos.UserDTO;
 import com.tfg.backend.Entities.User;
@@ -163,6 +164,17 @@ public class ProfileService implements IProfileService {
 	    throw new NoSuchElementException(); 
 	}
 
+    }
+    
+    @Override
+    public ProfileEnumsDTO getProfileEnums () {
+	
+	ProfileEnumsDTO profileEnumsDTO = new ProfileEnumsDTO();
+	profileEnumsDTO.setGenres(Profile.getGenres());
+	profileEnumsDTO.setTypes(Profile.getTypes());
+	
+	return profileEnumsDTO;
+	
     }
     
     

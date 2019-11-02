@@ -88,7 +88,15 @@ public class ShelterService implements IShelterService {
     @Override
     public AdoptionAnimalsPageDTO getShelterAdoptionAnimals(SearchShelterAnimalsDTO param) throws ForbiddenException {
 	AdoptionAnimalsPageDTO adoptionAnimalsPageDTO = new AdoptionAnimalsPageDTO();
-	Shelter shelter = getShelterFromToken(param.getToken());
+	Shelter shelter = null;
+	if(param.getToken()!=null) {
+	     shelter = getShelterFromToken(param.getToken());
+
+	}else {
+	    Optional<Shelter> optionalShelter = shelterDAO.findById(param.getShelterId());
+	     shelter = optionalShelter.get();	    
+	}
+	
 	Pageable page = PageRequest.of(param.getPage(), 5);
 	List<AdoptionAnimal> adoptionAnimals = adoptionAnimalDAO.searchAdoptionAnimalsByShelter(shelter.getId(), page);
 	int totalPages = 0;
@@ -101,6 +109,7 @@ public class ShelterService implements IShelterService {
 	adoptionAnimalsPageDTO.setAdoptionAnimals(toReducedAdoptionAnimalDTOList(adoptionAnimals));
 	adoptionAnimalsPageDTO.setTotalPages(totalPages);
 	return adoptionAnimalsPageDTO;
+
     }
 
     @Override

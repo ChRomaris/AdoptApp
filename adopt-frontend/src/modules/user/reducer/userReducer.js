@@ -1,8 +1,12 @@
-import  {GET_PREFERENCES, SET_PREFERENCES} from '../actions/types'
+import  {GET_PREFERENCES, SET_PREFERENCES, GET_USER_ENUMS} from '../actions/types'
 
 
 const initialState = {
-    profilePreferences : {}
+    profilePreferences : {},
+    userSelectorValues : {
+        types: [],
+        genres : []
+    }
 
 }
 
@@ -19,6 +23,11 @@ export default function (state = initialState, action) {
                 ...state,
                 profilePreferences : action.payload
             }
+        case GET_USER_ENUMS:
+                 return{
+                      ...state,
+                        userSelectorValues : action.payload
+                 }
         
         default : 
             return state;

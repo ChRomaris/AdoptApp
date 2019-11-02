@@ -6,8 +6,9 @@ import logo from '../../../images/cat2.gif';
 import InfoUserForm from '../components/InfoUserForm';
 import InfoShelterForm from '../components/InfoShelterForm';
 import {FormattedMessage} from 'react-intl'
-import {getPreferences} from '../actions/actions';
-import {connect} from 'react-redux'
+import {getPreferences, getUserEnums} from '../actions/actions';
+import {connect} from 'react-redux';
+import { Link } from 'react-router-dom';
 
 
 class SignUpForm extends Component {
@@ -33,6 +34,7 @@ class SignUpForm extends Component {
         this.handleSubmitUser = this.handleSubmitUser.bind(this);
         this.handleSubmitShelter = this.handleSubmitShelter.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
@@ -40,11 +42,32 @@ class SignUpForm extends Component {
       if(sessionStorage.getItem('serviceToken')!=null){
        this.props.history.replace("/List")
      }
+     this.props.getUserEnums()
+
+    }
+
+
+
+    componentDidUpdate(prevProps, prevState) {
+      console.log("Nuevos prosp")
+      console.log(this.props)
+      if(prevProps.enumValues!==this.props.enumValues){
+        this.setState({genre: this.props.enumValues.genres[0],
+                      type:this.props.enumValues.types[0] });
+        
+      }
+
+    }
+
+    componentWillReceiveProps(newProps){
+      console.log("props recibidas:")
+      console.log(newProps)
     }
 
     handleChange(e) {
-     
+        
         let target = e.target;
+        console.log(target.value)
         this.setState({
           [target.name] : target.value,
         },()=>{console.log(this.state)});
@@ -66,25 +89,34 @@ class SignUpForm extends Component {
       
     }
 
+    handleSubmit(e){
+      if(this.state.isShelter){
+        this.handleSubmitShelter(e)
+      }else{
+        this.handleSubmitUser(e)
+      }
+    }
 
-    handleSubmitUser(name, lastname, lastname2, email, genre, address){
+    handleSubmitUser(e){
+      e.preventDefault();
       const signUpUser = {
 
         username: this.state.userName,
         password: this.state.password,
         userDTO : {
-          name: name,
-          lastname: lastname,
-          lastname2: lastname2,
-          email: email,
-          address: address,
-          genre: genre
+          name: this.state.name,
+          lastname: this.state.lastname,
+          lastname2: this.state.lastname2,
+          email: this.state.email,
+          address: this.state.address,
+          genre: this.state.genre
         }
 
       }
 
       register(signUpUser)
-          .then(response => { 
+          .then(response => {
+            
             this.props.history.replace("/addLocation")
             sessionStorage.setItem('serviceToken', response.token);
             sessionStorage.setItem('userId', response.id);
@@ -95,25 +127,24 @@ class SignUpForm extends Component {
         });
     }
 
-    handleSubmitShelter(name, type, address, email, phoneNumber, description) {
-        
+    handleSubmitShelter(e) {
+      e.preventDefault();
         const signUpShelter = {
 
           username: this.state.userName,
           password: this.state.password,
           shelterDTO : {
-            type: type,
-            name: name,
-            phoneNumber: phoneNumber,
-            email: email,
-            address: address,
-            description: description
+            type: this.state.type,
+            name: this.state.name,
+            phoneNumber: this.state.phoneNumber,
+            email: this.state.email,
+            address: this.state.address,
+            description: this.state.description
           }
 
         }
           register(signUpShelter)
           .then(response => { 
-            debugger;
             sessionStorage.setItem('serviceToken', response.token);
             sessionStorage.setItem('userId', response.id);
             ToastsStore.success("Registrado Correctamente");
@@ -127,10 +158,10 @@ class SignUpForm extends Component {
     
     renderInfoForm(){
       if(this.state.isShelter){
-        return <InfoShelterForm userName = {this.state.userName} password = {this.state.password} handleSubmitShelter = {this.handleSubmitShelter} ></InfoShelterForm>
+        return <InfoShelterForm userName = {this.state.userName} password = {this.state.password} handleChange = {this.handleChange} ></InfoShelterForm>
       }
       else{
-        return <InfoUserForm userName = {this.state.userName} password = {this.state.password} handleSubmitUser = {this.handleSubmitUser} ></InfoUserForm>
+        return <InfoUserForm userName = {this.state.userName} password = {this.state.password}  handleChange = {this.handleChange} ></InfoUserForm>
       }
     }
 
@@ -153,26 +184,39 @@ class SignUpForm extends Component {
               </div>
         <div className="FormTitle">
                   <NavLink to="/"  className="FormTitle__Link"><FormattedMessage id='form.button.access'/></NavLink> o <NavLink exact to="/signUp" activeClassName="FormTitle__Link--Active" className="FormTitle__Link"><FormattedMessage id='form.button.register'/></NavLink>
-              </div>              <div className="FormField">
+              </div>  
+              <form ref={node => this.form = node} onSubmit={(e) => this.handleSubmit(e)} className="FormFields">        
+               <div className="FormField">
                 <label className="FormField__Label" htmlFor="userName"><FormattedMessage id='form.label.user'/></label>
                 <input type="text" id="userName" className="FormField__Input" placeholder="Introducir usuario" name="userName" defaultValue={this.state.userName} onChange={this.handleChange} required />
               </div>
-              
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="password"><FormattedMessage id='form.label.password'/></label>
                 <input type="password" id="password" className="FormField__Input" placeholder="Introducir Contraseña" name="password" defaultValue={this.state.password} onChange={this.handleChange} required />
               </div>
+              
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="password"><FormattedMessage id='form.label.shelter'/></label>
                 <input type="checkbox" id="isShelter" defaultChecked={this.state.isShelter}  name="isShelter"  onChange={this.handleCheck}/>
               </div>
+              <div className="infoSectionDecoration">
               <div className="UserInfoSection">
+                
                 {this.renderInfoForm()}
+                </div>
               </div>
-
+              <div className="FormField">
+                  <button type ="submit" className="FormField__Button mr-20"><FormattedMessage id='form.button.register'/></button> <Link to="/" className="FormField__Link"><FormattedMessage id='form.link.haveAccount'/></Link>
+              </div>
+              </form>
           </div>
           </div>
           </div> );
     }
 }
-export default connect(null, {getPreferences})(SignUpForm);
+
+const mapStateToProps = state => (()=>console.log(state),{
+  enumValues : state.user.userSelectorValues
+})
+
+export default connect(mapStateToProps, {getPreferences, getUserEnums})(SignUpForm);

@@ -15,11 +15,30 @@ public class ReturnedLostAnimalDTO {
     private Double distance;
     private Calendar dateTime;
     private String image;
+    private String ownerUsername;
     
     
     public ReturnedLostAnimalDTO() {
 	super();
     }
+    
+    
+
+
+
+    public String getOwnerUsername() {
+        return ownerUsername;
+    }
+
+
+
+
+
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
+    }
+
+
 
 
 

@@ -109,6 +109,7 @@ public class AnimalConversor {
 	lostAnimalInfoDTO.setLatitude(animal.getLatitude());
 	lostAnimalInfoDTO.setLongitude(animal.getLongitude());
 	lostAnimalInfoDTO.setState(animal.getState());
+	lostAnimalInfoDTO.setUserName(animal.getOwner().getUsername());
 	animalDTO.setLostAnimalInfoDTO(lostAnimalInfoDTO);
 	
 	return animalDTO;

@@ -3,7 +3,6 @@ import LostAnimalsList from './LostAnimalsList';
 import {TopMenu} from '../../../app';
 import {connect} from 'react-redux';
 import {getUserAnimals} from './actions/actions'
-import AnimalCreationForm from "../AnimalCreationForm";
 import LostAnimalUpdateForm from "./LostAnimalCreationForm";
 
 class MyLostAnimalsPage extends Component{
@@ -51,7 +50,7 @@ class MyLostAnimalsPage extends Component{
     }
 
     renderListForm(){
-        if(this.state.selectedAnimalId != ''){
+        if(this.state.selectedAnimalId !== ''){
             return <LostAnimalUpdateForm></LostAnimalUpdateForm>
         }
         else{
@@ -70,7 +69,7 @@ class MyLostAnimalsPage extends Component{
     
 }
 
-const mapStateToProps = state => (console.log(state),{
+const mapStateToProps = state => ({
     lostAnimals : state.lostAnimals.animals,
     selectedAnimal : state.lostAnimals.selectedAnimal
 

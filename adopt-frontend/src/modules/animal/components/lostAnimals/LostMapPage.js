@@ -4,7 +4,6 @@ import {getLostAnimalsInArea, showModal, setMarkerInfo,closeModal} from './actio
 import MarkerMapMain from '../../../common/MarkerMapMain';
 import TopMenu from '../../../app/components/TopMenu';
 import LostAnimalInfoModal from './LostAnimalInfoModal';
-import AddLocationModal from './AddLocationModal';
 
 class LostMapPage extends Component{
 
@@ -37,7 +36,7 @@ class LostMapPage extends Component{
 
 }
 
-const mapStateToProps = state => (console.log(state),{
+const mapStateToProps = state =>({
     animals :  state.lostAnimals.animals,
     show : state.lostAnimals.showModal
 })

@@ -74,7 +74,7 @@ const LostAnimalInfoModal = (props) => {
 }
 
 
-const mapStateToProps = state => (console.log(state),{
+const mapStateToProps = state => ({
     location : state.lostAnimals.selectedLocation,
     isUserList : state.lostAnimals.isUserList,
     isMarkerInfo : state.lostAnimals.isMarkerInfo,

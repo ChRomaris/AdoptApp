@@ -1,4 +1,4 @@
-import  { SET_PREFERENCES, GET_PREFERENCES} from './types';
+import  { SET_PREFERENCES, GET_PREFERENCES, GET_USER_ENUMS} from './types';
 
 const request = (options) => {
     const headers = new Headers({
@@ -38,5 +38,16 @@ export const getPreferences = (userToken) => dispatch => {
     }).then(preferences => dispatch({
         type : GET_PREFERENCES,
         payload : preferences
+    }));  
+}
+
+export const getUserEnums = () => dispatch => {
+
+    request ({
+        url: "http://localhost:8080/profile/enums",
+        method: 'GET',
+    }).then(enumValues => dispatch({
+        type : GET_USER_ENUMS,
+        payload : enumValues
     }));  
 }

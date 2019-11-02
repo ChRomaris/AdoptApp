@@ -1,5 +1,4 @@
 import React from 'react';
-import PreviewImage from '../mainList/components/PreviewImage'
 import {FormattedMessage} from "react-intl"
 
 import './styles/common.css';
@@ -29,7 +28,7 @@ const modal = (props) => {
                 </div>
                 <div className="modal-footer">
                     <button className="btn-cancel" onClick={props.close}><FormattedMessage id = "form.button.close" /></button>
-                    <button className="btn-continue"><FormattedMessage id = "form.button.animal" /></button>
+                    <button className="btn-continue" onClick={()=>props.showAnimals(props.shelter.id)}><FormattedMessage id = "form.button.animal" /></button>
                 </div>
             </div>
         </div>

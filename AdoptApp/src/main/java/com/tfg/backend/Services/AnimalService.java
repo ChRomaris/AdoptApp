@@ -174,7 +174,7 @@ public class AnimalService implements IAnimalService {
 		returnedLostAnimalDTO.setBreed(lostAnimal.getBreed());
 		returnedLostAnimalDTO.setDistance(distance);
 		returnedLostAnimalDTO.setDateTime(lostAnimal.getDateTime());
-
+		returnedLostAnimalDTO.setOwnerUsername(lostAnimal.getOwner().getUsername());
 		if(lostAnimal.getImages().iterator().hasNext()) {
 		    returnedLostAnimalDTO.setImage(lostAnimal.getImages().iterator().next().getImage());
 		}
