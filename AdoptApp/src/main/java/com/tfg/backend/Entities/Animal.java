@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -73,11 +74,30 @@ public class Animal {
 	@OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<AnimalPicture> images;
 	
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "animal", fetch = FetchType.EAGER)
+	private List<Notification> notifications;
+	
 	
 	public Animal() {
 		
 	}
 	
+	
+	
+	public List<Notification> getNotifications() {
+	    return notifications;
+	}
+
+
+
+	public void setNotifications(List<Notification> notifications) {
+	    this.notifications = notifications;
+	}
+
+
+
 	public static List<Breed> getBreeds() {
 	    return Arrays.asList(Breed.class.getEnumConstants());
 	}

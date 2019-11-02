@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 
 import javax.persistence.GenerationType;
@@ -16,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tfg.backend.Entities.Animal.Genre;
 
@@ -50,19 +52,76 @@ public abstract class Profile {
     private RoleType role;
     @OneToOne(mappedBy = "profile")
     private Preferences preferences;
-
+    
+    @JsonIgnore
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
     private List<Chat> senderChats;
-
+    
+    @JsonIgnore
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     private List<Chat> receiverChats;
-
+    
+    @JsonIgnore
     @OneToMany(mappedBy = "messageSender", cascade = CascadeType.ALL)
     private List<Message> messages;
+    
+    	@JsonIgnore
+	@OneToMany(mappedBy = "profile", fetch = FetchType.EAGER)
+	private List<Notification> notifications;
 
     public Profile() {
 	super();
     }
+    
+    
+
+    public List<Chat> getSenderChats() {
+        return senderChats;
+    }
+
+
+
+    public void setSenderChats(List<Chat> senderChats) {
+        this.senderChats = senderChats;
+    }
+
+
+
+    public List<Chat> getReceiverChats() {
+        return receiverChats;
+    }
+
+
+
+    public void setReceiverChats(List<Chat> receiverChats) {
+        this.receiverChats = receiverChats;
+    }
+
+
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
+
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+
 
     public static List<Genre> getGenres() {
 	return Arrays.asList(Genre.class.getEnumConstants());

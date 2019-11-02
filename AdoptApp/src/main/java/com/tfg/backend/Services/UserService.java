@@ -22,7 +22,9 @@ import com.tfg.backend.Common.JwtInfo;
 import com.tfg.backend.Daos.IAnimalDao;
 import com.tfg.backend.Daos.IAnimalPictureDao;
 import com.tfg.backend.Daos.ILostAnimalDAO;
+import com.tfg.backend.Daos.INotificationDAO;
 import com.tfg.backend.Daos.IPreferencesDAO;
+import com.tfg.backend.Daos.IProfileDao;
 import com.tfg.backend.Daos.IUserDao;
 import com.tfg.backend.Dtos.AnimalDTO;
 import com.tfg.backend.Dtos.DeleteAnimalDTO;
@@ -33,6 +35,8 @@ import com.tfg.backend.Dtos.ReturnedLostAnimalDTO;
 import com.tfg.backend.Dtos.UserPreferencesDTO;
 import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.LostAnimal;
+import com.tfg.backend.Entities.Notification;
+import com.tfg.backend.Entities.Notification.Type;
 import com.tfg.backend.Entities.Preferences;
 import com.tfg.backend.Entities.Profile;
 import com.tfg.backend.Entities.User;
@@ -51,12 +55,19 @@ public class UserService implements IUserService {
     IAnimalDao animalDAO;
     
     @Autowired
+    IProfileDao profileDAO;
+    
+    @Autowired
     ILostAnimalDAO lostAnimalDAO;
     
     @Autowired
     IAnimalPictureDao animalPictureDAO;
+    
     @Autowired
     IPreferencesDAO preferencesDAO;
+    
+    @Autowired
+    INotificationDAO notificationDAO;
 
     
     @Override
@@ -69,6 +80,18 @@ public class UserService implements IUserService {
 	    animalDTO.getLostAnimalInfoDTO().setDateTime(lostAnimal.getDateTime());
 	}
 	animalDAO.save(lostAnimal);
+	
+	List<Profile> profilesToNotify = profileDAO.findByLostPreferences(lostAnimal.getLatitude(), lostAnimal.getLongitude());
+
+	profilesToNotify.forEach((profile) ->{
+	   Notification notification = new Notification();
+	   notification.setAnimal(lostAnimal);
+	   notification.setType(Type.LOST_ADDED);
+	   notification.setProfile(profile);
+	   notification.setDate(Calendar.getInstance());
+	   notificationDAO.save(notification);
+	});
+	
 	
 	animalDTO.setId(lostAnimal.getId_animal());
 	animalDTO.getLostAnimalInfoDTO().setUser(user);

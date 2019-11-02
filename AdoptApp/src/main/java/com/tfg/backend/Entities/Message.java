@@ -34,6 +34,7 @@ public class Message {
     @Column
     boolean checked;
     
+   
     @ManyToOne
     @JoinColumn(name="senderId", referencedColumnName = "id")
     Profile messageSender;

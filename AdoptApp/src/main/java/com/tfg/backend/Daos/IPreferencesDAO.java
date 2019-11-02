@@ -9,7 +9,8 @@ import com.tfg.backend.Entities.Preferences;
 
 
     public interface IPreferencesDAO extends PagingAndSortingRepository<Preferences, Long> {
-	    
+	
+	   
 	}
 
 
