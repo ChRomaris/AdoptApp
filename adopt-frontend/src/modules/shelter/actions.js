@@ -80,4 +80,11 @@ export function deleteShelterAnimal (param){
                 body: JSON.stringify(params)
             });
         }
+
+        export function getShelterList(){
+            return request ({
+                url: "http://localhost:8080/shelter/shelterList",
+                method: 'GET',
+            });
+        }
         
