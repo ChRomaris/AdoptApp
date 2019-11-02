@@ -1,8 +1,10 @@
-import { updateShelter,getShelterInfo } from '../actions'
+import { updateShelter, getShelterInfo } from '../actions'
 import React, { Component } from 'react';
 import { ToastsContainer, ToastsStore } from 'react-toasts';
 import { TopMenu } from '../../app/'
-import AddLocationMap from '../../user/components/AddLocationMap'
+import AddLocationMap from '../../user/components/AddLocationMap';
+import {connect} from 'react-redux';
+import {getUserEnums} from '../../user/actions/actions'
 
 import '../../../styles/userStyles.css'
 import { FormattedMessage } from 'react-intl';
@@ -42,21 +44,23 @@ class UpdateShelter extends Component {
                 id: response.id,
                 name: response.shelterDTO.name,
                 userName: response.userName,
-                type:response.shelterDTO.type,
-                description:response.shelterDTO.description,
+                type: response.shelterDTO.type,
+                description: response.shelterDTO.description,
                 password: response.password,
                 email: response.shelterDTO.email,
                 phoneNumber: response.shelterDTO.phoneNumber,
                 address: response.shelterDTO.address,
                 latitude: response.latitude,
                 longitude: response.longitude
-            },this.setMapLocation)
+            }, this.setMapLocation)
         }).catch(error => {
             console.log("Error al recuperar la información del usuario")
         });
+
+        this.props.getUserEnums();
     }
 
-    setMapLocation(){
+    setMapLocation() {
         this.mapComponent.current.setMapPointer(this.state.latitude, this.state.longitude)
     }
 
@@ -94,7 +98,7 @@ class UpdateShelter extends Component {
             token: sessionStorage.getItem('serviceToken'),
             latitude: this.state.latitude,
             longitude: this.state.longitude,
-            shelterDTO : {
+            shelterDTO: {
                 name: this.state.name,
                 type: this.state.type,
                 description: this.state.description,
@@ -112,57 +116,61 @@ class UpdateShelter extends Component {
             });
     };
 
-    setLocationState(lat,long){
+    setLocationState(lat, long) {
         this.setState({
-            latitude:lat,
-            longitude:long
-        },() => {console.log("Latitud: " + this.state.longitude+ " Longitud: "+ this.state.longitude)})
+            latitude: lat,
+            longitude: long
+        }, () => { console.log("Latitud: " + this.state.longitude + " Longitud: " + this.state.longitude) })
     }
 
 
     render() {
         return (
-            <div className= "editingSectionComplete">
+            <div className="editingSectionComplete">
                 <TopMenu ></TopMenu>
                 <div className="userEditSection" >
-                <div className="LocationPartForm" >
-                        <h3><FormattedMessage id="form.tittle.position"/></h3>
-                        <AddLocationMap ref={this.mapComponent} setParentLocationState = {this.setLocationState} ></AddLocationMap>
+                    <div className="LocationPartForm" >
+                        <h3><FormattedMessage id="form.tittle.position" /></h3>
+                        <AddLocationMap ref={this.mapComponent} setParentLocationState={this.setLocationState} ></AddLocationMap>
                     </div>
                     <div className="Simple_Form" >
                         <div className="FormCenter" >
-                            <ToastsContainer store={ToastsStore} /> 
-                            <h3><FormattedMessage id="form.tittle.personalInfo"/> </h3>
+                            <ToastsContainer store={ToastsStore} />
+                            <h3><FormattedMessage id="form.tittle.personalInfo" /> </h3>
                             <form ref={node => this.form = node} onSubmit={(e) => this.handleSubmit(e)} className="FormFields" >
                                 <div className="FormField" >
-                                    <label className="FormField__Label" htmlFor="name"> <FormattedMessage id="form.label.name"/>  </label>
+                                    <label className="FormField__Label" htmlFor="name"> <FormattedMessage id="form.label.name" />  </label>
                                     <input type="text" id="name" className="FormField__Input" placeholder="Introducir nombre completo" name="name" defaultValue={this.state.name || ''} onChange={this.handleChange} required />
                                 </div>
-                                <div className="FormField" >
-                                    <label className="FormField__Label" htmlFor="type" > <FormattedMessage id="form.label.type"/> </label>
-                                    <input type="text" id="type" className="FormField__Input" placeholder="Introducir tipo" name="type" defaultValue={this.state.type || ''} onChange={this.handleChange} required />
+                                <div className="FormField">
+                                    <label className="FormField__Label" htmlFor="type"><FormattedMessage id='form.label.type' /></label>
+                                    <select id="type" className="FormField__Input" name="type" defaultValue={this.state.type} onChange={this.handleChange} required >
+                                        {this.props.enumValues.types.map(type => {
+                                            return <option key={type}>{type}</option>
+                                        })}
+                                    </select>
                                 </div>
                                 <div className="FormField" >
-                                    <label className="FormField__Label" htmlFor="lastname2" > <FormattedMessage id="form.label.description"/>  </label>
+                                    <label className="FormField__Label" htmlFor="lastname2" > <FormattedMessage id="form.label.description" />  </label>
                                     <input type="text" id="description" className="FormField__Input" placeholder="Introducir descripción" name="description" defaultValue={this.state.description || ''} onChange={this.handleChange} />
                                 </div>
                                 <div className="FormField" >
-                                    <label className="FormField__Label" htmlFor="password" > <FormattedMessage id="form.label.password"/>  </label>
+                                    <label className="FormField__Label" htmlFor="password" > <FormattedMessage id="form.label.password" />  </label>
                                     <input type="password" id="password" className="FormField__Input" placeholder="Introducir Contraseña" name="password" value={this.state.password || ''} onChange={this.handleChange} required />
                                 </div>
                                 <div className="FormField" >
-                                    <label className="FormField__Label" htmlFor="email" > <FormattedMessage id="form.label.email"/> </label>
+                                    <label className="FormField__Label" htmlFor="email" > <FormattedMessage id="form.label.email" /> </label>
                                     <input type="email" id="email" className="FormField__Input" placeholder="Introducir correo electónico" name="email" value={this.state.email || ''} onChange={this.handleChange} required />
                                 </div>
                                 <div className="FormField" >
-                                    <label className="FormField__Label" htmlFor="phoneNumber" > <FormattedMessage id="form.label.phoneNumber"/> </label>
+                                    <label className="FormField__Label" htmlFor="phoneNumber" > <FormattedMessage id="form.label.phoneNumber" /> </label>
                                     <input type="number" id="phoneNumber" className="FormField__Input" placeholder="Introducir numero de telefono" name="phoneNumber" value={this.state.phoneNumber || ''} onChange={this.handleChange} />
                                 </div>
-                                <div className="FormField" ><label className="FormField__Label" htmlFor="address" > <FormattedMessage id="form.label.address"/></label>
+                                <div className="FormField" ><label className="FormField__Label" htmlFor="address" > <FormattedMessage id="form.label.address" /></label>
                                     <input type="address" id="address" className="FormField__Input" placeholder="Introducir dirección" name="address" value={this.state.address || ''} onChange={this.handleChange} />
                                 </div >
                                 <div className="FormField" >
-                                    <button type="submit" className="FormField__Button mr-20" > <FormattedMessage id="form.button.updateInfo"/> </button> </div >
+                                    <button type="submit" className="FormField__Button mr-20" > <FormattedMessage id="form.button.updateInfo" /> </button> </div >
                             </form>
                         </div>
                     </div>
@@ -173,4 +181,10 @@ class UpdateShelter extends Component {
     }
 }
 
-export default UpdateShelter;
+const mapStateToProps = state => ({
+    enumValues : state.user.userSelectorValues
+})
+    
+
+
+export default connect(mapStateToProps,{getUserEnums})(UpdateShelter);

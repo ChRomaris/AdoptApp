@@ -28,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/profile/update").permitAll()
 				.antMatchers("/profile/setLocation").permitAll()
 				.antMatchers("/profile/getInfo").permitAll()
+				.antMatchers("/profile/enums").permitAll()
 				.antMatchers("/shelter/animal/add").permitAll()
 				.antMatchers("/shelter/animal/delete").permitAll()
 				.antMatchers("/shelter/sheltersDistance").permitAll()
@@ -57,6 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/animal/lostAnimalInfo").permitAll()
 				.antMatchers("/catalog/products/*").permitAll()
 				.antMatchers("/catalog/products").permitAll()
+				.antMatchers("/catalog/products").permitAll()
+				.antMatchers("/chat/all").permitAll()
+				.antMatchers("/chat/history").permitAll()
+				.antMatchers("/chat/start").permitAll()
+				.antMatchers("/chat/active").permitAll()
+				.antMatchers("/handler/**").permitAll()
 				.antMatchers("/**").hasRole("USER");
 
 	}

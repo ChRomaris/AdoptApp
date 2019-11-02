@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {FormattedMessage} from 'react-intl'
+import {FormattedMessage} from 'react-intl';
+import {connect} from 'react-redux';
 
 
 class InfoShelterForm extends Component {
@@ -19,28 +20,18 @@ class InfoShelterForm extends Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+     
 
     }
 
-    componentDidMount(){
-
-    }
 
     handleChange(e) {
      
-        let target = e.target;
-        this.setState({
-          [target.name] : target.value,
-        },()=>{console.log(this.state)});
+      this.props.handleChange(e);
     }
 
 
-    handleSubmit(e) {
-        e.preventDefault();
-        this.props.handleSubmitShelter(this.state.name, this.state.type, this.state.address, this.state.email, this.state.phoneNumber, this.state.description);
-    
-    };
+
 
 
 
@@ -56,12 +47,14 @@ class InfoShelterForm extends Component {
                 <label className="FormField__Label" htmlFor="name"><FormattedMessage id='form.label.name'/></label>
                 <input type="text" id="name" className="FormField__Input" placeholder="Introducir nombre Asociación" name="name" defaultValue={this.state.name} onChange={this.handleChange} required />
               </div>
-
               <div className="FormField">
-                <label className="FormField__Label" htmlFor="type"><FormattedMessage id='form.label.type'/></label>
-                <input type="text" id="type" className="FormField__Input" placeholder="Introducir tipo" name="type" defaultValue={this.state.type} onChange={this.handleChange} required />
-              </div>
-              
+              <label className="FormField__Label" htmlFor="type"><FormattedMessage id='form.label.type'/></label>
+              <select id="type" className="FormField__Input" name="type" defaultValue={this.state.type} onChange={this.handleChange} required  >
+              {this.props.enumValues.types.map(type => {
+                            return <option key = {type}>{type}</option>
+                        })}  
+              </select>
+              </div> 
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="address"><FormattedMessage id='form.label.address'/></label>
                 <input type="text" id="address" className="FormField__Input" placeholder="Introducir Dirección" name="address" defaultValue={this.state.address} onChange={this.handleChange} required />
@@ -78,13 +71,12 @@ class InfoShelterForm extends Component {
                 <label className="FormField__Label" htmlFor="description"><FormattedMessage id='form.label.description'/></label>
                 <input type="text" id="description" className="FormField__Input" placeholder="Introducir descripción" name="description" defaultValue={this.state.description} onChange={this.handleChange} required />
               </div>
-            <form ref={node => this.form = node} onSubmit={(e) => this.handleSubmit(e)} className="FormFields">
-              <div className="FormField">
-                  <button type ="submit" className="FormField__Button mr-20"><FormattedMessage id='form.button.register'/></button> <Link to="/" className="FormField__Link"><FormattedMessage id='form.link.haveAccount'/></Link>
-              </div>
-            </form>
           </div>
            );
     }
 }
-export default InfoShelterForm;
+
+const mapStateToProps = state =>({
+  enumValues : state.user.userSelectorValues
+})
+export default connect(mapStateToProps,{}) (InfoShelterForm);

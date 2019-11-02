@@ -94,7 +94,7 @@ class LostAnimalCard extends Component{
     }
 }
 
-const mapStateToProps = state =>(console.log(state),{
+const mapStateToProps = state =>({
     selectedAnimal : state.lostAnimals.selectedAnimal,
     showModal : state.lostAnimals.showModal,
     isUserList : state.lostAnimals.isUserList,

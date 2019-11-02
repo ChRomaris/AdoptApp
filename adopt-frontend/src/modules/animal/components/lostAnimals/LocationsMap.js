@@ -51,7 +51,6 @@ class LocationsMap extends Component{
             >
 
             {this.props.locations.map(marker => (
-              console.log(marker.LocationId),
             <LocationMarker toggleModal={()=>this.showModal(marker)}
               key={marker.locationId}
               lat={marker.latitude}
@@ -67,7 +66,7 @@ class LocationsMap extends Component{
 
 }
 
-const mapStateToProps = state =>(console.log(state.lostAnimals.locations),{
+const mapStateToProps = state =>({
     locations : state.lostAnimals.locations
 })
 

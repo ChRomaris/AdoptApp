@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {getAllAdoptionAnimals} from '../actions';
 import List from '../../mainList/components/List';
 import { Button } from 'reactstrap';
+import {getShelterAnimals} from '../../shelter/actions'
 
 class AdoptionAnimalList extends Component{
 
@@ -21,7 +22,14 @@ class AdoptionAnimalList extends Component{
     }
     
     componentDidMount(){
-        this.getAnimals();
+        if(this.props.match.params.shelterId){
+            console.log("con id")
+            this.getAnimalsWithId(this.props.match.params.shelterId)
+        }else{
+            console.log("sin id")
+            this.getAnimals();
+        }
+        
 
     }
 
@@ -34,6 +42,26 @@ class AdoptionAnimalList extends Component{
         console.log("GetAnimals con parametros : " )
         console.log(params)
         getAllAdoptionAnimals(params).then(response => {
+            this.setState( {
+                animales : response.adoptionAnimals,
+                totalPages : response.totalPages
+                
+            },()=>console.log(this.state))
+            
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+
+    getAnimalsWithId (shelterId){
+
+        const params = {
+            page: this.state.actualPage,
+            shelterId: shelterId
+        }
+        console.log("GetAnimals con parametros : " )
+        console.log(params)
+        getShelterAnimals(params).then(response => {
             this.setState( {
                 animales : response.adoptionAnimals,
                 totalPages : response.totalPages

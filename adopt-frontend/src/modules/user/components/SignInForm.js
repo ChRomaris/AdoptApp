@@ -103,7 +103,7 @@ class SignInForm extends Component {
 
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="password"><FormattedMessage id='form.label.password'/></label>
-                <input type="password" id="password" className="FormField__Input"  name="password" value={this.state.password} onChange={this.handleChange} />
+                <input type="password" id="password" className="FormField__Input"  name="password" value={this.state.password} onChange={this.handleChange} required/>
               </div>
 
               <div className="FormField">
@@ -116,7 +116,7 @@ class SignInForm extends Component {
         );}}
 
     
-const mapStateToProps = state =>(console.log(state),{
+const mapStateToProps = state =>({
   profilePreferences : state.user.profilePreferences
 })
 

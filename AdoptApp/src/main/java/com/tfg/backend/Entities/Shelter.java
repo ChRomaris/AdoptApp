@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Shelter extends Profile {
 
     @Column
-    private String type;
+    private Type type;
     @Column
     private String name;
     @Column	
@@ -44,9 +44,18 @@ public class Shelter extends Profile {
     }
   
 
-    public String getType() {
-	return type;
+
+    public Type getType() {
+        return type;
     }
+
+
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+
 
     public String getDescription() {
         return description;
@@ -72,9 +81,7 @@ public class Shelter extends Profile {
 	this.animals = animals;
     }
 
-    public void setType(String type) {
-	this.type = type;
-    }
+
 
     public String getName() {
 	return name;

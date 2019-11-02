@@ -90,7 +90,7 @@ class MarkersMap extends Component{
 
 }
 
-const mapStateToProps = state => (console.log(state),{
+const mapStateToProps = state => ({
   selectedAnimal : state.lostAnimals.selectedAnimal
 })
 

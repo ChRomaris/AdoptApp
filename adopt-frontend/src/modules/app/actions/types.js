@@ -1,0 +1,2 @@
+export const GET_ANIMAL_ENUMS = 'GET_ANIMAL_ENUMS';
+export const GET_PROFILE_ENUMS = 'GET_PROFILE_ENUMS';

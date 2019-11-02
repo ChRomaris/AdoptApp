@@ -152,11 +152,14 @@ display: inline-block;
     height: 30vh;
     margin-top: 2vh;
     overflow-x: scroll;
-}
+    background-color: white;
+    border-radius: 10px;
+    padding-top: 3vh;
+}   
 
 .carouselImage{
     
-    max-height: 28vh;
+    max-height: 23vh;
     max-width: 25%;
     float: left;
     margin-left: 2vw;

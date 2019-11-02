@@ -16,7 +16,6 @@ const initialState = {
     isUserList: false,
     locations: [],
     locationsLoaded : false,
-    selectedLocation: '',
     isMarkerInfo:false
 
 

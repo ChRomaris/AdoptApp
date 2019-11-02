@@ -77,7 +77,7 @@ class LostAnimalsPage extends Component{
 }
 
 
-const mapStateToProps = state =>(console.log(state),{
+const mapStateToProps = state =>({
     selectedAnimal : state.lostAnimals.selectedAnimal,
     showModal : state.lostAnimals.showModal,
     selectedLatitude : state.lostAnimals.selectedLatitude,

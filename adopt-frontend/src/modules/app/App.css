@@ -9,15 +9,28 @@
 .UserInfoSection{
     width: 100%;
     background-color: #2E4158;
-    height: 115vh;
+    height: 85  vh;
     margin-bottom: 5vh;
     text-align: left;
     border-style: solid;
     border-width: 2px;
-    border-color: #199087;
+
     border-radius: 10px;
     padding: 3vh;
   
+}
+
+.infoSectionDecoration{
+        width: 100%;
+    background-color: #ABE7DB;
+    height: 92vh;
+    margin-bottom: 5vh;
+    text-align: left;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ABE7DB;
+    border-radius: 10px;
+    padding: 3vh;
 }
 .UserInfoSection h4{
 color:white;
@@ -38,9 +51,12 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background-color: #D8F6F6;
+    background-color: black;
+
    
 }
+
+
 
 .App {
     height: 110vh;
@@ -226,6 +242,9 @@ body {
 
 .bar {
     background-color: #2E4158;
+    width: 100%;
+    margin-top: 0vh;
+    position: absolute;
 }
 
 .animalForm {

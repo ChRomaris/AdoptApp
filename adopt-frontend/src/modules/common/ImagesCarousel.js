@@ -24,7 +24,6 @@ class ImagesCarousel extends Component{
     renderImages(){
         return(
          this.props.images.map(image=>(
-            console.log(image),
            <div key ={"d"+this.getKey}>
            <img key ={"i"+this.getKey}
              alt=''

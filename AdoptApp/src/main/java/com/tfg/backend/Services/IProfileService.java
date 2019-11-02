@@ -5,6 +5,7 @@ import javax.management.InstanceNotFoundException;
 import com.tfg.backend.Dtos.AuthenticatedUserDTO;
 import com.tfg.backend.Dtos.LocationDTO;
 import com.tfg.backend.Dtos.ProfileDTO;
+import com.tfg.backend.Dtos.ProfileEnumsDTO;
 import com.tfg.backend.Entities.User;
 import com.tfg.backend.Entities.Profile;
 import com.tfg.backend.Exceptions.DuplicatedUserException;
@@ -24,5 +25,7 @@ public interface IProfileService {
 	ProfileDTO updateProfile(ProfileDTO profileDTO) throws InstanceNotFoundException;
 
 	Profile getProfileFromToken(String userToken);
+	
+	ProfileEnumsDTO getProfileEnums();
 
 }

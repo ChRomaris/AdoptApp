@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -28,11 +29,12 @@ public class User extends Profile {
 	@Column
 	private String address;
 	@Column 
-	private String genre;
+	private Genre genre;
 	@Column
 	private String email;
 	
-	@JsonManagedReference
+
+	@JsonIgnore
 	@OneToMany(mappedBy="owner", cascade = CascadeType.ALL)
 	private List<LostAnimal> lostAnimals;
 
@@ -93,13 +95,17 @@ public class User extends Profile {
 	    this.lastname2 = lastname2;
 	}
 
-	public String getGenre() {
+
+	public Genre getGenre() {
 	    return genre;
 	}
 
-	public void setGenre(String genre) {
+
+	public void setGenre(Genre genre) {
 	    this.genre = genre;
 	}
+
+
 
 
 }

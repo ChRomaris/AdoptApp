@@ -1,6 +1,6 @@
 import React,{ Component } from "react";
 import {
-    MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavbarToggler, MDBCollapse, MDBFormInline,
+    MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavbarToggler, MDBCollapse,
     MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem
     } from "mdbreact";
 
@@ -63,6 +63,14 @@ class UserTopMenu extends Component{
                       <MDBDropdownItem ><a href="#/user/animals"><FormattedMessage id="menu.label.myAnimals"/></a></MDBDropdownItem> 
                       </MDBDropdownMenu>
                     </MDBDropdown>
+                    <MDBDropdown>
+                      <MDBDropdownToggle nav caret>
+                        <span className="mr-2">Chat</span>
+                      </MDBDropdownToggle>
+                      <MDBDropdownMenu>
+                      <MDBDropdownItem ><a href="#/chat">Chats Activos</a></MDBDropdownItem> 
+                      </MDBDropdownMenu>
+                    </MDBDropdown>
                   <MDBNavItem>
                     <MDBDropdown>
                       <MDBDropdownToggle nav caret>
@@ -75,6 +83,7 @@ class UserTopMenu extends Component{
                       </MDBDropdownMenu>
                     </MDBDropdown>
                   </MDBNavItem>
+                  
                 </MDBNavbarNav>
               </MDBCollapse>
             </MDBNavbar>

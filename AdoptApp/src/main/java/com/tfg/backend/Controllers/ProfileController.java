@@ -28,6 +28,7 @@ import com.tfg.backend.Dtos.AuthenticatedUserDTO;
 import com.tfg.backend.Dtos.ErrorsDTO;
 import com.tfg.backend.Dtos.LocationDTO;
 import com.tfg.backend.Dtos.ProfileDTO;
+import com.tfg.backend.Dtos.ProfileEnumsDTO;
 import com.tfg.backend.Dtos.UserDTO;
 import com.tfg.backend.Entities.Profile;
 import com.tfg.backend.Entities.RoleType;
@@ -115,5 +116,11 @@ public class ProfileController {
 	
 	return jwtGenerator.generate(jwtInfo);
     }
+    
+    @GetMapping("/enums")
+    private ProfileEnumsDTO getProfileEnums() {
+	return profileService.getProfileEnums();
+    }
 
 }
+

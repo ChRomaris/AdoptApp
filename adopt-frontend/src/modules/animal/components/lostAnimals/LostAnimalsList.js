@@ -100,7 +100,6 @@ class LostAnimalsList extends Component{
                 <ToastsContainer store={ToastsStore} />
                 <div>
                 {this.props.lostAnimals.map(animal => (
-                    console.log(animal.id),
                         <LostAnimalCard key={animal.id} animal={animal} redirectLocations = {this.props.redirectLocations} editAnimal = {this.props.editAnimal} showInfo = {this.props.showInfo}></LostAnimalCard>
                     ))}
                 </div>

@@ -1,11 +1,11 @@
 import React,{ Component } from "react";
-import getIntlMessage,{ FormattedMessage}  from 'react-intl';
+import { FormattedMessage}  from 'react-intl';
 import './styles/user.css';
 import TopMenu from '../../app/components/TopMenu';
 import {connect} from 'react-redux';
 import {getPreferences, setPreferences} from '../actions/actions';
 import {getTypes} from '../../animal/actions';
-import {Container, Button, Form, FormGroup, Label, Input,FormText} from 'reactstrap';
+import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import Switch from 'react-switch';
 
 
@@ -201,7 +201,7 @@ handleCheck(checked){
     
 }
 
-const mapStateToProps = state => (console.log(state),{
+const mapStateToProps = state => ({
     maxLostDistance: state.user.profilePreferences.maxLostDistance,
     maxAdoptionDistance : state.user.profilePreferences.maxAdoptionDistance,
     breed: state.user.profilePreferences.breed,
