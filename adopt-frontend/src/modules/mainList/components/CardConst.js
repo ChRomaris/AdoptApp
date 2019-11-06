@@ -6,6 +6,7 @@ import Moment from 'moment';
 import 'moment/locale/es' 
 import '../../../styles/cardStyle.css'
 import {FormattedMessage} from 'react-intl'
+import {TwitterShareButton} from 'react-twitter-embed';
 class CardConst extends Component  {
 constructor(props){
     super(props);
@@ -20,7 +21,7 @@ renderButtons(){
     if(this.props.showButtons){
         console.log("Valor del animal en card")
         console.log(this.props.animal)
-        return( <Buttons animalId = {this.props.animal.id} showEditingForm = {this.showForm} deleteAnimal = {this.props.deleteAnimal} ></Buttons>   )
+        return( <Buttons animalId = {this.props.animal.id} showEditingForm = {this.showForm} deleteAnimal = {this.props.deleteAnimal} ></Buttons>, <TwitterShareButton url={'https://adoptapp.com/'+this.props.animal.id} options={{ text: ' Hay un nuevo animal en nuestra asociación. Se llama '+ this.props.animal.name +' y es un '+this.props.animal.breed+ '. Mas información en:' }}/>    )
     }
 }
 render(){

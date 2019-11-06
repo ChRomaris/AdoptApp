@@ -4,7 +4,7 @@ import AdoptionAnimalDetail from './AdoptionAnimalDetail';
 import {getAnimalInfo} from '../actions';
 import ImagesCarousel from '../../common/ImagesCarousel';
 import SingleMarkerMap from '../../common/SingleMarkerMap';
-
+import {TwitterShareButton} from 'react-twitter-embed';
 class AdoptionAnimalInfoPage extends Component{
     constructor(){
         super()
@@ -33,7 +33,9 @@ class AdoptionAnimalInfoPage extends Component{
             <TopMenu></TopMenu>
             <ImagesCarousel images = {this.state.animal.images}></ImagesCarousel>
             <SingleMarkerMap latitude = {this.state.animal.latitude} longitude = {this.state.animal.longitude}></SingleMarkerMap>
+            <TwitterShareButton url={'https://facebook.com/saurabhnemade'} options={{ text: '#reactjs is awesome', via: 'saurabhnemade' }}/>
             <AdoptionAnimalDetail animal = {this.state.animal}></AdoptionAnimalDetail>
+
         </div>
         )
     }
