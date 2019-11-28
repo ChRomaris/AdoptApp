@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {login}  from '../actions';
+import {login}  from '../../../backend/userService';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 import {NavLink} from 'react-router-dom';
 import logo from '../../../images/cat2.gif';
@@ -58,6 +58,7 @@ class SignInForm extends Component {
                 
                   sessionStorage.setItem('serviceToken', response.token);
                   sessionStorage.setItem('userId', response.id);
+                  sessionStorage.setItem('username', response.username);
                   ToastsStore.success("Logueado Correctamente");
                   this.props.getPreferences(response.token);
                   this.props.history.replace("/List")   
@@ -92,9 +93,7 @@ class SignInForm extends Component {
                 <NavLink to="/" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item"><FormattedMessage id='form.button.access'/></NavLink>
                 <NavLink exact to="/signUp" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item"><FormattedMessage id='form.button.register'/></NavLink>
               </div>
-          <div className="FormTitle">
-                  <NavLink to="/" activeClassName="FormTitle__Link--Active" className="FormTitle__Link"><FormattedMessage id='form.button.access'/></NavLink> o <NavLink exact to="/signUp" activeClassName="FormTitle__Link--Active" className="FormTitle__Link"><FormattedMessage id='form.button.register'/></NavLink>
-              </div>
+
             <form onSubmit={this.handleSubmit} className="FormFields">
             <div className="FormField">
             <label className="FormField__Label" htmlFor="userName"><FormattedMessage id='form.label.user'/></label>
@@ -109,6 +108,7 @@ class SignInForm extends Component {
               <div className="FormField">
                   <button type="submit" className="FormField__Button mr-20"><FormattedMessage id='form.button.access'/></button> <Link to="/signUp" className="FormField__Link"><FormattedMessage id='form.link.createAccount'/></Link>
               </div>
+              <Link to="/List" className="FormField__Link"><FormattedMessage id='form.button.anonimous'/></Link>
             </form>
             </div>
             </div>

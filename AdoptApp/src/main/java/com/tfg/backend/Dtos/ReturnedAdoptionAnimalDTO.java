@@ -5,15 +5,15 @@ import java.util.List;
 
 import com.tfg.backend.Entities.Shelter;
 import com.tfg.backend.Entities.AdoptionAnimal.AdoptionState;
-import com.tfg.backend.Entities.Animal.Breed;
 import com.tfg.backend.Entities.Animal.Color;
-import com.tfg.backend.Entities.Animal.Genre;
+import com.tfg.backend.Entities.Animal.AnimalGenre;
 import com.tfg.backend.Entities.Animal.Size;
+import com.tfg.backend.Entities.Breed;
 
 public class ReturnedAdoptionAnimalDTO {
 	private Long id;
 	private String name;
-	private Genre genre;
+	private AnimalGenre genre;
 	private Breed breed;
 	private String description;
 	private Color color;
@@ -28,6 +28,7 @@ public class ReturnedAdoptionAnimalDTO {
 	private AdoptionState state;
 	private Long adoptionTime;
 	private Long shelterId;
+	private String shelterName;
 	private Float latitude;
 	private Float longitude;
 	
@@ -37,8 +38,26 @@ public class ReturnedAdoptionAnimalDTO {
 	    super();
 	}
 	
+	
+	
 
 	
+	public String getShelterName() {
+	    return shelterName;
+	}
+
+
+
+
+
+	public void setShelterName(String shelterName) {
+	    this.shelterName = shelterName;
+	}
+
+
+
+
+
 	public List<ImageDTO> getImages() {
 	    return images;
 	}
@@ -104,10 +123,10 @@ public class ReturnedAdoptionAnimalDTO {
 	public void setName(String name) {
 	    this.name = name;
 	}
-	public Genre getGenre() {
+	public AnimalGenre getGenre() {
 	    return genre;
 	}
-	public void setGenre(Genre genre) {
+	public void setGenre(AnimalGenre genre) {
 	    this.genre = genre;
 	}
 	public String getDescription() {

@@ -13,7 +13,7 @@ import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.LostAnimal;
 //import com.tfg.backend.Services.AnimalService;
 import com.tfg.backend.Entities.Shelter;
-import com.tfg.backend.Entities.Animal.Genre;
+import com.tfg.backend.Entities.Animal.AnimalGenre;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,6 +22,8 @@ import java.util.List;
 public class AnimalConversor {
     private AnimalConversor() {
     }
+    
+    
     
     public final static ImageDTO toImageDTO(AnimalPicture animalPicture) {
 	ImageDTO imageDTO = new ImageDTO();
@@ -45,14 +47,14 @@ public class AnimalConversor {
 	adoptionAnimal.setColor(animal.getColor());
 	adoptionAnimal.setDescription(animal.getDescription());
 	adoptionAnimal.setGenre(animal.getGenre());
-	adoptionAnimal.setBreed(animal.getBreed());
 	if (animal.getId() != null)
-	    adoptionAnimal.setId_animal(animal.getId());
+	    adoptionAnimal.setId_Animal(animal.getId());
 	adoptionAnimal.setName(animal.getName());
 	adoptionAnimal.setSize(animal.getSize());
+	adoptionAnimal.setBreed(animal.getBreed());
 	adoptionAnimal.setAdoptionTime(animal.getAdoptionAnimalInfoDTO().getAdoptionTime());
 	adoptionAnimal.setBirthDate(animal.getAdoptionAnimalInfoDTO().getBirthDate());
-	adoptionAnimal.setHealth_comment(animal.getAdoptionAnimalInfoDTO().getHealth_comment());
+	adoptionAnimal.setHealthComment(animal.getAdoptionAnimalInfoDTO().getHealth_comment());
 	adoptionAnimal.setShelter(animal.getAdoptionAnimalInfoDTO().getShelter());
 	adoptionAnimal.setState(animal.getAdoptionAnimalInfoDTO().getState());
 	adoptionAnimal.setTrained(animal.getAdoptionAnimalInfoDTO().getTrained());
@@ -79,7 +81,7 @@ public class AnimalConversor {
 	animalDTO.setSize(animal.getSize());
 	adoptionAnimalInfoDTO.setAdoptionTime(animal.getAdoptionTime());
 	adoptionAnimalInfoDTO.setBirthDate(animal.getBirthDate());
-	adoptionAnimalInfoDTO.setHealth_comment(animal.getHealth_comment());
+	adoptionAnimalInfoDTO.setHealth_comment(animal.getHealthComment());
 	adoptionAnimalInfoDTO.setShelter(animal.getShelter());
 	adoptionAnimalInfoDTO.setState(animal.getState());
 	adoptionAnimalInfoDTO.setTrained(animal.getTrained());
@@ -147,13 +149,14 @@ public class AnimalConversor {
 	returnedAdoptionAnimalDTO.setColor(adoptionAnimal.getColor());
 	returnedAdoptionAnimalDTO.setSize(adoptionAnimal.getSize());
 	returnedAdoptionAnimalDTO.setBirthDate(adoptionAnimal.getBirthDate());
-	returnedAdoptionAnimalDTO.setHealth_comment(adoptionAnimal.getHealth_comment());
+	returnedAdoptionAnimalDTO.setHealth_comment(adoptionAnimal.getHealthComment());
 	returnedAdoptionAnimalDTO.setTrained(adoptionAnimal.getTrained());
 	returnedAdoptionAnimalDTO.setState(adoptionAnimal.getState());
 	returnedAdoptionAnimalDTO.setAdoptionTime(adoptionAnimal.getAdoptionTime());
 	returnedAdoptionAnimalDTO.setShelterId(adoptionAnimal.getShelter().getId());
 	returnedAdoptionAnimalDTO.setLatitude(adoptionAnimal.getShelter().getLatitude());
 	returnedAdoptionAnimalDTO.setLongitude(adoptionAnimal.getShelter().getLongitude());
+	returnedAdoptionAnimalDTO.setShelterName(adoptionAnimal.getShelter().getName());
 	if(adoptionAnimal.getImages().iterator().hasNext()) {
 	    Set<AnimalPicture> imageSet = adoptionAnimal.getImages();
 	    returnedAdoptionAnimalDTO.setImage(adoptionAnimal.getImages().iterator().next().getImage());
@@ -212,15 +215,15 @@ public class AnimalConversor {
     
     public final static LostAnimal toLostAnimal (AnimalDTO animalDTO) {
 	LostAnimal lostAnimal = new LostAnimal();
-	lostAnimal.setBreed(animalDTO.getBreed());
 	lostAnimal.setColor(animalDTO.getColor());
 	if(animalDTO.getLostAnimalInfoDTO().getComment() != null)
 	lostAnimal.setComment(animalDTO.getLostAnimalInfoDTO().getComment());
 	lostAnimal.setDateTime(animalDTO.getLostAnimalInfoDTO().getDateTime());
 	lostAnimal.setDescription(animalDTO.getDescription());
+	lostAnimal.setBreed(animalDTO.getBreed());
 	lostAnimal.setGenre(animalDTO.getGenre());
 	if(animalDTO.getId() != null)
-	lostAnimal.setId_animal(animalDTO.getId());
+	lostAnimal.setId_Animal(animalDTO.getId());
 	lostAnimal.setLatitude(animalDTO.getLostAnimalInfoDTO().getLatitude());
 	lostAnimal.setLongitude(animalDTO.getLostAnimalInfoDTO().getLongitude());
 	lostAnimal.setName(animalDTO.getName());

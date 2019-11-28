@@ -3,15 +3,16 @@ package com.tfg.backend.Dtos;
 import java.util.List;
 
 import com.tfg.backend.Entities.AdoptionAnimal.AdoptionState;
-import com.tfg.backend.Entities.Animal.Breed;
 import com.tfg.backend.Entities.Animal.Color;
-import com.tfg.backend.Entities.Animal.Genre;
+import com.tfg.backend.Entities.Animal.AnimalGenre;
 import com.tfg.backend.Entities.Animal.Size;
+import com.tfg.backend.Entities.AnimalType;
+import com.tfg.backend.Entities.Breed;
 
 public class EnumsDTO {
-
+    public List<AnimalType> animalTypes;
     public List<Breed> breeds;
-    public List<Genre> genres;
+    public List<AnimalGenre> genres;
     public List<Color> colors;
     public List<Size> sizes;
     public List<AdoptionState> adoptionStates;
@@ -21,16 +22,30 @@ public class EnumsDTO {
 	super();
     }
     
+    
+    
+    public List<AnimalType> getAnimalTypes() {
+        return animalTypes;
+    }
+
+
+
+    public void setAnimalTypes(List<AnimalType> animalTypes) {
+        this.animalTypes = animalTypes;
+    }
+
+
+
     public List<Breed> getBreeds() {
         return breeds;
     }
     public void setBreeds(List<Breed> breeds) {
         this.breeds = breeds;
     }
-    public List<Genre> getGenres() {
+    public List<AnimalGenre> getGenres() {
         return genres;
     }
-    public void setGenres(List<Genre> genres) {
+    public void setGenres(List<AnimalGenre> genres) {
         this.genres = genres;
     }
     public List<Color> getColors() {

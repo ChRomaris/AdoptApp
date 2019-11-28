@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.tfg.backend.Entities.Profile.Genre;
+import com.tfg.backend.Entities.Profile.ProfileGenre;
 
 public class UserDTO  {
 
@@ -14,7 +14,7 @@ public class UserDTO  {
 	private String lastname2;
 	private String email;
 	private String address;
-	private Genre genre;
+	private ProfileGenre genre;
 	
 	public UserDTO() {
 		super();
@@ -22,13 +22,13 @@ public class UserDTO  {
 
 	
 
-	public Genre getGenre() {
+	public ProfileGenre getGenre() {
 	    return genre;
 	}
 
 
 
-	public void setGenre(Genre genre) {
+	public void setGenre(ProfileGenre genre) {
 	    this.genre = genre;
 	}
 

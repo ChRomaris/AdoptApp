@@ -22,11 +22,11 @@ class AddLocationMap extends Component {
         
     }
     static defaultProps = {
-        center: {
-          lat: 42.09989087544122,
-          lng: -77.03967669057192
-        },
-        zoom:11
+      center: {
+        lat: 43.3351,
+        lng: -8.38233
+      },
+        zoom:8
       };
 
       setMapPointer(lat, long){

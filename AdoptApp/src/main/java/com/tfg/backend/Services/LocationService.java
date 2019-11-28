@@ -41,14 +41,18 @@ public class LocationService implements ILocationService {
     public ReturnedLocationDTO addLocation (LocationDTO locationDTO) {
 	ReturnedLocationDTO returnedLocationDTO = new ReturnedLocationDTO();
 	String username = null ;
+	if(locationDTO.getToken()!=null) {
+		try {
+		    Profile profile = profileService.getProfileFromToken(locationDTO.getToken()); 
+		    username = profile.getUsername();
 
-	try {
-	    Profile profile = profileService.getProfileFromToken(locationDTO.getToken()); 
-	    username = profile.getUsername();
-
-	}catch(NoSuchElementException e) {
-	    username = locationDTO.getUserName();
+		}catch(NoSuchElementException e) {
+		    username = locationDTO.getUserName();
+		} 
+	}else {
+	    username = "Desconocido";
 	}
+
 
 	Optional<LostAnimal> animal = lostAnimalDAO.findById(locationDTO.getAnimalId());
 

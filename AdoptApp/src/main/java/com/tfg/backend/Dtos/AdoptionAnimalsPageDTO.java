@@ -9,6 +9,7 @@ import com.tfg.backend.Entities.AdoptionAnimal;
 public class AdoptionAnimalsPageDTO {
 public List<ReducedAdoptionAnimalDTO> adoptionAnimals;
 public int totalPages;
+public String userToken;
 
 public AdoptionAnimalsPageDTO() {
     super();
@@ -29,4 +30,14 @@ public int getTotalPages() {
 public void setTotalPages(int actualPage) {
     this.totalPages = actualPage;
 }
+
+public String getUserToken() {
+    return userToken;
+}
+
+public void setUserToken(String userToken) {
+    this.userToken = userToken;
+}
+
+
 }

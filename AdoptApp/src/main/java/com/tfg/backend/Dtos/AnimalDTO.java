@@ -5,17 +5,21 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.tfg.backend.Entities.Shelter;
-import com.tfg.backend.Entities.Animal.Breed;
 import com.tfg.backend.Entities.Animal.Color;
-import com.tfg.backend.Entities.Animal.Genre;
+import com.tfg.backend.Entities.Animal.AnimalGenre;
 import com.tfg.backend.Entities.Animal.Size;
+import com.tfg.backend.Entities.AnimalType;
+import com.tfg.backend.Entities.Breed;
 
 
 public class AnimalDTO {
 	private Long id;
 	private String name;
-	private Genre genre;
+	private AnimalGenre genre;
 	private Breed breed;
+	private AnimalType animalType;
+	private String breedName;
+	private String animalTypeName;
 	private String description;
 	private Color color;
 	private Size size;
@@ -32,8 +36,110 @@ public class AnimalDTO {
 		super();
 	}
 	
+	
+	
 
 	
+	
+
+
+
+
+
+
+
+
+
+	public AnimalType getAnimalType() {
+	    return animalType;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setAnimalType(AnimalType animalType) {
+	    this.animalType = animalType;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public String getAnimalTypeName() {
+	    return animalTypeName;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setAnimalTypeName(String animalTypeName) {
+	    this.animalTypeName = animalTypeName;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public String getBreedName() {
+	    return breedName;
+	}
+
+
+
+
+
+
+
+	public void setBreedName(String breedName) {
+	    this.breedName = breedName;
+	}
+
+
+
+
+
 
 
 	public List<ImageDTO> getImages() {
@@ -123,10 +229,10 @@ public class AnimalDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Genre getGenre() {
+	public AnimalGenre getGenre() {
 		return genre;
 	}
-	public void setGenre(Genre genre) {
+	public void setGenre(AnimalGenre genre) {
 		this.genre = genre;
 	}
 	public String getDescription() {

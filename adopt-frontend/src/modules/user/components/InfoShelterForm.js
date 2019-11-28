@@ -68,7 +68,7 @@ class InfoShelterForm extends Component {
                 <input type="number" id="phoneNumber" className="FormField__Input" placeholder="Introducir numero de teléfono" name="phoneNumber" defaultValue={this.state.phoneNumber} onChange={this.handleChange} required />
               </div>
               <div className="FormField">
-                <label className="FormField__Label" htmlFor="description"><FormattedMessage id='form.label.description'/></label>
+                <label className="FormField__Label" htmlFor="description">Breve descripción</label>
                 <input type="text" id="description" className="FormField__Input" placeholder="Introducir descripción" name="description" defaultValue={this.state.description} onChange={this.handleChange} required />
               </div>
           </div>

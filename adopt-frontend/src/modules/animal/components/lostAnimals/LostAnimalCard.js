@@ -9,20 +9,29 @@ import {connect} from 'react-redux';
 class LostAnimalCard extends Component{
     constructor(props){
         super()
+
+        this.state = {
+            breed: ''
+        }
         this.renderGenre = this.renderGenre.bind(this)
         this.renderFooter = this.renderFooter.bind(this)
         this.locationsClick = this.locationsClick.bind(this)
         this.deleteClick = this.deleteClick.bind(this)
         this.moreInfoClick = this.moreInfoClick.bind(this)
+        this.renderDistance = this.renderDistance.bind(this)
     }
 
     renderGenre(){
-        if(this.props.animal.genre === "MALE" ){
+        console.log(this.props.animal)
+        if(this.props.animal.genre === "MACHO" ){
            return <FormattedMessage id='form.enum.male'/>  
-        }else if(this.props.animal.genre === "FEMALE"){
-           return <FormattedMessage id='form.enum.female'/>  
+        }else if(this.props.animal.genre === "HEMBRA"){
+           return "Hembra"
         }       
     }
+
+    
+
 
     locationsClick(animalId){
     const params = {
@@ -68,8 +77,19 @@ class LostAnimalCard extends Component{
         this.props.showModal(id)
     }
 
+    renderDistance(){
+        if(!this.props.myAnimal && sessionStorage.getItem('serviceToken')!==null){
+            return <CardText><FormattedMessage id='form.label.distance'/> : {Math.round(this.props.animal.distance)}</CardText>
+        }
+    }
+    componentWillReceiveProps(newProps){
+        console.log(newProps)
+    }
+    
+
+
     render(){
-        
+       
         return(
             <Card>
                 <CardHeader>{this.props.animal.name}</CardHeader>
@@ -77,11 +97,12 @@ class LostAnimalCard extends Component{
                     <div className="picture">
                         <PreviewImage image={this.props.animal.image}/>
                     </div>
+                    {console.log(this.props.animal.breed)}
                     <div className="texts">
                         <CardTitle><FormattedMessage id='form.label.date'/> : {Moment(this.props.animal.date).format("DD-MM-YY")}</CardTitle>
                         <CardTitle><FormattedMessage id='form.label.genre'/> : {this.renderGenre()} </CardTitle>
-                        <CardTitle><FormattedMessage id='form.label.breed'/> : {this.props.animal.breed} </CardTitle>
-                        <CardText><FormattedMessage id='form.label.distance'/> : {Math.round(this.props.animal.distance)}</CardText>
+                        <CardTitle><FormattedMessage id='form.label.breed'/> : {this.props.animal.breed.name} </CardTitle>
+                        {this.renderDistance()}
                     </div>  
                 </CardBody>
                 <CardFooter>

@@ -8,14 +8,15 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tfg.backend.Entities.Animal.Breed;
+
 import com.tfg.backend.Entities.Animal.Color;
-import com.tfg.backend.Entities.Animal.Genre;
+import com.tfg.backend.Entities.Animal.AnimalGenre;
 import com.tfg.backend.Entities.Animal.Size;
 
 @Entity
@@ -26,16 +27,15 @@ public class Preferences {
 @Id
 @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="PREFERENCES_SEQ")
 private Long preferencesId;
-@Column
-private Breed breed;
+
 @Column
 private Color color;
 @Column
 private Size size;
 @Column
-private Genre genre;
+private AnimalGenre genre;
 @Column
-private boolean summary;
+private Boolean summary;
 @Column
 private Double maxAdoptionDistance;
 @Column
@@ -44,6 +44,10 @@ private Double maxLostDistance;
 @JsonIgnore
 @JoinColumn(name= "ProfileId", referencedColumnName = "id")
 private Profile profile;
+
+@ManyToOne
+@JoinColumn(name="breedId", referencedColumnName = "breedId")
+private Breed breed;
 
 public Preferences() {
     super();
@@ -88,7 +92,7 @@ public void setSize(Size size) {
 
 
 
-public Genre getGenre() {
+public AnimalGenre getGenre() {
     return genre;
 }
 
@@ -96,7 +100,7 @@ public Genre getGenre() {
 
 
 
-public void setGenre(Genre genre) {
+public void setGenre(AnimalGenre genre) {
     this.genre = genre;
 }
 
@@ -104,7 +108,7 @@ public void setGenre(Genre genre) {
 
 
 
-public boolean isSummary() {
+public Boolean isSummary() {
     return summary;
 }
 
@@ -112,7 +116,7 @@ public boolean isSummary() {
 
 
 
-public void setSummary(boolean summary) {
+public void setSummary(Boolean summary) {
     this.summary = summary;
 }
 

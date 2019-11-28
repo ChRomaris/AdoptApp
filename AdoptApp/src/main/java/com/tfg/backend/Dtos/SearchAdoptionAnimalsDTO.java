@@ -3,11 +3,26 @@ package com.tfg.backend.Dtos;
 public class SearchAdoptionAnimalsDTO {
 
     private int page;
+    private AnimalFilter filter;
     private String userToken;
     
     public SearchAdoptionAnimalsDTO() {
 	super();
     }
+    
+    
+
+    public AnimalFilter getFilter() {
+        return filter;
+    }
+
+
+
+    public void setFilter(AnimalFilter filter) {
+        this.filter = filter;
+    }
+
+
 
     public int getPage() {
         return page;

@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class LostAnimal extends Animal{
     
     public enum LostState {
-	LOST, FOUND
+	PERDIDO, ENCONTRADO
     }
     
     @Column
@@ -102,6 +102,4 @@ public class LostAnimal extends Animal{
     }
     public void setComment(String comment) {
         this.comment = comment;
-    }   
-
-}
+    }}

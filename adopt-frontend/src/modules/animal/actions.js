@@ -58,9 +58,9 @@ export function getNearbyAdoptionAnimals(params){
     });
 }
 
-export function getTypes(){
+export function getTypes(typeName){
     return request ({
-        url: "http://localhost:8080/animal/getTypes",
+        url: "http://localhost:8080/animal/getTypes?name="+typeName,
         method: 'GET',
     });
 }

@@ -1,3 +1,6 @@
+
+
+
 .bigMapContainer{
     height: 90vh;
     width: 93vw;
@@ -25,19 +28,52 @@ height: 100%;
     z-index: 20
 }
 
-.modal-wrapper {
-    background: white;
-    border: 1px solid #d0cccc;
-    box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.17);
-   margin-top:40vh;
-   margin-left: 20vw;
-    transition: all .8s;
-    width: 60%;
-    height: 40vh;
-    position: absolute;
-    z-index: 5;
-    background-blend-mode: screen;
+@media screen and (min-width:600px){
+    .modal-wrapper {
+        background: white;
+        border: 1px solid #d0cccc;
+        box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.17);
+       margin-top:40vh;
+       margin-left: 20vw;
+        transition: all .8s;
+        width: 60%;
+        height: 40vh;
+        position: absolute;
+        z-index: 5;
+        background-blend-mode: screen;
+    }
+
+    .modal-footer {
+        background: #263238;
+        height: 35px;
+        margin-top: 3vh;
+    }
 }
+
+@media screen and (max-width:600px){
+    .modal-wrapper {
+        background: white;
+        border: 1px solid #d0cccc;
+        box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.17);
+       margin-top:10vh;
+       margin-left: 20vw;
+        transition: all .8s;
+        width: 60%;
+        height: 63vh;
+        position: absolute;
+        z-index: 5;
+        background-blend-mode: screen;
+    }
+
+    .modal-footer {
+        background: #263238;
+        height: 35px;
+        margin-top: 25vh;
+    }
+}
+
+
+
 
 .modal-header {
     background: #263238;
@@ -71,11 +107,7 @@ height: 100%;
     height: 20vh;
 }
 
-.modal-footer {
-    background: #263238;
-    height: 35px;
-    margin-top: 3vh;
-}
+
 
 .close-modal-btn {
     color: white;
@@ -146,49 +178,108 @@ font-weight: bold;
 display: inline-block;
  
 }
+@media screen and (min-width:600px){
 
-.carouselContainer{
-    width: 93vw;
-    height: 30vh;
-    margin-top: 2vh;
-    overflow-x: scroll;
-    background-color: white;
-    border-radius: 10px;
-    padding-top: 3vh;
-}   
-
-.carouselImage{
+    .carouselContainer{
+        width: 93vw;
+        height: 30vh;
+        margin-top: 2vh;
+        overflow-x: scroll;
+        background-color: white;
+        border-radius: 10px;
+        padding-top: 3vh;
+    }
     
-    max-height: 23vh;
-    max-width: 25%;
-    float: left;
-    margin-left: 2vw;
+    .carouselImage{
+    
+        max-height: 23vh;
+        max-width: 25%;
+        float: left;
+        margin-left: 2vw;
+    }
+
+    .singleMarkerMapContainer{
+        width: 93vw;
+        height: 30vh;
+        background-color: #D8F6F6;
+        margin-top: 2vh;
+    }
+
+    .notificationCell{
+        width:  10vw;
+        font-weight: bold;
+    }
+    
+    .notificationSection{
+        margin-left: 25vw;
+        margin-top: 5vh;
+        background-color:white;
+        border-radius: 10px;
+        width: 45vw;
+        padding: 5vh;
+    }
+    
+    .notificationSection h3 {
+        text-align: center;
+    }
+
 }
 
-.singleMarkerMapContainer{
-    width: 93vw;
-    height: 30vh;
-    background-color: #D8F6F6;
-    margin-top: 2vh;
-}
+@media screen and (max-width:600px){
 
-.notificationCell{
-    width:  10vw;
-    font-weight: bold;
-}
+    .carouselContainer{
+        width: 93vw;
+        height: 30vh;
+        margin-top: 2vh;
+        overflow-x: scroll;
+    
+        background-color: white;
+        border-radius: 10px;
+        padding-top: 3vh;
+    }
+    
+    .carouselImage{
+    
+        max-height: 25vh;
 
-.notificationSection{
-    margin-left: 25vw;
-    margin-top: 5vh;
-    background-color:white;
-    border-radius: 10px;
-    width: 45vw;
-    padding: 5vh;
-}
+        float: left;
+        margin-left: 2vw;
+    }
 
-.notificationSection h3 {
-    text-align: center;
+    .singleMarkerMapContainer{
+        width: 50vh;
+        height: 40vh;
+        background-color: #D8F6F6;
+        margin-top: 2vh;
+        display: inline-block;
+    }
+
+    .notificationCell{
+        width: 5vw;
+        font-weight: bold;
+    }
+
+    .notificationSection{
+        margin-left: 5vw;
+        margin-top: 5vh;
+        background-color:white;
+        border-radius: 10px;
+        width: 90vw;
+        padding: 1vh;
+    }
+    
+    .notificationSection h3 {
+        text-align: center;
+    }
+
 }
+  
+
+
+
+
+
+
 
 
 .shelterListSection {

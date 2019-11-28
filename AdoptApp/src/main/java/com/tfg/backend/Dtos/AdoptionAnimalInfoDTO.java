@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tfg.backend.Entities.AdoptionAnimal.AdoptionState;
-import com.tfg.backend.Entities.Animal.Genre;
+import com.tfg.backend.Entities.Animal.AnimalGenre;
 import com.tfg.backend.Entities.AnimalPicture;
 import com.tfg.backend.Entities.Shelter;
 

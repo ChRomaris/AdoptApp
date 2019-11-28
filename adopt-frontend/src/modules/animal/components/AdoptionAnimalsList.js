@@ -2,16 +2,25 @@ import React, { Component } from "react";
 import {getAllAdoptionAnimals} from '../actions';
 import List from '../../mainList/components/List';
 import { Button } from 'reactstrap';
-import {getShelterAnimals} from '../../shelter/actions'
+import {getShelterAnimals} from '../../shelter/actions';
+import Filter from '../../common/Filter';
+import { Link } from 'react-router-dom';
 
 class AdoptionAnimalList extends Component{
 
     constructor(props){
         super()
         this.state = {
+            error : false,
             animales : [],
             actualPage : 0,
             totalPages : 0,
+            filter : {
+                breed: null,
+                genre: null,
+                size: null,
+                color: null
+            }
         }
 
         this.showInfo = this.showInfo.bind(this);
@@ -19,6 +28,7 @@ class AdoptionAnimalList extends Component{
         this.nextPage = this.nextPage.bind(this);
         this.previousPage = this.previousPage.bind(this);
         this.getAnimals = this.getAnimals.bind(this);
+        this.handleFilter = this.handleFilter.bind(this);
     }
     
     componentDidMount(){
@@ -37,10 +47,12 @@ class AdoptionAnimalList extends Component{
 
         const params = {
             userToken : sessionStorage.getItem("serviceToken"),
-            page: this.state.actualPage
+            page: this.state.actualPage,
+            filter: this.state.filter
         }
         console.log("GetAnimals con parametros : " )
         console.log(params)
+        console.log("Los nuevos animales son:")
         getAllAdoptionAnimals(params).then(response => {
             this.setState( {
                 animales : response.adoptionAnimals,
@@ -57,7 +69,8 @@ class AdoptionAnimalList extends Component{
 
         const params = {
             page: this.state.actualPage,
-            shelterId: shelterId
+            shelterId: shelterId,
+            filter : this.state.filter
         }
         console.log("GetAnimals con parametros : " )
         console.log(params)
@@ -69,7 +82,9 @@ class AdoptionAnimalList extends Component{
             },()=>console.log(this.state))
             
         }).catch(error => {
-            console.log(error)
+            this.setState({
+                error : true
+            })
         })
     }
 
@@ -135,14 +150,51 @@ class AdoptionAnimalList extends Component{
         this.props.history.replace("/adoption/"+animalId);
     }
 
+    handleFilter(filter){
+        this.setState({
+            filter: filter
+        })
+        const params = {
+                userToken : sessionStorage.getItem("serviceToken"),
+                page: this.state.actualPage,
+                filter: filter
+            }
+            console.log("GetAnimals con parametros : " )
+            console.log(params)
+            getAllAdoptionAnimals(params).then(response => {
+                this.setState( {
+                    animales : response.adoptionAnimals,
+                    totalPages : response.totalPages
+                    
+                },()=>console.log(this.state))
+                
+            }).catch(error => {
+                console.log(error)
+            })
+    }
+
     
     render(){
-        return(
-    <div>
-      <List animales={this.state.animales} edit = {this.editAnimal} showButtons = {false} showInfo = {this.showInfo}></List>
-      {this.renderButtons()}  
-      </div>
-        )
+        if(this.state.error === true ){
+            return(
+                <div>
+                    <h2>Asociación Inválida</h2>
+                    <Link to="/" className="FormField__Link">Volver al inicio</Link>
+                </div>
+            )
+        }
+        else{
+            return(
+
+                <div>
+                    
+                  <Filter handleFilter = {this.handleFilter}></Filter>
+                  <List animales={this.state.animales} edit = {this.editAnimal} showButtons = {false} showInfo = {this.showInfo}></List>
+                  {this.renderButtons()}  
+                  </div>
+                    )
+        }
+
     }
 }
 

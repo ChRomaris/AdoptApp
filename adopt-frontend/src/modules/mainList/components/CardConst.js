@@ -18,10 +18,9 @@ showForm(){
     this.props.showEditingForm(this.props.animal.id);
 }
 renderButtons(){
+    {console.log(this.props.showButtons)}
     if(this.props.showButtons){
-        console.log("Valor del animal en card")
-        console.log(this.props.animal)
-        return( <Buttons animalId = {this.props.animal.id} showEditingForm = {this.showForm} deleteAnimal = {this.props.deleteAnimal} ></Buttons>, <TwitterShareButton url={'https://adoptapp.com/'+this.props.animal.id} options={{ text: ' Hay un nuevo animal en nuestra asociación. Se llama '+ this.props.animal.name +' y es un '+this.props.animal.breed+ '. Mas información en:' }}/>    )
+    return( [<Buttons animalId = {this.props.animal.id} showEditingForm = {this.showForm} deleteAnimal = {this.props.deleteAnimal} ></Buttons>, <TwitterShareButton url={'https://adoptapp.com/'+this.props.animal.id} options={{ text: ' Hay un nuevo animal en nuestra asociación. Se llama '+ this.props.animal.name +' y es un '+this.props.animal.breed+ '. Mas información en:' }}/>   ] )
     }
 }
 render(){
@@ -37,7 +36,7 @@ render(){
             <div className="texts">
             <CardTitle><FormattedMessage id='form.label.genre'/> : {this.props.animal.genre} </CardTitle>
             <CardTitle><FormattedMessage id='form.label.age'/> : {Moment(this.props.animal.birthDate).fromNow(true)}</CardTitle>
-            <CardTitle><FormattedMessage id='form.label.breed'/> : {this.props.animal.breed} </CardTitle>
+            <CardTitle><FormattedMessage id='form.label.breed'/> : {this.props.animal.breed.name} </CardTitle>
             <CardText><FormattedMessage id='form.label.description'/> : {this.props.animal.description}</CardText>
             
             </div>  

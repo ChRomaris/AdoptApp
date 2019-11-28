@@ -127,9 +127,9 @@ class UpdateAnimalForm extends Component{
                 </FormGroup>
                 <FormGroup>
                     <Label for="exampleBreed"><FormattedMessage id='form.label.breed'/></Label>
-                    <Input type="select" name="breed" id="exampleBreed"  value={this.state.breed } onChange={this.handleChange}>
+                    <Input type="select" name="breed" id="exampleBreed"  value={this.state.breed} onChange={this.handleChange}>
                         {this.props.enumValues.breeds.map(breed => {
-                            return <option key = {breed}>{breed}</option>
+                            return <option key = {breed}>{breed.name}</option>
                         })}
                     </Input>     
                 </FormGroup>
@@ -171,7 +171,7 @@ class UpdateAnimalForm extends Component{
                     </Input>     
                 </FormGroup>
                 <FormGroup>
-                    <Label for="exampleTrained"><FormattedMessage id = "form.label.trained" /></Label>
+                    <Label for="exampleTrained" className="trainedLabel"><FormattedMessage id = "form.label.trained" /></Label>
                     <Input type="checkbox" name="trained" id="exampleTrained" placeholder="Esta entrenado" value={this.state.trained || ''} onChange={this.handleChange}></Input>     
                 </FormGroup>
                 <FormGroup>

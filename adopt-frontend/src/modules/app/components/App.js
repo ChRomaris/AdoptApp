@@ -26,6 +26,7 @@ import ChatPage from '../../Chat/ChatPage';
 import ActiveChatsPage from '../../Chat/ActiveChatsPage';
 import NotificationsPage from '../../common/NotificationsPage';
 import ShelterListPage from '../../shelter/components/ShelterListPage';
+import {PrivateRoute} from './PrivateRoute';
 
 
 import '../App.css';
@@ -62,30 +63,30 @@ componentDidMount(){
       <Router>     
               <Switch>
                 <Route exact path="/signUp" component={SignUpForm}></Route>
-                <Route exact path="/shelter/update" component={UpdateShelter}></Route>
-                <Route exact path="/shelter/preferences" component={ShelterPreferences}></Route>
+                <PrivateRoute exact path="/shelter/update" component={UpdateShelter}></PrivateRoute>
+                <PrivateRoute exact path="/shelter/preferences" component={ShelterPreferences}></PrivateRoute>
                 <Route exact path="/shelter" component = {ShelterAnimalList}></Route>
-                <Route exact path="/animal/add" component={AnimalCreationForm}></Route>
-                <Route exact path="/animal/edit" component={UpdateAnimalForm}></Route>
+                <PrivateRoute exact path="/animal/add" component={AnimalCreationForm}></PrivateRoute>
+                <PrivateRoute exact path="/animal/edit" component={UpdateAnimalForm}></PrivateRoute>
                 <Route exact path="/"  component={SignInForm}></Route>
                 <Route exact path="/List" component = {AdoptionAnimalList}></Route>
                 <Route exact path="/List/:shelterId" component = {AdoptionAnimalList}></Route>
-                <Route exact path="/user/update" component = {UpdateUser}></Route>
-                <Route preferences = {this.props.profilePreferences} exact path="/user/preferences" component = {UserPreferences}></Route>
-                <Route exact path="/addLostAnimal" component = {LostAnimalCreationForm}></Route>
-                <Route exact path="/map" component = {AddLocationMap}></Route>
-                <Route exact path="/addLocation" component = {AddLocation}></Route>
+                <PrivateRoute exact path="/user/update" component = {UpdateUser}></PrivateRoute>
+                <PrivateRoute preferences = {this.props.profilePreferences} exact path="/user/preferences" component = {UserPreferences}></PrivateRoute>
+                <PrivateRoute exact path="/addLostAnimal" component = {LostAnimalCreationForm}></PrivateRoute>
+                <PrivateRoute exact path="/map" component = {AddLocationMap}></PrivateRoute>
+                <PrivateRoute exact path="/addLocation" component = {AddLocation}></PrivateRoute>
                 <Route exact path="/adoptionMap" component = {AdoptionMapPage}></Route>
                 <Route exact path = "/lostList" component = {LostAnimalsPage}></Route>
-                <Route exact path = "/user/animals" component = {MyLostAnimalsPage}></Route>
+                <PrivateRoute exact path = "/user/animals" component = {MyLostAnimalsPage}></PrivateRoute>
                 <Route exact path = "/user/animals/:animalId" component = {LostAnimalUpdateForm}></Route>
-                <Route exact path = "/animal/locations" component = {LocationsPage}></Route>
+                <PrivateRoute exact path = "/animal/locations" component = {LocationsPage}></PrivateRoute>
                 <Route exact path = "/lostMap" component ={LostMapPage}></Route>
                 <Route exact path = "/lost/:animalId" component ={LostAnimalInfoPage}></Route>
                 <Route exact path = "/adoption/:animalId" component = {AdoptionAnimalInfoPage}></Route>
-                <Route exact path = "/chat/:username" component = {ChatPage}></Route>
-                <Route exact path = "/notifications" component = {NotificationsPage}></Route>
-                <Route exact path = "/chat" component = {ActiveChatsPage}></Route>
+                <PrivateRoute exact path = "/chat/:username" component = {ChatPage}></PrivateRoute>
+                <PrivateRoute exact path = "/notifications" component = {NotificationsPage}></PrivateRoute>
+                <PrivateRoute exact path = "/chat" component = {ActiveChatsPage}></PrivateRoute>
                 <Route exact path = "/shelterList" component = {ShelterListPage}></Route>
               </Switch>
       </Router>

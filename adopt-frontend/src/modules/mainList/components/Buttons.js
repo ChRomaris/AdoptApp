@@ -30,8 +30,6 @@ class Buttons extends Component{
 
 
     render(){
-        console.log("Props en los botones")
-        console.log(this.props)
         return(
             <div  className= "buttons">
         <Button onClick={this.showEditingForm}>Editar</Button>

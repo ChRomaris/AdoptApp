@@ -20,7 +20,7 @@ public interface IProfileService {
 
 	ProfileDTO setLocation(LocationDTO locationDTO);
 
-	ProfileDTO registerProfile(ProfileDTO profileDTO);
+	ProfileDTO registerProfile(ProfileDTO profileDTO) throws DuplicatedUserException;
 
 	ProfileDTO updateProfile(ProfileDTO profileDTO) throws InstanceNotFoundException;
 

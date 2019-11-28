@@ -1,12 +1,14 @@
-.adoptionAnimalDetailContainer{
-    width: 50vw;
-    height: 35vh;
-    margin-top: 10vh;
-    padding : 3vh;
-    background-color: white;
-    margin-left: 40vw;
-    border-radius: 10px;
-    
+
+@media screen and (min-width: 600px){
+    .adoptionAnimalDetailContainer{
+        width: 50vw;
+        height: 35vh;
+        margin-top: 7vh;
+        padding : 3vh;
+        background-color: white;
+        margin-left: 40vw;
+        border-radius: 10px;
+       
 }
 
 .singleMarkerMapContainer{
@@ -16,8 +18,101 @@
     float: left;
 }
 
+
+.filterContainer{
+    width:13vw;
+    height: 55vh;   
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    margin-top: 15vh;
+
+}
+
+.filterContainer h5{
+    background-color: #2E4158;
+    height: 4vh;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    text-align: center;
+    color: white;
+}
+
+.filterLabel{
+    margin-top: 3vh;
+    
+  
+}
+
+.filterButton{
+   margin-top: 50vh;
+}
+
+
+
+ 
+}
+
+@media screen and (max-width : 600px){
+    .adoptionAnimalDetailContainer{
+        width: 95vw;
+        height: 39vh;
+        margin-top: 2vh;
+        padding : 1vh;
+        background-color: white;
+        border-radius: 10px;
+        display: inline-block;
+       
+}
+
+.singleMarkerMapContainer{
+    width: 95vw;
+    height: 50vh;
+    margin-top: 2vh;
+    float: left;
+}
+
+
+
+.filterContainer{
+    width:92vw;
+    height: 55vh;   
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    margin-top: 10vh;
+    margin-left: 1vw;
+
+}
+
+.filterContainer h5{
+    background-color: #2E4158;
+    height: 4vh;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    text-align: center;
+    color: white;
+}
+
+.filterLabel{
+    margin-top: 3vh;
+    
+  
+}
+
+.filterButton{
+   margin-top: 50vh;
+}
+
+
+}
+
+
+
 .markersMap{
     width: 100%;
     height: 100%;
     
 }
+
+

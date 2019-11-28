@@ -2,7 +2,8 @@ package com.tfg.backend.Dtos;
 
 import java.util.Calendar;
 
-import com.tfg.backend.Entities.Animal.Breed;
+import com.tfg.backend.Entities.Breed;
+
 
 public class AnimalMarkerDTO {
     Long id;

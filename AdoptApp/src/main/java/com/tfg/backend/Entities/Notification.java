@@ -42,7 +42,7 @@ public class Notification {
   
  
     @ManyToOne 
-    @JoinColumn (name = "animalId")
+    @JoinColumn (name = "id_animal")
     private Animal animal;
 
     public Notification() {

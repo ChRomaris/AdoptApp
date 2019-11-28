@@ -28,6 +28,7 @@ class LostAnimalInfoPage extends Component{
             }
         }
         this.contactOnClick = this.contactOnClick.bind(this);
+        this.renderContact = this.renderContact.bind(this);
     }
     componentDidMount(){
         getLostAnimalInfo(this.props.match.params.animalId).then(response =>{
@@ -57,7 +58,11 @@ class LostAnimalInfoPage extends Component{
         console.log()
         this.props.history.replace("/chat/"+this.state.animal.ownerUsername)
     }
-
+    renderContact(){
+        if (sessionStorage.getItem('serviceToken') !==  null){
+            return <Button onClick={()=>this.contactOnClick()}>Contactar</Button>
+        }
+    }
     render(){
         return(
             <div>
@@ -67,7 +72,8 @@ class LostAnimalInfoPage extends Component{
                 <ImagesCarousel images={this.state.animal.images}></ImagesCarousel>
                 <SingleMarkerMap latitude ={this.state.animal.latitude} longitude={this.state.animal.longitude}></SingleMarkerMap>
                 <div className = "button">
-                    <Button onClick={()=>this.contactOnClick()}>Contactar</Button>
+                    {console.log(this.state.animal)}
+                    {this.renderContact()}
                 </div>
                 <LostAnimalDetail animal = {this.state.animal} ></LostAnimalDetail>
 

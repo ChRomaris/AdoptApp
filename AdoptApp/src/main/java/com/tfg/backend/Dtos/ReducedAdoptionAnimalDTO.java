@@ -2,8 +2,8 @@ package com.tfg.backend.Dtos;
 
 import java.util.Calendar;
 
-import com.tfg.backend.Entities.Animal.Breed;
-import com.tfg.backend.Entities.Animal.Genre;
+import com.tfg.backend.Entities.Animal.AnimalGenre;
+import com.tfg.backend.Entities.Breed;
 
 public class ReducedAdoptionAnimalDTO {
 private Long id;
@@ -11,7 +11,7 @@ private String name;
 private Breed breed;
 private Calendar birthDate;
 private String description;
-private Genre genre;
+private AnimalGenre genre;
 private String image;
 private Double distance;
 
@@ -63,10 +63,10 @@ public String getDescription() {
 public void setDescription(String description) {
     this.description = description;
 }
-public Genre getGenre() {
+public AnimalGenre getGenre() {
     return genre;
 }
-public void setGenre(Genre genre) {
+public void setGenre(AnimalGenre genre) {
     this.genre = genre;
 }
 public String getImage() {

@@ -29,151 +29,150 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "Animal")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Animal {
-	
-	public static enum Genre{
-		MALE, FEMALE
-	}
-	
-	public static enum Breed{
-	    Affenpinscher, AfghanHound,
-	    AfghanShepher,
-	    AlaskanHusky,
-	    AmericanEskimoDog,
-	    AustrianPinscher,
-	    PungsanDog,
-	    RussianSalonDog,
-	    WelshSpringerSpaniel,
-	    Whippet,
-	    YorkshireTerrier
-	}
-	public static enum Color{
-	    BLACK, GREY, WHITE, BROWN
-	}
-	
-	public static enum Size{
-	    SMALL, MEDIUM, BIG
-	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id_animal;
-	@Column
-	private String name;
-	@Column
-	private Genre genre;
-	@Column	
-	private Breed breed;
-	@Column
-	private String description;
-	@Column
-	private Color color;
-	@Column
-	
-	private Size size;
-	@JsonManagedReference
-	@OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<AnimalPicture> images;
-	
+    public static enum AnimalGenre {
+	MACHO, HEMBRA
+    }
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "animal", fetch = FetchType.EAGER)
-	private List<Notification> notifications;
-	
-	
-	public Animal() {
-		
-	}
-	
-	
-	
-	public List<Notification> getNotifications() {
-	    return notifications;
-	}
+    public static enum Color {
+	NEGRO, GRIS, BLANCO, MARRÓN
+    }
+
+    public static enum Size {
+	PEQUEÑO, MEDIANO, GRANDE
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id_animal;
+    @Column
+    private String name;
+    @Column
+    private AnimalGenre genre;
+    @Column
+    private String description;
+    @Column
+    private Color color;
+    @Column
+
+    private Size size;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<AnimalPicture> images;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "animal", fetch = FetchType.EAGER)
+    private List<Notification> notifications;
+
+    @ManyToOne
+    @JoinColumn(name="animalType_id", referencedColumnName = "animalTypeId")
+    private AnimalType animalType;
+    
+    @ManyToOne
+    @JoinColumn(name="breed_id", referencedColumnName = "breedId")
+    private Breed breed;
+    
+    public Animal() {
+
+    }
+
+    public List<Notification> getNotifications() {
+	return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+	this.notifications = notifications;
+    }
 
 
+    public static List<Color> getColors() {
+	return Arrays.asList(Color.class.getEnumConstants());
+    }
 
-	public void setNotifications(List<Notification> notifications) {
-	    this.notifications = notifications;
-	}
+    public static List<Size> getSizes() {
+	return Arrays.asList(Size.class.getEnumConstants());
+    }
 
+    public static List<AnimalGenre> getGenres() {
+	return Arrays.asList(AnimalGenre.class.getEnumConstants());
+    }
 
+    public Breed getBreed() {
+	return breed;
+    }
 
-	public static List<Breed> getBreeds() {
-	    return Arrays.asList(Breed.class.getEnumConstants());
-	}
-	
-	public static List<Color> getColors() {
-	    return Arrays.asList(Color.class.getEnumConstants());
-	}
-	
-	public static List<Size> getSizes() {
-	    return Arrays.asList(Size.class.getEnumConstants());
-	}
-	
-	public static List<Genre> getGenres() {
-	    return Arrays.asList(Genre.class.getEnumConstants());
-	}
-	
-	public Breed getBreed() {
-	    return breed;
-	}
+    public void setBreed(Breed breed) {
+	this.breed = breed;
+    }
 
+    public Set<AnimalPicture> getImages() {
+	return images;
+    }
 
+    public void setImages(Set<AnimalPicture> images) {
+	this.images = images;
+    }
 
+    public long getId_animal() {
+	return id_animal;
+    }
 
-	public void setBreed(Breed breed) {
-	    this.breed = breed;
-	}
+    public void setId_Animal(long animalId) {
+	this.id_animal = animalId;
+    }
 
+    public String getName() {
+	return name;
+    }
 
+    public void setName(String name) {
+	this.name = name;
+    }
 
+    public AnimalGenre getGenre() {
+	return genre;
+    }
 
-	public Set<AnimalPicture> getImages() {
-		return images;
-	}
+    public void setGenre(AnimalGenre genre) {
+	this.genre = genre;
+    }
 
-	public void setImages(Set<AnimalPicture> images) {
-		this.images = images;
-	}
+    public String getDescription() {
+	return description;
+    }
 
-	public long getId_animal() {
-		return id_animal;
-	}
+    public void setDescription(String description) {
+	this.description = description;
+    }
 
-	public void setId_animal(long id_animal) {
-		this.id_animal = id_animal;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public Genre getGenre() {
-		return genre;
-	}
-	public void setGenre(Genre genre) {
-		this.genre = genre;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public Color getColor() {
-		return color;
-	}
-	public void setColor(Color color) {
-		this.color = color;
-	}
-	public Size getSize() {
-		return size;
-	}
-	public void setSize(Size size) {
-		this.size = size;
-	}
-	
-	
-	
+    public Color getColor() {
+	return color;
+    }
+
+    public void setColor(Color color) {
+	this.color = color;
+    }
+
+    public Size getSize() {
+	return size;
+    }
+
+    public void setSize(Size size) {
+	this.size = size;
+    }
+
+    public AnimalType getAnimalType() {
+        return animalType;
+    }
+
+    public void setAnimalType(AnimalType animalType) {
+        this.animalType = animalType;
+    }
+
+    public void setId_animal(long id_animal) {
+        this.id_animal = id_animal;
+    }
+
+    
+    
 }

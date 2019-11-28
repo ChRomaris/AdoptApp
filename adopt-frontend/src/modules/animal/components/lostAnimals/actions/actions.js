@@ -1,4 +1,4 @@
-import  { GET_LOST_ANIMALS, NEXT_PAGE, PREVIOUS_PAGE, SHOW_MODAL, CLOSE_MODAL, SAVE_LOCATION, SET_LOCATION, GET_USER_ANIMALS, GET_ANIMAL_LOCATIONS, SET_SELECTED_LOCATION, GET_LOST_AREA, SET_MARKER_INFO, SET_ANIMAL, RESET_ANIMAL, DELETE_LOST} from './types';
+import  { DISABLE_MARKER_INFO,GET_LOST_ANIMALS, NEXT_PAGE, PREVIOUS_PAGE, SHOW_MODAL, CLOSE_MODAL, SAVE_LOCATION, SET_LOCATION, GET_USER_ANIMALS, GET_ANIMAL_LOCATIONS, SET_SELECTED_LOCATION, GET_LOST_AREA, SET_MARKER_INFO, SET_ANIMAL, RESET_ANIMAL, DELETE_LOST} from './types';
 
 const request = (options) => {
     const headers = new Headers({
@@ -115,6 +115,12 @@ export const getLostAnimalsInArea = (params) => dispatch => {
 export const setMarkerInfo =  () => dispatch => {
     dispatch ({
         type: SET_MARKER_INFO
+    })
+}
+
+export const disableMarkerInfo =  () => dispatch => {
+    dispatch ({
+        type: DISABLE_MARKER_INFO
     })
 }
 

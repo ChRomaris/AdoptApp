@@ -1,17 +1,18 @@
 package com.tfg.backend.Dtos;
 
-import com.tfg.backend.Entities.Animal.Breed;
 import com.tfg.backend.Entities.Animal.Color;
-import com.tfg.backend.Entities.Animal.Genre;
+import com.tfg.backend.Entities.Animal.AnimalGenre;
 import com.tfg.backend.Entities.Animal.Size;
+import com.tfg.backend.Entities.Breed;
 
 public class UserPreferencesDTO {
 
 private Long preferencesId;
 private Breed breed;
+private String breedName;
 private Color color;
 private Size size;
-private Genre genre;
+private AnimalGenre genre;
 private boolean summary;
 private Double maxAdoptionDistance;
 private Double maxLostDistance;
@@ -19,6 +20,18 @@ private String userToken;
 
 public UserPreferencesDTO() {
     super();
+}
+
+
+
+public String getBreedName() {
+    return breedName;
+}
+
+
+
+public void setBreedName(String breedName) {
+    this.breedName = breedName;
 }
 
 
@@ -35,13 +48,13 @@ public void setUserToken(String userToken) {
 
 
 
-public Genre getGenre() {
+public AnimalGenre getGenre() {
     return genre;
 }
 
 
 
-public void setGenre(Genre genre) {
+public void setGenre(AnimalGenre genre) {
     this.genre = genre;
 }
 

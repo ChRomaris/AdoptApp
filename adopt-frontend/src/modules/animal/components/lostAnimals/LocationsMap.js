@@ -3,7 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import LocationMarker from './LocationMarker';
 import {connect} from 'react-redux';
 import LostAnimalInfoModal from './LostAnimalInfoModal';
-import {setSelectedLocation} from './actions/actions';
+import {setSelectedLocation, disableMarkerInfo} from './actions/actions';
 
 class LocationsMap extends Component{
   constructor (){
@@ -15,15 +15,22 @@ class LocationsMap extends Component{
 
     this.showModal = this.showModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.contact = this.contact.bind(this);
   }
 
     static defaultProps = {
-        center: {
-          lat: 42.09989087544122,
-          lng: -77.03967669057192
-        },
+      center: {
+        lat: 43.3351,
+        lng: -8.38233
+      },
         zoom:11
       };
+      
+
+      componentDidMount(){
+        this.closeModal()
+        this.props.disableMarkerInfo()
+      }
 
       
 
@@ -40,10 +47,14 @@ class LocationsMap extends Component{
       })
     }
 
+    contact(username){
+      this.props.contact(username)
+  }
+
     render(){
         return(
             <div className="locationsMarkersMap" >
-           <LostAnimalInfoModal show = {this.state.showModal} marker = {this.state.selectedMarker} close={this.closeModal}></LostAnimalInfoModal>
+           <LostAnimalInfoModal show = {this.state.showModal} marker = {this.state.selectedMarker} close={this.closeModal} contact = {this.contact}></LostAnimalInfoModal>
             <GoogleMapReact 
               bootstrapURLKeys={{ key: 'AIzaSyAREV4WoFuo_aAjetmOHXmr9ulKepuYKRo'}}
               defaultCenter={this.props.center}
@@ -70,4 +81,4 @@ const mapStateToProps = state =>({
     locations : state.lostAnimals.locations
 })
 
-export default connect (mapStateToProps,{setSelectedLocation})(LocationsMap)
+export default connect (mapStateToProps,{setSelectedLocation, disableMarkerInfo})(LocationsMap)

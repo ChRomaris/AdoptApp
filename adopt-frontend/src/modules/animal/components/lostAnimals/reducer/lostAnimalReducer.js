@@ -1,4 +1,4 @@
-import  { GET_LOST_ANIMALS, NEXT_PAGE, PREVIOUS_PAGE, SHOW_MODAL, CLOSE_MODAL, SAVE_LOCATION, SET_LOCATION, GET_USER_ANIMALS, GET_ANIMAL_LOCATIONS, SET_SELECTED_LOCATION, GET_LOST_AREA, SET_MARKER_INFO, SET_ANIMAL, RESET_ANIMAL, DELETE_LOST} from '../actions/types'
+import  { DISABLE_MARKER_INFO, GET_LOST_ANIMALS, NEXT_PAGE, PREVIOUS_PAGE, SHOW_MODAL, CLOSE_MODAL, SAVE_LOCATION, SET_LOCATION, GET_USER_ANIMALS, GET_ANIMAL_LOCATIONS, SET_SELECTED_LOCATION, GET_LOST_AREA, SET_MARKER_INFO, SET_ANIMAL, RESET_ANIMAL, DELETE_LOST} from '../actions/types'
 
 
 const initialState = {
@@ -13,6 +13,7 @@ const initialState = {
     selectedAnimalId: '',
     selectedLatitude : '',
     selectedLongitude : '',
+    selectdBreed : '',
     isUserList: false,
     locations: [],
     locationsLoaded : false,
@@ -98,7 +99,8 @@ export default function (state = initialState, action) {
         case SET_ANIMAL:
             return{
                 ...state,
-                selectedAnimal : action.payload
+                selectedAnimal : action.payload,
+                selectedBreed : action.payload.breed
             }
         case RESET_ANIMAL:
             return{
@@ -109,6 +111,11 @@ export default function (state = initialState, action) {
             return{
                 ...state,
                 animals : action.payload.lostAnimals
+        }
+        case DISABLE_MARKER_INFO:
+            return{
+                ...state,
+                isMarkerInfo : false
         }
         default : 
             return state;

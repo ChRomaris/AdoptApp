@@ -1,4 +1,4 @@
-import { getUserInfo, updateUser } from '../actions';
+import { getUserInfo, updateUser } from '../../../backend/userService';
 import React, { Component } from 'react';
 import { ToastsContainer, ToastsStore } from 'react-toasts';
 import { TopMenu } from '../../app/';

@@ -35,13 +35,16 @@ class List extends Component {
         
         console.log( this.props);
         return (
+            
             <div>
+                {console.log(this.props.showButtons)}
             <TopMenu></TopMenu>
             <div className="Main">
                 <Container>
                     <ToastsContainer store={ToastsStore} />
                     <div>
                         {this.props.animales.map(item => (
+                            
                             <CardConst classname="card" showEditingForm={this.showForm} animal={item} key={item.name} deleteAnimal = {this.props.deleteAnimal} showButtons = {this.props.showButtons} showInfo = {this.props.showInfo} ></CardConst>
                         ))}
                     </div>

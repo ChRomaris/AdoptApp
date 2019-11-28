@@ -13,4 +13,5 @@ export const SET_MARKER_INFO = 'SET_MARKER_INFO';
 export const SET_ANIMAL = 'SET_ANIMAL';
 export const RESET_ANIMAL = 'RESET_ANIMAL';
 export const DELETE_LOST  = 'DELETE_LOST';
+export const DISABLE_MARKER_INFO  = 'DISABLE_MARKER_INFO';
 

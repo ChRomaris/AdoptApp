@@ -18,30 +18,88 @@
     margin-left: 5vw;
 }
 
-.lostAnimal-modal-container{
-    width: 50vw;
-    height: 10vh;
-    position:absolute;
-    z-index: 2;
-    margin-top: 20vh;
-    margin-left: 20vw;
+@media screen and (max-width:600px){
+    .lostAnimal-modal-container{
+        width: 70vw;
+        height: 10vh;
+        position:absolute;
+        z-index: 2;
+        margin-top: 10vh;
+        margin-left: 12vw;
+    }
+
+    .marker-modal-image{
+        width: 30vw;
+        height: 15vh;
+    
+    }
+
+    .marker-modal-text{
+        width:62%;
+        height: 25vh;
+    
+    }
+
+    .lostAnimal-modal-footer{
+        width: 100%;
+        background-color: #2E4158;
+        position: absolute;
+    }
+
+    .lostAnimal-modal-body{
+        width:100%;
+        background-color: white;
+        height: 42vh;
+        padding: 2vh;
+    }
 }
 
-.lostAnimal-modal-body{
-    width:100%;
-    background-color: white;
-    height: 30vh;
-    padding: 2vh;
+@media screen and (min-width:600px){
+    .lostAnimal-modal-container{
+        width: 50vw;
+        height: 10vh;
+        position:absolute;
+        z-index: 2;
+        margin-top: 20vh;
+        margin-left: 20vw;
+    }
+
+    .marker-modal-image{
+        float: left;
+        width: 35%;
+        height: 20vh;
+    
+    }
+
+    .marker-modal-text{
+        width:62%;
+        height: 25vh;
+        margin-left: 30vw;
+    
+    }
+
+    .lostAnimal-modal-footer{
+        width: 100%;
+        margin-top: 0px;
+        background-color: #2E4158;
+        position: absolute;
+    }
+
+    .lostAnimal-modal-body{
+        width:100%;
+        background-color: white;
+        height: 30vh;
+        padding: 2vh;
+    }
 }
 
 
 
-.lostAnimal-modal-footer{
-    width: 100%;
-    margin-top: 0px;
-    background-color: #2E4158;
-    position: absolute;
-}
+
+
+
+
+
 
 .overlayActive{
 width: 94%;
@@ -52,47 +110,78 @@ position: absolute;
 opacity: 0.5;
 }
 
-.marker-modal-text{
-    width:62%;
-    height: 25vh;
-    margin-left: 30vw;
 
+
+
+
+
+
+
+
+
+
+@media screen and (min-width:600px){
+    .singleMarkerMapContainer{
+        width: 38vw;
+        height: 50vh;
+        margin-top: 2vh;
+        float: left;
+    }
+
+    .value{
+        width:20vw;
+    }
+
+    .label{
+        font-weight: bold;
+        font-size: 2vh;
+        width: 20vw;
+        height: 5vh;
+    }
+
+    .lostAnimalDetailContainer{
+        width: 50vw;
+        height: 30vh;
+        margin-top: 2vh;
+        margin-left: 40vw;
+        padding : 5vh;
+        background-color: white;
+        
+    }
 }
 
-.marker-modal-image{
-    float: left;
-    width: 35%;
-    height: 20vh;
+@media screen and (max-width:600px){
+    .singleMarkerMapContainer{
+        width: 94vw;
+        height: 50vh;
+        margin-top: 2vh;
+        float: left;
+    }
 
+    .value{
+        width:50px;
+
+        
+    }
+
+    .label{
+
+        padding: 1vh;
+        font-weight: bold;
+        
+    }
+
+    .lostAnimalDetailContainer{
+        width: 95vw;
+        height: 35vh;
+        margin-top: 1vh;
+        padding : 3vh;
+        background-color: white;
+        
+    }
 }
 
-.lostAnimalDetailContainer{
-    width: 50vw;
-    height: 30vh;
-    margin-top: 2vh;
-    margin-left: 40vw;
-    padding : 5vh;
-    background-color: white;
-    
-}
 
-.label{
-    font-weight: bold;
-    font-size: 2vh;
-    width: 20vw;
-    height: 5vh;
-}
-
-.value{
-    width:20vw;
-}
-
-.singleMarkerMapContainer{
-    width: 38vw;
-    height: 50vh;
-    margin-top: 2vh;
-    float: left;
-}
 
 .markersMap{
     width: 100%;

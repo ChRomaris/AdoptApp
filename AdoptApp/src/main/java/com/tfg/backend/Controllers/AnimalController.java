@@ -88,8 +88,8 @@ public class AnimalController {
     }
     
     @GetMapping("/getTypes")
-    public  EnumsDTO getTypes () {
-	return animalService.getEnumValues();
+    public  EnumsDTO getTypes (@RequestParam String name) {
+	return animalService.getEnumValues(name);
     }
     
     @PostMapping("/getLostAnimals")

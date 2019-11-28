@@ -21,6 +21,8 @@ import com.tfg.backend.Common.JwtInfo;
 import com.tfg.backend.Daos.IAdoptionAnimalDao;
 import com.tfg.backend.Daos.IAnimalDao;
 import com.tfg.backend.Daos.IAnimalPictureDao;
+import com.tfg.backend.Daos.IAnimalTypeDAO;
+import com.tfg.backend.Daos.IBreedDAO;
 import com.tfg.backend.Daos.ILostAnimalDAO;
 import com.tfg.backend.Daos.IShelterDAO;
 import com.tfg.backend.Daos.IUserDao;
@@ -45,6 +47,8 @@ import com.tfg.backend.Dtos.ShelterAnimalsDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
 import com.tfg.backend.Entities.Animal;
 import com.tfg.backend.Entities.AnimalPicture;
+import com.tfg.backend.Entities.AnimalType;
+import com.tfg.backend.Entities.Breed;
 import com.tfg.backend.Entities.LostAnimal;
 import com.tfg.backend.Entities.Preferences;
 import com.tfg.backend.Entities.Shelter;
@@ -88,6 +92,12 @@ public class AnimalService implements IAnimalService {
 	
 	@Autowired
 	JwtGenerator jwtGenerator;
+	
+	@Autowired
+	IBreedDAO breedDAO;
+	
+	@Autowired
+	IAnimalTypeDAO animalTypeDAO;
 
 
 
@@ -111,14 +121,37 @@ public class AnimalService implements IAnimalService {
 		return allAdoptionAnimals;
 	}
 	
+	
+	@Override
+	public List<LostAnimal> getAllLostAnimals (){
+		List<LostAnimal> allLostAnimals = new ArrayList<>();
+		Iterator<LostAnimal> iteratorAnimals = lostAnimalDao.findAll().iterator();
+		iteratorAnimals.forEachRemaining(allLostAnimals::add);
+		return allLostAnimals;
+	}
+	
 	@Override
 	public AdoptionAnimalsPageDTO getAdoptionAnimals(SearchAdoptionAnimalsDTO searchAdoptionAnimalsDTO) {
 	    AdoptionAnimalsPageDTO adoptionAnimalsPageDTO = new AdoptionAnimalsPageDTO();
-	    if(searchAdoptionAnimalsDTO.getUserToken()!=null) {
-		Profile profile = profileService.getProfileFromToken(searchAdoptionAnimalsDTO.getUserToken());
-		Pageable page = PageRequest.of(searchAdoptionAnimalsDTO.getPage(), 5);
-		List <AdoptionAnimal> adoptionAnimals = adoptionAnimalDao.searchAdoptionAnimalsByDistance(profile.getLatitude(), profile.getLongitude(), profile.getPreferences().getMaxAdoptionDistance(), page);
-		List <Double> distances = adoptionAnimalDao.searchAdoptionAnimalsDistances(profile.getLatitude(), profile.getLongitude(), profile.getPreferences().getMaxAdoptionDistance(), page);
+	    Pageable page = PageRequest.of(searchAdoptionAnimalsDTO.getPage(), 5);
+	    Breed breed = null;
+	    AnimalType animalType = null;
+	    if(searchAdoptionAnimalsDTO.getFilter()!=null) {
+		breed = breedDAO.findByName(searchAdoptionAnimalsDTO.getFilter().getBreed());
+		animalType = animalTypeDAO.findByName(searchAdoptionAnimalsDTO.getFilter().getAnimalType());
+	    }
+	    
+	    Profile profile = null;
+	    
+	    
+	    if(searchAdoptionAnimalsDTO.getUserToken()!=null ) {
+		profile = profileService.getProfileFromToken(searchAdoptionAnimalsDTO.getUserToken());
+	    }
+	    
+	    if(profile!=null && profile.getLatitude() != null ) {
+		
+		List <AdoptionAnimal> adoptionAnimals = adoptionAnimalDao.searchAdoptionAnimalsByDistance(profile.getLatitude(), profile.getLongitude(), profile.getPreferences().getMaxAdoptionDistance(),animalType,breed,searchAdoptionAnimalsDTO.getFilter().getGenre(),searchAdoptionAnimalsDTO.getFilter().getSize(),searchAdoptionAnimalsDTO.getFilter().getColor(), page);
+		List <Double> distances = adoptionAnimalDao.searchAdoptionAnimalsDistances(profile.getLatitude(), profile.getLongitude(), profile.getPreferences().getMaxAdoptionDistance(),animalType,breed,searchAdoptionAnimalsDTO.getFilter().getGenre(),searchAdoptionAnimalsDTO.getFilter().getSize(),searchAdoptionAnimalsDTO.getFilter().getColor(), page);
 		List<ReducedAdoptionAnimalDTO> reducedAdoptionAnimals = toReducedAdoptionAnimalDTOList(adoptionAnimals);
 		Iterator distanceIterator = distances.iterator();
 		reducedAdoptionAnimals.forEach((reducedAdoptionAnimal)->{
@@ -127,10 +160,10 @@ public class AnimalService implements IAnimalService {
 		});
 		
 		adoptionAnimalsPageDTO.setAdoptionAnimals(reducedAdoptionAnimals);
-		adoptionAnimalsPageDTO.setTotalPages(adoptionAnimalDao.countAdoptionAnimalsByDistance(profile.getLatitude(), profile.getLongitude(), profile.getPreferences().getMaxAdoptionDistance())/5);
+		adoptionAnimalsPageDTO.setTotalPages(adoptionAnimalDao.countAdoptionAnimalsByDistance(profile.getLatitude(), profile.getLongitude(), profile.getPreferences().getMaxAdoptionDistance(),animalType,breed,searchAdoptionAnimalsDTO.getFilter().getGenre(),searchAdoptionAnimalsDTO.getFilter().getSize(),searchAdoptionAnimalsDTO.getFilter().getColor())/5);
 	    }else {
-		adoptionAnimalsPageDTO.setAdoptionAnimals(toReducedAdoptionAnimalDTOList(getAllAdoptionAnimals()));
-		adoptionAnimalsPageDTO.setTotalPages(adoptionAnimalDao.countAdoptionAnimals()/5);
+		adoptionAnimalsPageDTO.setAdoptionAnimals(toReducedAdoptionAnimalDTOList(adoptionAnimalDao.searchAllAnimals(breed,animalType,searchAdoptionAnimalsDTO.getFilter().getGenre(),searchAdoptionAnimalsDTO.getFilter().getSize(),searchAdoptionAnimalsDTO.getFilter().getColor(), page)));
+		adoptionAnimalsPageDTO.setTotalPages(adoptionAnimalDao.countAdoptionAnimals(animalType,breed,searchAdoptionAnimalsDTO.getFilter().getGenre(),searchAdoptionAnimalsDTO.getFilter().getSize(),searchAdoptionAnimalsDTO.getFilter().getColor())/5);
 	    }
 	    
 	    return adoptionAnimalsPageDTO;
@@ -153,26 +186,47 @@ public class AnimalService implements IAnimalService {
 
 	@Transactional
 	public LostAnimalPageDTO searchByDistance(SearchLostAnimalsDTO searchLostAnimalsDTO) throws UnsupportedEncodingException{
-	    Profile profile = profileService.getProfileFromToken(searchLostAnimalsDTO.getUserToken());
-	    Float profileLatitude = profile.getLatitude();
-	    Float profileLongitude = profile.getLongitude();
 	    Pageable page = PageRequest.of(searchLostAnimalsDTO.getPage(), 5);
 	    List<ReturnedLostAnimalDTO> returnedLostAnimals = new ArrayList<>();
-	    List<LostAnimal> lostAnimals = lostAnimalDao.searchLostAnimalsByDistance(profileLatitude, profileLongitude, new Double(9000), page);
-	    List<Double> distances = lostAnimalDao.searchLostAnimalsDistances(profileLatitude, profileLongitude, new Double(9000), page);
-	    LostAnimalPageDTO lostAnimalPageDTO = new LostAnimalPageDTO();
-	    Iterator distanceIterator = distances.iterator();
-	    int numerLostAnimals = lostAnimalDao.countLostAnimals(profileLatitude, profileLongitude, new Double(9000));
+	    List<LostAnimal> lostAnimals = new ArrayList<>();
+	    Iterator distanceIterator = null;
+	    int numberLostAnimals;
+	    Profile profile = null;
+	    if(searchLostAnimalsDTO.getUserToken()!=null) {
+		profile = profileService.getProfileFromToken(searchLostAnimalsDTO.getUserToken());
+		
+	    }
 	    
+	    if(profile !=null && profile.getLatitude() != null) {
+		
+		    Float profileLatitude = profile.getLatitude();
+		    Float profileLongitude = profile.getLongitude();
+		    lostAnimals = lostAnimalDao.searchLostAnimalsByDistance(profileLatitude, profileLongitude, new Double(9000), page);
+		    List<Double> distances = lostAnimalDao.searchLostAnimalsDistances(profileLatitude, profileLongitude, new Double(9000), page);
+		    distanceIterator = distances.iterator();
+		     numberLostAnimals = lostAnimalDao.countLostAnimals(profileLatitude, profileLongitude, new Double(9000));
+	    }else {
+		
+		lostAnimals  = lostAnimalDao.findAll(page).getContent();
+		 numberLostAnimals = lostAnimals.size();
+	    }
+	    
+
+	    LostAnimalPageDTO lostAnimalPageDTO = new LostAnimalPageDTO();
 	    for(LostAnimal lostAnimal : lostAnimals) {
 		ReturnedLostAnimalDTO returnedLostAnimalDTO = new ReturnedLostAnimalDTO();
-		Double distance = (Double)distanceIterator.next();
+		 Double distance = null;
+		if(distanceIterator != null) {
+		   distance = (Double)distanceIterator.next();
+		}
 		returnedLostAnimalDTO.setId(lostAnimal.getId_animal());
 		returnedLostAnimalDTO.setName(lostAnimal.getName());
 		returnedLostAnimalDTO.setGenre(lostAnimal.getGenre());
 		returnedLostAnimalDTO.setDescription(lostAnimal.getDescription());
 		returnedLostAnimalDTO.setBreed(lostAnimal.getBreed());
-		returnedLostAnimalDTO.setDistance(distance);
+		if(distance!=null) {
+		    returnedLostAnimalDTO.setDistance(distance);
+		}
 		returnedLostAnimalDTO.setDateTime(lostAnimal.getDateTime());
 		returnedLostAnimalDTO.setOwnerUsername(lostAnimal.getOwner().getUsername());
 		if(lostAnimal.getImages().iterator().hasNext()) {
@@ -185,7 +239,7 @@ public class AnimalService implements IAnimalService {
 	    }
 	    
 	    lostAnimalPageDTO.setLostAnimals(returnedLostAnimals);
-	    lostAnimalPageDTO.setTotalPages(numerLostAnimals/5);
+	    lostAnimalPageDTO.setTotalPages(numberLostAnimals/5);
 	    
 	    return lostAnimalPageDTO;
 	    
@@ -194,12 +248,24 @@ public class AnimalService implements IAnimalService {
 	@Override
 	public LostAnimalsInAreaDTO getAnimalsInArea (String token) {
 	    LostAnimalsInAreaDTO lostAnimalsInAreaDTO = new LostAnimalsInAreaDTO();
+	    if(token !=null && !token.equals("null")) {
+		
+	    
+	    
 	    Profile profile = profileService.getProfileFromToken(token);
 	    Double maxDistance = null;
 	    maxDistance = profile.getPreferences().getMaxLostDistance();
 	    List<LostAnimal> lostAnimals = lostAnimalDao.searchLostAnimalsInArea(profile.getLatitude(), profile.getLongitude(), new Double (maxDistance));
 	    List<LostAnimalInfoDTO> lostAnimalInfoDTOList = toLostAnimalInfoDTOList(lostAnimals);
 	    lostAnimalsInAreaDTO.setAnimals(lostAnimalInfoDTOList);
+	    
+	    }else {
+		List<LostAnimal> lostAnimals = getAllLostAnimals();
+		List<LostAnimalInfoDTO> lostAnimalInfoDTOList = toLostAnimalInfoDTOList(lostAnimals);
+		lostAnimalsInAreaDTO.setAnimals(lostAnimalInfoDTOList);
+			
+	    }
+
 	    return lostAnimalsInAreaDTO;
 	}
 	
@@ -259,9 +325,21 @@ public class AnimalService implements IAnimalService {
 	}
 	
 	@Override
-	public EnumsDTO getEnumValues() {
+	public EnumsDTO getEnumValues(String name) {
 	    EnumsDTO enumsDTO = new EnumsDTO();
-	    enumsDTO.setBreeds(Animal.getBreeds());
+	    AnimalType animalType = null;
+	    
+	    if(name!=null && !name.equals("null")) {
+		animalType = animalTypeDAO.findByName(name);
+	    }
+	    
+	    if(animalType!=null) {
+		enumsDTO.setBreeds(breedDAO.getBreeds(animalType));
+	    }else
+	    {
+		enumsDTO.setBreeds(breedDAO.getAllBreeds());
+	    }
+	    enumsDTO.setAnimalTypes(animalTypeDAO.getTypes());
 	    enumsDTO.setColors(Animal.getColors());
 	    enumsDTO.setGenres(Animal.getGenres());
 	    enumsDTO.setSizes(Animal.getSizes());

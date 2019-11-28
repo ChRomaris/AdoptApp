@@ -19,7 +19,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.tfg.backend.Entities.Animal.Genre;
+import com.tfg.backend.Entities.Animal.AnimalGenre;
 
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
@@ -29,12 +29,12 @@ import javax.persistence.JoinColumn;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Profile {
 
-    public static enum Genre {
-	MALE, FEMALE
+    public static enum ProfileGenre {
+	HOMBRE, MUJER
     }
 
     public static enum Type {
-	PUBLIC, PRIVATE
+	PUBLICA, PRIVADA
     }
 
     @Id
@@ -123,8 +123,8 @@ public abstract class Profile {
 
 
 
-    public static List<Genre> getGenres() {
-	return Arrays.asList(Genre.class.getEnumConstants());
+    public static List<ProfileGenre> getGenres() {
+	return Arrays.asList(ProfileGenre.class.getEnumConstants());
     }
 
     public static List<Type> getTypes() {

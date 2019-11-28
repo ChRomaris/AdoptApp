@@ -9,10 +9,17 @@ import {closeModal, saveLocation, setLocation, getAnimals} from './actions/actio
 class LostAnimalsPage extends Component{
     constructor(){
         super()
+        this.state = {
+            date:'',
+            comment:''
+        }
+        super()
         this.saveLocation = this.saveLocation.bind(this)
         this.setLocation = this.setLocation.bind(this)
         this.renderModal = this.renderModal.bind(this)
         this.showInfo = this.showInfo.bind(this)
+        this.commentChange = this.commentChange.bind(this);
+        this.dateChange = this.dateChange.bind(this);
     }
 
     saveLocation (){
@@ -20,7 +27,10 @@ class LostAnimalsPage extends Component{
             animalId: this.props.selectedAnimal,
             token : sessionStorage.getItem('serviceToken'),
             latitude : this.props.selectedLatitude,
-            longitude : this.props.selectedLongitude   
+            longitude : this.props.selectedLongitude,
+            comment :this.state.comment,
+            dateTime : this.state.date,
+            username : sessionStorage.getItem('name'),
         }
 
         this.props.saveLocation(params)
@@ -54,11 +64,29 @@ class LostAnimalsPage extends Component{
         this.props.history.replace("/lost/"+animalId)
     }
 
+    dateChange(e){
+        let target = e.target;
+        console.log(target.value);
+        this.setState({
+            date:target.value
+        })
+
+    }
+
+    commentChange(e){
+        console.log("commentChange")
+        let target = e.target;
+        console.log(target.value)
+        this.setState({
+            comment:target.value
+        })
+    }
+
     //Método para renderizar el modal, de esta forma no se guarda el estado al cerrarlo
     renderModal (){
         if(this.props.showModal){
 
-            return <AddLocationModal show={window.scrollTo(0,500),true} close={this.props.closeModal} save = {this.saveLocation} set = {this.setLocation} ></AddLocationModal>
+            return <AddLocationModal show={window.scrollTo(0,500),true} close={this.props.closeModal} save = {this.saveLocation} set = {this.setLocation} dateChange = {this.dateChange} commentChange = {this.commentChange} ></AddLocationModal>
         }
     }
 

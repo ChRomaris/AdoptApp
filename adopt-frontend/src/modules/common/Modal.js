@@ -2,7 +2,11 @@ import React from 'react';
 import {FormattedMessage} from "react-intl"
 
 import './styles/common.css';
-
+function renderDistance (distance){
+    if(sessionStorage.getItem('serviceToken')){
+        return<div className="modal-data-field"><p><FormattedMessage id = "form.label.distance" /> :</p> {Math.round(distance)} Km  </div>
+    }
+}
 const modal = (props) => {
     console.log(props)
     return (
@@ -22,13 +26,14 @@ const modal = (props) => {
                         <div className="modal-data-field"><p><FormattedMessage id = "form.label.address" />:</p> {props.shelter.address}  </div>  
                         <div className="modal-data-field"><p><FormattedMessage id = "form.label.email" />:</p> {props.shelter.email}  </div> 
                         <div className="modal-data-field"><p><FormattedMessage id = "form.label.phoneNumber" />:</p> {props.shelter.phoneNumber}  </div> 
-                        <div className="modal-data-field"><p><FormattedMessage id = "form.label.distance" /> :</p> {Math.round(props.shelter.distance)} Km  </div> 
+                        {renderDistance(props.shelter.distance)}
+                         
                     </div>
 
                 </div>
                 <div className="modal-footer">
                     <button className="btn-cancel" onClick={props.close}><FormattedMessage id = "form.button.close" /></button>
-                    <button className="btn-continue" onClick={()=>props.showAnimals(props.shelter.id)}><FormattedMessage id = "form.button.animal" /></button>
+                    <button className="btn-continue" onClick={()=>props.showAnimals(props.shelter.id)}>Ver animales</button>
                 </div>
             </div>
         </div>

@@ -2,12 +2,12 @@ package com.tfg.backend.Dtos;
 
 import java.util.List;
 
-import com.tfg.backend.Entities.Profile.Genre;
+import com.tfg.backend.Entities.Profile.ProfileGenre;
 import com.tfg.backend.Entities.Profile.Type;
 
 public class ProfileEnumsDTO {
     private List<Type> types;
-    private List<Genre> genres;
+    private List<ProfileGenre> genres;
     
     public ProfileEnumsDTO() {
 	super();
@@ -21,11 +21,11 @@ public class ProfileEnumsDTO {
         this.types = types;
     }
 
-    public List<Genre> getGenres() {
+    public List<ProfileGenre> getGenres() {
         return genres;
     }
 
-    public void setGenres(List<Genre> genres) {
+    public void setGenres(List<ProfileGenre> genres) {
         this.genres = genres;
     }
    

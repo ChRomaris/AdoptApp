@@ -84,7 +84,8 @@ export default{
     'form.button.animal' : 'Ver animal',
     'form.button.notificationDelete' : 'Borrar notificación',
     'menu.label.shelterList' : 'Lista de asociaciones',
-    'menu.label.shelterMap': 'Mapa de asociaciones'
+    'menu.label.shelterMap': 'Mapa de asociaciones',
+    'form.button.anonimous' : 'Acceder sin identificarse'
 
 
 }

@@ -42,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/user/preferences").permitAll()
 				.antMatchers("/user/getAnimals").permitAll()
 				.antMatchers("/user/deleteLost").permitAll()
+				.antMatchers("/user/mail").permitAll()
 				.antMatchers("/shelter/list").permitAll()
 				.antMatchers("/shelter/animal/delete").permitAll()
 				.antMatchers("/shelter/shelterList").permitAll()

@@ -16,8 +16,9 @@ class Chat extends Component {
     };
 
     this.getCurrentUserInfo = this.getCurrentUserInfo.bind(this);
-    this.returnSocket = this.returnSocket.bind(this)
-    this.initializeChat = this.initializeChat.bind(this)
+    this.returnSocket = this.returnSocket.bind(this);
+    this.initializeChat = this.initializeChat.bind(this);
+    this.renderElements = this.renderElements.bind(this);
   }
 
   getCurrentUserInfo(){
@@ -43,6 +44,7 @@ class Chat extends Component {
   }
 
   sendMessage = (text, self) => {
+    console.log("send")
     const messageDTO = {
       userToken: sessionStorage.getItem('serviceToken'),
       chatId: this.state.chatId,
@@ -50,6 +52,7 @@ class Chat extends Component {
       username: self.author,
       authorId: 1
     }
+    console.log(messageDTO)
     try {
       this.clientRef.sendMessage("/app/all", JSON.stringify(messageDTO)).then(response => {
 
@@ -76,23 +79,28 @@ class Chat extends Component {
   initializeChat(){
     
     if(this.props.username!==""){
-      
+      console.log("entra")
       const chatDTO = {
         userToken: sessionStorage.getItem('serviceToken'),
         username: this.props.username
       }
       startChat(chatDTO).then(response => {
+        
         if(response.messages !==null){
     
         const texts = response.messages.map((message) => {
           
           return { authorId: message.messageSender.id, author: message.messageSender.username, message: message.text }
         })
+      this.setState({
+        messages: texts
+      })
+      }
 
         this.setState({
-          messages: texts,
+
           chatId: response.id,
-        })}
+        })
       })
 
     }
@@ -121,14 +129,25 @@ class Chat extends Component {
     }
   }
   
+  renderElements(){
+    if(this.props.username != 'undefined'){
+      return (
+        <div className="chatSection">
+          
+          {this.returnBox()}
+          {this.returnSocket()}
+        </div>)
+    }else{
+      return <h1>Usuario Inválido</h1>
+    }
+  }
 
 
   render() {
 
     return (
       <div className="chatSection">
-        {this.returnBox()}
-        {this.returnSocket()}
+        {this.renderElements()}
       </div>
     );
   }

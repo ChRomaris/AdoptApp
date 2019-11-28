@@ -41,10 +41,10 @@ class MarkersMap extends Component{
     
 
     static defaultProps = {
-        center: {
-          lat: 42.09989087544122,
-          lng: -77.03967669057192
-        },
+      center: {
+        lat: 43.3351,
+        lng: -8.38233
+      },
         zoom:11
       };
 

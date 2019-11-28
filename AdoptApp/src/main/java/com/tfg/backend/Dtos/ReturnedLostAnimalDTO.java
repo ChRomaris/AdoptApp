@@ -1,15 +1,15 @@
 package com.tfg.backend.Dtos;
 import java.util.Calendar;
-import com.tfg.backend.Entities.Animal.Breed;
 import com.tfg.backend.Entities.Animal.Color;
-import com.tfg.backend.Entities.Animal.Genre;
+import com.tfg.backend.Entities.Animal.AnimalGenre;
 import com.tfg.backend.Entities.Animal.Size;
+import com.tfg.backend.Entities.Breed;
 
 public class ReturnedLostAnimalDTO {
 
     private Long id;
     private String name;
-    private Genre genre;
+    private AnimalGenre genre;
     private Breed breed;
     private String Description;
     private Double distance;
@@ -72,10 +72,10 @@ public class ReturnedLostAnimalDTO {
     public void setName(String name) {
         this.name = name;
     }
-    public Genre getGenre() {
+    public AnimalGenre getGenre() {
         return genre;
     }
-    public void setGenre(Genre genre) {
+    public void setGenre(AnimalGenre genre) {
         this.genre = genre;
     }
     public Breed getBreed() {

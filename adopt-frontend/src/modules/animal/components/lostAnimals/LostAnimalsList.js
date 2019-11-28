@@ -54,6 +54,11 @@ class LostAnimalsList extends Component{
     }
 
     renderButtons(){
+
+        console.log("actual")
+        console.log(this.props.actualPage)
+        console.log("maxima")
+         console.log(this.props.maxPage)
         if(this.props.maxPage === 0){
 
         }
@@ -77,6 +82,7 @@ class LostAnimalsList extends Component{
         }
         else{
         return(
+
                 <div className = "previousNextButtons">
                      <div className ="previousButton">
                      <Button onClick={this.previousPage} >
@@ -100,7 +106,7 @@ class LostAnimalsList extends Component{
                 <ToastsContainer store={ToastsStore} />
                 <div>
                 {this.props.lostAnimals.map(animal => (
-                        <LostAnimalCard key={animal.id} animal={animal} redirectLocations = {this.props.redirectLocations} editAnimal = {this.props.editAnimal} showInfo = {this.props.showInfo}></LostAnimalCard>
+                        <LostAnimalCard key={animal.id} animal={animal} redirectLocations = {this.props.redirectLocations} editAnimal = {this.props.editAnimal} showInfo = {this.props.showInfo} myAnimal = {this.props.myAnimal}></LostAnimalCard>
                     ))}
                 </div>
                 {this.renderButtons()}

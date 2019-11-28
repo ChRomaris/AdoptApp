@@ -1,22 +1,53 @@
-.picture{
-    display: inline-block;
-   float: left;
-    padding: 0px;
-    width: 25vw;
-    height: 33vh;
-}
-.texts{
+@media screen and (min-width: 600px) {
+    .picture{
+        display: inline-block;
+       float: left;
+        padding: 0px;
+        width: 25vw;
+        height: 33vh;
+    }
+
+    .cardBody{
+        width: 100%;
+        height: 32vh;
+    }
+
+    .texts{
     
    
-    margin-left: 10%;
-    float: left;
-
+        margin-left: 10%;
+        float: left;
+    
+    }
 }
 
-.cardBody{
-    width: 100%;
-    height: 32vh;
-}
+@media screen and (max-width: 600px) {
+    .picture
+    {
+        display: inline-block;
+        float: left;
+        padding: 0px;
+        width: 100vw;;
+    }
+
+    .cardBody{
+        width: 100%;
+        height: 45vh;
+    }
+
+    .texts{
+    
+   
+        margin-left: 10%;
+        float: left;
+        margin-top:4vh;
+    
+    }
+        }
+
+
+
+
 
 .buttons{
     

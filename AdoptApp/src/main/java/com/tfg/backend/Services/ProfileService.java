@@ -52,29 +52,39 @@ public class ProfileService implements IProfileService {
 
     @Override
     @Transactional
-    public ProfileDTO registerProfile(ProfileDTO profileDTO) {
-	//Guardamos el perfil
-	Profile profile = toProfile(profileDTO);
-	profileDAO.save(profile);
+    public ProfileDTO registerProfile(ProfileDTO profileDTO) throws DuplicatedUserException {
 	
-	// Creamos las preferencias por defecto del usuario
-	Preferences preferences = new Preferences();
-	preferences.setMaxAdoptionDistance(new Double(100));
-	preferences.setMaxLostDistance(new Double(100));
-	preferences.setSummary(true);
-	preferences.setProfile(profile);
-	
-	preferencesDAO.save(preferences);
-	
-	// Generamos el token del perfil
-	JwtInfo jwtInfo = new JwtInfo(profile.getId(), profile.getUsername(), profile.getRole());
-	String token = jwtGenerator.generate(jwtInfo);
+	Profile profile = profileDAO.findByUsername(profileDTO.getUsername());
+	if(profile != null) {
+		//Guardamos el perfil
+		 profile = toProfile(profileDTO);
+		profileDAO.save(profile);
+		
+		// Creamos las preferencias por defecto del usuario
+		Preferences preferences = new Preferences();
+		preferences.setMaxAdoptionDistance(new Double(100));
+		preferences.setMaxLostDistance(new Double(100));
+		if(profileDTO.getUserDTO() != null) {
+		    preferences.setSummary(true);
+		}
 
-	ProfileDTO registeredProfile = toProfileDTO(profile);
-	registeredProfile.setToken(token);
+		preferences.setProfile(profile);
+		
+		preferencesDAO.save(preferences);
+		
+		// Generamos el token del perfil
+		JwtInfo jwtInfo = new JwtInfo(profile.getId(), profile.getUsername(), profile.getRole());
+		String token = jwtGenerator.generate(jwtInfo);
 
-	// Devolvemos la información del perfil
-	return registeredProfile;
+		ProfileDTO registeredProfile = toProfileDTO(profile);
+		registeredProfile.setToken(token);
+
+		// Devolvemos la información del perfil
+		return registeredProfile;
+
+	}else {
+	    throw new DuplicatedUserException(); 
+	}
 
     }
 

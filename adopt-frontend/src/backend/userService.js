@@ -1,57 +1,79 @@
-import axios from 'axios';
-import { BehaviorSubject } from 'rxjs';
+const request = (options) => {
+    const headers = new Headers({
+        'Content-Type': 'application/json',
+    })
 
+    const defaults = {headers: headers};
+    options = Object.assign({}, defaults, options);
 
-const currentUserSubject = new BehaviorSubject (JSON.parse(localStorage.getItem('currentUser')))
-
-export function handleResponse(response) {
-    return response.text().then(text => {
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
-            if ([401, 403].indexOf(response.status) !== -1) {
-                // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-                userService.logout();
-                window.location.reload(true);
+    return fetch(options.url, options)
+    .then(response => 
+        response.json().then(json => {
+            if(!response.ok) {
+                return Promise.reject(json);
             }
+            return json;
+        })
+    );
+};
 
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
-        }
-
-        return data;
-    });
-}
-export const login = (loginData) => {   
-
-    axios.post('http://localhost:8080/user/signIn',loginData)
-    .then(handleResponse).then(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        currentUserSubject.next(user);
-        return user;
-    })  
-}
 
 function logout() {
     sessionStorage.removeItem('serviceToken');
     sessionStorage.removeItem('shelterName');
     sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('username');
 }
+
+
+export function getUserInfo(userInfo){
+    return request ({
+        url: "http://localhost:8080/profile/getInfo",
+        method: 'POST',
+        body: JSON.stringify(userInfo)
+    });
+}
+
+export function register (registerUpdateRequest) {
+    
+    return request ({
+        url: "http://localhost:8080/profile/register",
+        method: 'POST',
+        body: JSON.stringify(registerUpdateRequest)
+    });
+}
+
+export function login (loginData) {
+    return request ({
+        url: "http://localhost:8080/profile/login",
+        method: 'POST',
+        body: JSON.stringify(loginData)
+    })
+}
+
+export function setLocation(locationParams){
+    return request ({
+        url: "http://localhost:8080/profile/setLocation",
+        method: 'POST',
+        body: JSON.stringify(locationParams)
+    })
+}
+
+export function updateUser(updateUserRequest){
+    return request ({
+        url: "http://localhost:8080/profile/update ",
+        method: 'POST',
+        body: JSON.stringify(updateUserRequest)
+    });
+}
+
 
 export const userService = {
     login,
     logout,
-    currentUser: currentUserSubject.asObservable(),
-    getCurrentUserValue () { return currentUserSubject.value}
+    updateUser,
+    setLocation,
+    register
 };
-
-export const signUp = (user) => {
-
-    axios.post('http://localhost:8080/user/signIn',user)
-
-
-}
-
-
-
 
 

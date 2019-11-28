@@ -16,6 +16,7 @@ class LostAnimalCreationForm extends Component {
     constructor(){
         super();
         this.state = {
+            animalTypes:[],
             breeds:[],
             genres:[],
             colors:[],
@@ -40,16 +41,17 @@ class LostAnimalCreationForm extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.setDefaultValues = this.setDefaultValues.bind(this)
         this.handleSubmit  = this.handleSubmit.bind(this)
+        this.refreshBreeds = this.refreshBreeds.bind(this)
     }
 
     componentDidMount(){
         this.fillTypes()
-        this.setDefaultValues()
     }
 
     fillTypes(){
-        getTypes().then(response=>{
+        getTypes("PERRO").then(response=>{
             this.setState({
+                animalTypes: response.animalTypes,
                 breeds : response.breeds,
                 genres : response.genres,
                 colors : response.colors,
@@ -58,9 +60,21 @@ class LostAnimalCreationForm extends Component {
         })
     }
 
+    refreshBreeds(type){
+        getTypes(type).then(response=>{
+            this.setState({
+                breeds : response.breeds,
+
+            })
+        })
+    }
+
     setDefaultValues(){
+        console.log("SetDEfaultValues")
+        console.log(this.state.animalTypes)
         this.setState ({
-            breed:this.state.breeds[0],
+            animalType:this.state.animalTypes[0].name,
+            breed:this.state.breeds[0].name,
             genre:this.state.genres[0],
             color:this.state.colors[0],
             size:this.state.sizes[0]
@@ -70,6 +84,11 @@ class LostAnimalCreationForm extends Component {
     handleChange (event){
         let target = event.target
         let value = target.value
+        if(target.name === "animalType"){
+
+            this.refreshBreeds(target.value)
+        }
+
         this.setState ({
             [target.name] : value,
         })
@@ -81,7 +100,8 @@ class LostAnimalCreationForm extends Component {
         const params = {
             id   : this.state.id,
             name : this.state.name,
-            breed : this.state.breed,
+            breedName : this.state.breed,
+            animalTypeName : this.state.animalType.name,
             genre : this.state.genre,
             description : this.state.description,
             color : this.state.color,
@@ -92,7 +112,7 @@ class LostAnimalCreationForm extends Component {
             lostAnimalInfoDTO : {
                 latitude : this.state.latitude,
                 longitude : this.state.longitude,
-                state : 'LOST',
+                state : 'PERDIDO',
                 dateTime : this.state.date,
                 comment : this.state.comment
             },
@@ -144,10 +164,18 @@ class LostAnimalCreationForm extends Component {
                     
                 </FormGroup>
                 <FormGroup>
+                    <Label for="animalType">Tipo de animal</Label>
+                    <Input type="select" name="animalType" id="animalType"  value={this.state.animalType } onChange={this.handleChange}>
+                        {this.state.animalTypes.map(animalType => {
+                            return <option key = {animalType.name}>{animalType.name}</option>
+                        })}
+                    </Input>     
+                </FormGroup>
+                <FormGroup>
                     <Label for="exampleBreed"><FormattedMessage id='form.label.breed'/></Label>
                     <Input type="select" name="breed" id="exampleBreed"  value={this.state.breed } onChange={this.handleChange}>
                         {this.state.breeds.map(breed => {
-                            return <option key = {breed}>{breed}</option>
+                            return <option key = {breed.name}>{breed.name}</option>
                         })}
                     </Input>     
                 </FormGroup>

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import UserTopMenu from '../../user/components/UserTopMenu';
 import ShelterTopMenu from '../../shelter/components/ShelterTopMenu';
-import {getUserInfo} from '../../user/actions';
+import AnonimousTopMenu from '../../user/components/AnonimousTopMenu';
+import {getUserInfo} from '../../../backend/userService';
 
 
 class TopMenu extends Component {
@@ -9,7 +10,8 @@ class TopMenu extends Component {
     super();
 
     this.state = {
-      isShelter: false
+      isShelter:false ,
+      isAnonimous : false
 
     }
 
@@ -21,19 +23,29 @@ componentDidMount(){
     token : sessionStorage.getItem('serviceToken')
   }
 
-  getUserInfo(getInfoParams).then( response => {
-    if (response.shelterDTO != null){
-      this.setState ({
-        isShelter : true
-      })
-    }
-  })
+  if(getInfoParams.token !== null){
+    getUserInfo(getInfoParams).then( response => {
+      if (response.shelterDTO != null){
+        this.setState ({
+          isShelter : true
+        })
+      }
+    })
+  }else{
+    this.setState({
+      isAnonimous : true
+    })
+  }
+  
 }
 
 
 
 showMenu () {
-  if(this.state.isShelter){
+  if(this.state.isAnonimous){
+    return <AnonimousTopMenu></AnonimousTopMenu>
+  }
+  else if(this.state.isShelter){
     return <ShelterTopMenu></ShelterTopMenu>
   }else{
     return <UserTopMenu></UserTopMenu>

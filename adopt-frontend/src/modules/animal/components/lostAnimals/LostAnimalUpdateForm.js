@@ -165,7 +165,7 @@ class LostAnimalUpdateForm extends Component{
                     <Label for="exampleBreed"><FormattedMessage id='form.label.breed'/></Label>
                     <Input type="select" name="breed" id="exampleBreed"  value={this.state.breed } onChange={this.handleChange}>
                         {this.state.breeds.map(breed => {
-                            return <option key = {breed}>{breed}</option>
+                            return <option key = {breed.name}>{breed.name}</option>
                         })}
                     </Input>     
                 </FormGroup>

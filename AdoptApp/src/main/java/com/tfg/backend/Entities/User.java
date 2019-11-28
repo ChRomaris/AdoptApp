@@ -29,7 +29,7 @@ public class User extends Profile {
 	@Column
 	private String address;
 	@Column 
-	private Genre genre;
+	private ProfileGenre genre;
 	@Column
 	private String email;
 	
@@ -96,12 +96,12 @@ public class User extends Profile {
 	}
 
 
-	public Genre getGenre() {
+	public ProfileGenre getGenre() {
 	    return genre;
 	}
 
 
-	public void setGenre(Genre genre) {
+	public void setGenre(ProfileGenre genre) {
 	    this.genre = genre;
 	}
 

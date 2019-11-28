@@ -6,6 +6,17 @@ import LostAnimalInfoModal from './LostAnimalInfoModal';
 
 class LocationsPage extends Component{
 
+    constructor(){
+        super();
+
+       this.contact = this.contact.bind(this)
+    }
+    contact(username){
+        this.props.history.replace("/chat/"+username)
+    }
+
+
+
     render(){
 
         console.log("locations")
@@ -13,8 +24,8 @@ class LocationsPage extends Component{
         return(
             <div>
                 <TopMenu></TopMenu>
-                <LostAnimalInfoModal show = {this.props.showModal}></LostAnimalInfoModal>
-                <LocationsMap></LocationsMap>
+                <LostAnimalInfoModal show = {this.props.showModal} contact = {this.contact}></LostAnimalInfoModal>
+                <LocationsMap contact = {this.contact}></LocationsMap>
             </div>
         )
     }

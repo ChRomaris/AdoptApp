@@ -4,7 +4,7 @@ import AdoptionAnimalDetail from './AdoptionAnimalDetail';
 import {getAnimalInfo} from '../actions';
 import ImagesCarousel from '../../common/ImagesCarousel';
 import SingleMarkerMap from '../../common/SingleMarkerMap';
-import {TwitterShareButton} from 'react-twitter-embed';
+import {Button} from 'reactstrap'
 class AdoptionAnimalInfoPage extends Component{
     constructor(){
         super()
@@ -13,6 +13,9 @@ class AdoptionAnimalInfoPage extends Component{
                 images:[]
             }
         }
+        
+         this.contactOnClick = this.contactOnClick.bind(this);
+         this.renderContact = this.renderContact.bind(this);
     }
 
     componentDidMount (){
@@ -21,19 +24,34 @@ class AdoptionAnimalInfoPage extends Component{
         }
 
         getAnimalInfo(params).then(response => {
+
             this.setState({
                 animal : response
-            },()=>console.log(this.state))
+            },()=>console.log(response))
         })
     }
 
+    contactOnClick(){
+        console.log(this.state.animal)
+        console.log(this.state.animal)
+        this.props.history.replace("/chat/"+this.state.animal.shelterName)
+    }
+    renderContact(){
+        if (sessionStorage.getItem('serviceToken') !== null){
+            return <Button onClick={()=>this.contactOnClick()}>Contactar</Button>
+        }
+    }
     render(){
         return(
         <div>
             <TopMenu></TopMenu>
             <ImagesCarousel images = {this.state.animal.images}></ImagesCarousel>
+            
             <SingleMarkerMap latitude = {this.state.animal.latitude} longitude = {this.state.animal.longitude}></SingleMarkerMap>
-            <TwitterShareButton url={'https://facebook.com/saurabhnemade'} options={{ text: '#reactjs is awesome', via: 'saurabhnemade' }}/>
+            
+            <div className = "button">
+            {this.renderContact()}
+                </div>
             <AdoptionAnimalDetail animal = {this.state.animal}></AdoptionAnimalDetail>
 
         </div>

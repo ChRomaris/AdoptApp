@@ -74,7 +74,7 @@ class UserPreferences extends Component{
 
  fillTypes(){
     getTypes().then(response=>{
-
+        console.log(response)
         this.setState({
             breeds : response.breeds,
             genres : response.genres,
@@ -101,7 +101,7 @@ handleSubmit(event){
     event.preventDefault();
     const params = {
         preferencesId : this.state.preferencesId,
-        breed : this.state.breed,
+        breedName : this.state.breed,
         size: this.state.size,
         genre: this.state.genre,
         color : this.state.color,
@@ -151,7 +151,7 @@ handleCheck(checked){
                     <Input type="select" name="breed" id="exampleBreed"  value={this.state.breed || '' } onChange={this.handleChange}>
                         <option key = "empty">Seleccionar raza</option>
                         {this.state.breeds.map(breed => {
-                            return <option key = {breed}>{breed}</option>
+                            return <option key = {breed.name}>{breed.name}</option>
                         })}
                     </Input>     
                 </FormGroup>

@@ -18,9 +18,11 @@ class AnimalCreationForm extends Component{
             colors : [],
             sizes : [],
             states : [],
+            animalTypes:[],
             name : '',
             genre : '',
-            breed: '',
+            animalType:'',
+            breed: {},
             description: '',
             birthDate: '',
             healthComment: '',
@@ -37,6 +39,7 @@ class AnimalCreationForm extends Component{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.fillTypes = this.fillTypes.bind(this);
         this.setDefaultValues = this.setDefaultValues.bind(this);
+        this.refreshBreeds = this.refreshBreeds.bind(this);
         
     }
 
@@ -51,8 +54,14 @@ class AnimalCreationForm extends Component{
        
         let target = e.target;
         let value = target.type === 'checkbox' ? target.checked : target.value;
+ 
+        if(target.name === "animalType"){
+
+            this.refreshBreeds(target.value)
+        }
         let name = target.name;
         let genre = target.genre;
+        let animalType = target.animalType;
         let breed = target.breed;
         let description = target.description;
         let birthDate = target.birthDate;
@@ -66,6 +75,7 @@ class AnimalCreationForm extends Component{
 
         this.setState({
           [name]: value,
+          [animalType]: value,
           [genre]: value,
           [breed]: value,   
           [description] : value,
@@ -81,8 +91,9 @@ class AnimalCreationForm extends Component{
     }
 
     fillTypes(){
-        getTypes().then(response=>{
+        getTypes("PERRO").then(response=>{
             this.setState({
+                animalTypes : response.animalTypes,
                 breeds : response.breeds,
                 genres : response.genres,
                 colors : response.colors,
@@ -94,11 +105,21 @@ class AnimalCreationForm extends Component{
 
     setDefaultValues(){
         this.setState ({
+            animalType:this.state.animalTypes[0],
             breed:this.state.breeds[0],
             genre:this.state.genres[0],
             color:this.state.colors[0],
             size:this.state.sizes[0],
             state:this.state.states[0]
+        })
+    }
+
+    refreshBreeds(type){
+        getTypes(type).then(response=>{
+            this.setState({
+                breeds : response.breeds,
+
+            })
         })
     }
 
@@ -114,7 +135,8 @@ class AnimalCreationForm extends Component{
         const animalCreationData = {
             name : this.state.name,
             genre : this.state.genre,
-            breed : this.state.breed,
+            animalTypeName:this.state.animalType.name,
+            breedName : this.state.breed,
             description : this.state.description,
             color : this.state.color,
             size : this.state.size,
@@ -124,7 +146,7 @@ class AnimalCreationForm extends Component{
             userToken : sessionStorage.getItem('serviceToken'),
             adoptionAnimalInfoDTO : {
                 birthDate : this.state.birthDate,
-                health_Comment : this.state.healthComment,
+                health_comment : this.state.healthComment,
                 trained: this.state.trained,
                 state : this.state.state,
             }  
@@ -154,13 +176,22 @@ class AnimalCreationForm extends Component{
         <Input type="text" name="name" id="exampleName"  value={this.state.name} onChange={this.handleChange}></Input>     
                 </FormGroup>
                 <FormGroup>
+                    <Label for="exampleEmail">Tipo de animal</Label>
+                    <Input type="select" name="animalType" id="animalType"  value={this.state.animalType} onChange={this.handleChange}>
+                    {this.state.animalTypes.map(animalType => {
+                            return <option key = {animalType.name}>{animalType.name}</option>
+                        })}   
+                    </Input>     
+                </FormGroup>
+                <FormGroup>
                     <Label for="exampleBreed"><FormattedMessage id='form.label.breed'/></Label>
                     <Input type="select" name="breed" id="exampleBreed"  value={this.state.breed } onChange={this.handleChange}>
                         {this.state.breeds.map(breed => {
-                            return <option key = {breed}>{breed}</option>
+                            return <option key = {breed.name}>{breed.name}</option>
                         })}
                     </Input>     
                 </FormGroup>
+
                 <FormGroup>
                     <Label for="exampleEmail"><FormattedMessage id='form.label.genre'/></Label>
                     <Input type="select" name="genre" id="exampleGenre"  value={this.state.genre} onChange={this.handleChange}>
@@ -199,8 +230,8 @@ class AnimalCreationForm extends Component{
                     </Input>     
                 </FormGroup>
                 <FormGroup>
-                    <Label for="exampleTrained"><FormattedMessage id='form.label.trained'/></Label>
-                    <Input type="checkbox" name="trained" id="exampleTrained"  value={this.state.trained} onChange={this.handleChange}></Input>     
+                    <Label for="exampleTrained" className="trainedLabel"><FormattedMessage id='form.label.trained' /></Label>
+                    <Input type="checkbox" name="trained" id="exampleTrained"  value={this.state.trained} onChange={this.handleChange} ></Input>     
                 </FormGroup>
                 <FormGroup>
                     <Label for="exampleState"><FormattedMessage id='form.label.adoptionState'/></Label>

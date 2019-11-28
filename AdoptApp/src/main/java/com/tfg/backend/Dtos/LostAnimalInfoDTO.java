@@ -3,7 +3,7 @@ package com.tfg.backend.Dtos;
 import java.util.Calendar;
 import java.util.List;
 
-import com.tfg.backend.Entities.Animal.Breed;
+import com.tfg.backend.Entities.Breed;
 import com.tfg.backend.Entities.LostAnimal;
 import com.tfg.backend.Entities.LostAnimal.LostState;
 import com.tfg.backend.Entities.User;

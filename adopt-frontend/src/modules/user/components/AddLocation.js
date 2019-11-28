@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import AddLocationMap from './AddLocationMap'
-import {setLocation} from '../actions'
-import {FormattedMessage} from 'react-intl'
+import AddLocationMap from './AddLocationMap';
+import { setLocation } from '../../../backend/userService';
+import {FormattedMessage} from 'react-intl';
 
 import '../../../styles/userStyles.css'
 

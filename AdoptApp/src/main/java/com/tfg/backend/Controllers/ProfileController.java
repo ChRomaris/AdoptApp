@@ -77,7 +77,7 @@ public class ProfileController {
 
     
     @PostMapping("/register")
-    public ProfileDTO signUp(@RequestBody ProfileDTO profileDTO)  {
+    public ProfileDTO signUp(@RequestBody ProfileDTO profileDTO) throws DuplicatedUserException  {
 	return profileService.registerProfile(profileDTO);	
     }
     

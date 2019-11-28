@@ -12,19 +12,27 @@ import {FormattedMessage} from 'react-intl';
 import { userService } from '../../../backend/userService'
 
 class UserTopMenu extends Component{
-    state = {
-        isOpen: false,
-        isAdmin : ''
-      };
+
+  constructor(){
+    super()
+    this.state  = {
+      isOpen: false,
+      isAdmin : ''
+    };
+    this.toggleCollapse = this.toggleCollapse.bind(this);
+  }
+    
       
       componentDidMount(){
-        this.setState={
+        this.setState ({
           isOpen :false,
-        }
+        })
       }
       
-      toggleCollapse = () => {
-        this.setState({ isOpen: !this.state.isOpen });
+      toggleCollapse (){
+        this.setState({
+          isOpen : !this.state.isOpen
+        })
       }
       
       
@@ -74,7 +82,7 @@ class UserTopMenu extends Component{
 
                     <MDBDropdown>
                       <MDBDropdownToggle nav caret>
-                        <span className="mr-2"><FormattedMessage id="menu.label.profile"/></span>
+                        <span className="mr-2">{sessionStorage.getItem('username')}</span>
                       </MDBDropdownToggle>
                       <MDBDropdownMenu>
                         <MDBDropdownItem ><a href="#/user/update"><FormattedMessage id="menu.label.personalInfo"/></a></MDBDropdownItem>

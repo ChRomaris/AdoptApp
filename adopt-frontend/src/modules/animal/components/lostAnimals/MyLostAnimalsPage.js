@@ -54,7 +54,7 @@ class MyLostAnimalsPage extends Component{
             return <LostAnimalUpdateForm></LostAnimalUpdateForm>
         }
         else{
-            return <LostAnimalsList redirectLocations={this.locationsClick} editAnimal = {this.editAnimal} ></LostAnimalsList>
+            return <LostAnimalsList redirectLocations={this.locationsClick} editAnimal = {this.editAnimal} myAnimal={true} ></LostAnimalsList>
         }
     }
 

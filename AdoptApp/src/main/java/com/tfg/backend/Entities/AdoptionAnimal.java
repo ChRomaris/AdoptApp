@@ -11,13 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.tfg.backend.Entities.Animal.Breed;
 
 @Entity
 public class AdoptionAnimal extends Animal {
     
     public static enum AdoptionState{
-	IN_ADOPTION, ADOPTED
+	EN_ADOPCION, ADOPTADO
     }
     
     @Column
@@ -25,7 +24,7 @@ public class AdoptionAnimal extends Animal {
     @Column
     private Calendar birthDate;
     @Column
-    private String health_comment;
+    private String healthComment;
     @Column
     private Boolean trained;
     @Column
@@ -34,6 +33,8 @@ public class AdoptionAnimal extends Animal {
     @ManyToOne
     @JoinColumn(name = "shelter", referencedColumnName = "id")
     private Shelter shelter;
+    @Column
+    private Calendar creationDate;
 
     public AdoptionAnimal() {
 
@@ -42,7 +43,14 @@ public class AdoptionAnimal extends Animal {
     public static List<AdoptionState> getAdoptionStates() {
 	return Arrays.asList(AdoptionState.class.getEnumConstants());
     }
-	
+    
+    public Calendar getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Calendar creationDate) {
+        this.creationDate = creationDate;
+    }
 
     public Long getAdoptionTime() {
 	return adoptionTime;
@@ -60,12 +68,12 @@ public class AdoptionAnimal extends Animal {
         this.birthDate = birthDate;
     }
 
-    public String getHealth_comment() {
-        return health_comment;
+    public String getHealthComment() {
+        return healthComment;
     }
 
-    public void setHealth_comment(String health_comment) {
-        this.health_comment = health_comment;
+    public void setHealthComment(String health_comment) {
+        this.healthComment = health_comment;
     }
 
     public Boolean getTrained() {

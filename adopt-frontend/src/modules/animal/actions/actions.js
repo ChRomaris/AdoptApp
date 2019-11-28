@@ -23,7 +23,7 @@ const request = (options) => {
 export const getAnimalEnums = () => dispatch => {
     console.log("action")
     request ({
-        url: "http://localhost:8080/animal/getTypes",
+        url: "http://localhost:8080/animal/getTypes?name=",
         method: 'GET',
     }).then(enumValues => dispatch({
         type : GET_ANIMAL_ENUMS,

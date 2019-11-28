@@ -3,7 +3,10 @@ import { getShelterAnimals } from '../actions';
 import List from '../../mainList/components/List';
 import UpdateAnimalForm from "../../animal/components/UpdateAnimalForm";
 import { Button } from 'reactstrap';
-import {deleteShelterAnimal} from '../actions'
+import {deleteShelterAnimal} from '../actions';
+import Filter from '../../common/Filter';
+import { isThisSecond } from "date-fns";
+
 
 
 function RenderEditingForm(props) {
@@ -16,7 +19,7 @@ function RenderEditingForm(props) {
     return <List animales={props.animals} deleteAnimal = {props.deleteAnimal}  showEditingForm={props.showEditingForm} showButtons={true}></List>;
   }
 
-  function RenderListForm(props) {
+  function RenderListForm(props) {  
     console.log("Props del renderList")
     console.log( props);
     const isEdition = props.isEdition;
@@ -40,7 +43,14 @@ class ShelterAnimalList extends Component {
             editingAnimalId : '',
             page : 0,
             totalPages : 0,
-            actualPage : 0
+            actualPage : 0,
+            filter:{
+                breed:null,
+                genre:null,
+                color:null,
+                size:null
+            }
+ 
 
         }
         this.ShowEditingForm = this.ShowEditingForm.bind(this);
@@ -48,10 +58,16 @@ class ShelterAnimalList extends Component {
         this.DeleteAnimal = this.DeleteAnimal.bind(this);
         this.previousPage = this.previousPage.bind(this);
         this.nextPage = this.nextPage.bind(this);
-       
+        this.handleFilter = this.handleFilter.bind(this);
+        this.handleFilter = this.handleFilter.bind(this);
+        this.showInfo = this.showInfo.bind(this);
         
         
 
+    }
+
+    showInfo(animalId){
+        this.props.history.replace("/adoption/"+animalId);
     }
 
     previousPage(actual){
@@ -119,10 +135,9 @@ class ShelterAnimalList extends Component {
 
         const searchShelterAnimalsDTO = {
             token: sessionStorage.getItem('serviceToken'),
-            page: this.state.actualPage
+            page: this.state.actualPage,
+            filter : this.state.filter
         }
-        console.log("searchShelterAnimalsDTO:")
-        console.log(searchShelterAnimalsDTO)
             getShelterAnimals(searchShelterAnimalsDTO).then(response => {
                 if (response.adoptionAnimals != null) {
                     this.setState({
@@ -176,13 +191,24 @@ class ShelterAnimalList extends Component {
         this.getAnimalList();
     }
 
+    handleFilter(filter){
+        this.setState({
+            filter: filter
+        },()=>this.getAnimalList())
+
+        
+
+
+    }
+
     
 
 
     render() {
       return   (
         <div>
-        <RenderListForm isEdition={this.state.isEditing} animals={this.state.animals} showEditingForm={this.ShowEditingForm} animalId={this.state.editingAnimalId} deleteAnimal = {this.DeleteAnimal} showList={this.ShowList}/>
+        <Filter handleFilter = {this.handleFilter}></Filter>
+        <RenderListForm isEdition={this.state.isEditing} animals={this.state.animals} showEditingForm={this.ShowEditingForm} animalId={this.state.editingAnimalId} deleteAnimal = {this.DeleteAnimal} showList={this.ShowList} showInfo = {this.showInfo}/>
         {this.renderButtons()}
       </div>
       )

@@ -24,6 +24,7 @@ import com.tfg.backend.Dtos.ErrorsDTO;
 import com.tfg.backend.Dtos.LostAnimalPageDTO;
 import com.tfg.backend.Dtos.UserPreferencesDTO;
 import com.tfg.backend.Exceptions.ForbiddenException;
+import com.tfg.backend.Services.IMailService;
 import com.tfg.backend.Services.IUserService;
 
 @RestController
@@ -34,6 +35,9 @@ public class UserController {
     
     @Autowired
     IUserService userService;
+    
+    @Autowired
+    IMailService mailService;
     
     @Autowired
     private MessageSource messageSource;

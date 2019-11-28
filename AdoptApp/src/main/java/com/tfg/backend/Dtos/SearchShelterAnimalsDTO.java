@@ -4,8 +4,21 @@ public class SearchShelterAnimalsDTO {
 
 	private String token;
 	private Long shelterId;
+	private AnimalFilter filter;
 	private int page;
 	
+	
+	
+	public AnimalFilter getFilter() {
+	    return filter;
+	}
+
+
+	public void setFilter(AnimalFilter filter) {
+	    this.filter = filter;
+	}
+
+
 	public int getPage() {
 	    return page;
 	}

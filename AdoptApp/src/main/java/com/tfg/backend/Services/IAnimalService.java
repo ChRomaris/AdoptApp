@@ -23,16 +23,11 @@ import com.tfg.backend.Entities.LostAnimal;
 import com.tfg.backend.Exceptions.IncorrectValueException;
 public interface IAnimalService {
 
-    List<AdoptionAnimal> getAllAdoptionAnimals();
 
  
     List<AnimalMarkerDTO> getNearbyAdoptionAnimals(ProfileDTO profile) throws UnsupportedEncodingException;
 
     List<Animal> searchAdoptionAnimalByFilter(AdoptionAnimalFilterDTO filter);
-
-    EnumsDTO getEnumValues();
-    
-    LostAnimalsPageDTO getAllLostAnimals(int page);
 
 
     LostAnimalsInAreaDTO getAnimalsInArea(String token);
@@ -42,6 +37,14 @@ public interface IAnimalService {
 
 
     AdoptionAnimalsPageDTO getAdoptionAnimals(SearchAdoptionAnimalsDTO searchAdoptionAnimalsDTO);
+
+    List<AdoptionAnimal> getAllAdoptionAnimals();
+
+    LostAnimalsPageDTO getAllLostAnimals(int page);
+
+    EnumsDTO getEnumValues(String name);
+
+    List<LostAnimal> getAllLostAnimals();
 
 
 //   AdoptionAnimalsPageDTO getAdoptionAnimals(SearchAdoptionAnimalsDTO searchAdoptionAnimalsDTO);

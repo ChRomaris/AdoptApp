@@ -21,24 +21,36 @@ class SingleMarkerMap extends Component{
 
     static defaultProps = {
         center: {
-          lat: 42.09989087544122,
-          lng: -77.03967669057192
+          lat: 43.3351,
+          lng: -8.38233
         },
-        zoom:11,
+        zoom:8,
         latitude:'',
         longitude:'',
       };
 
       
+      componentWillReceiveProps(newProps){
+        console.log("props")
+        console.log(newProps)
+        this.setState({
+          center:{
+            lat : newProps.latitude,
+            lng : newProps.longitude
+          }
+        })
+      }
 
 render(){
+
     return(
     <div className="singleMarkerMapContainer" >
+      
         <div className="markersMap" >
             
             <GoogleMapReact 
               bootstrapURLKeys={{ key: 'AIzaSyAREV4WoFuo_aAjetmOHXmr9ulKepuYKRo'}}
-              defaultCenter={this.state.center}
+              defaultCenter = {this.props.center}
               defaultZoom={this.props.zoom}
             >
             <Marker

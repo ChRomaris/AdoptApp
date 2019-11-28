@@ -1,8 +1,30 @@
-.card{
-    margin-top: 2%;
+@media screen and (min-width:600px){
+    .card{
+        margin-top: 2%;
+    }
+
+    .Main{
+        background-color: #D8F6F6;
+        padding: 5vh;
+    }
 }
 
-.Main{
-    background-color: #D8F6F6;
-    padding: 5vh;
+@media  screen and (max-width:600px){
+    .card{
+        margin-top: 2vh;
+        width: 88vw;
+  
+    }
+
+    .Main{
+        background-color: #D8F6F6;
+        margin-top: 75vh;
+        margin-left: auto;
+        margin-right: auto;
+        position: absolute;
+    }
 }
+
+
+
+

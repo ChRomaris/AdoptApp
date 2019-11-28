@@ -30,6 +30,8 @@ import com.tfg.backend.Common.JwtInfo;
 import com.tfg.backend.Daos.IAdoptionAnimalDao;
 import com.tfg.backend.Daos.IAnimalDao;
 import com.tfg.backend.Daos.IAnimalPictureDao;
+import com.tfg.backend.Daos.IAnimalTypeDAO;
+import com.tfg.backend.Daos.IBreedDAO;
 import com.tfg.backend.Daos.INotificationDAO;
 import com.tfg.backend.Daos.IPreferencesDAO;
 import com.tfg.backend.Daos.IShelterDAO;
@@ -47,8 +49,11 @@ import com.tfg.backend.Dtos.ShelterListDTO;
 import com.tfg.backend.Dtos.ShelterPreferencesDTO;
 import com.tfg.backend.Dtos.UserPreferencesDTO;
 import com.tfg.backend.Entities.AdoptionAnimal;
+import com.tfg.backend.Entities.AdoptionAnimal.AdoptionState;
 import com.tfg.backend.Entities.Animal;
 import com.tfg.backend.Entities.AnimalPicture;
+import com.tfg.backend.Entities.AnimalType;
+import com.tfg.backend.Entities.Breed;
 import com.tfg.backend.Entities.Notification;
 import com.tfg.backend.Entities.Notification.Type;
 import com.tfg.backend.Entities.Preferences;
@@ -90,11 +95,19 @@ public class ShelterService implements IShelterService {
     @Autowired
     INotificationDAO notificationDAO;
     
+    @Autowired
+    IBreedDAO breedDAO;
+    
+    @Autowired
+    IAnimalTypeDAO animalTypeDAO;
+    
 
     @Override
     public AdoptionAnimalsPageDTO getShelterAdoptionAnimals(SearchShelterAnimalsDTO param) throws ForbiddenException {
 	AdoptionAnimalsPageDTO adoptionAnimalsPageDTO = new AdoptionAnimalsPageDTO();
 	Shelter shelter = null;
+	Breed breed = null;
+	AnimalType animalType = null;
 	if(param.getToken()!=null) {
 	     shelter = getShelterFromToken(param.getToken());
 
@@ -102,14 +115,19 @@ public class ShelterService implements IShelterService {
 	    Optional<Shelter> optionalShelter = shelterDAO.findById(param.getShelterId());
 	     shelter = optionalShelter.get();	    
 	}
+	if(param.getFilter()!=null) {
+	    breed = breedDAO.findByName(param.getFilter().getBreed());
+	    animalType = animalTypeDAO.findByName(param.getFilter().getAnimalType());
+	}
+	
 	
 	Pageable page = PageRequest.of(param.getPage(), 5);
-	List<AdoptionAnimal> adoptionAnimals = adoptionAnimalDAO.searchAdoptionAnimalsByShelter(shelter.getId(), page);
+	List<AdoptionAnimal> adoptionAnimals = adoptionAnimalDAO.searchAdoptionAnimalsByShelter(shelter.getId(),animalType,breed,param.getFilter().getGenre(),param.getFilter().getSize(),param.getFilter().getColor(), page);
 	int totalPages = 0;
-	if(adoptionAnimalDAO.countAdoptionAnimalsByShelter(shelter.getId())==5) {
+	if(adoptionAnimalDAO.countAdoptionAnimalsByShelter(shelter.getId(),animalType,breed,param.getFilter().getGenre(),param.getFilter().getSize(),param.getFilter().getColor())==5) {
 	  totalPages = 0;
 	}else {
-	   totalPages = (adoptionAnimalDAO.countAdoptionAnimalsByShelter(shelter.getId())/5);
+	   totalPages = (adoptionAnimalDAO.countAdoptionAnimalsByShelter(shelter.getId(),animalType, breed,param.getFilter().getGenre(),param.getFilter().getSize(),param.getFilter().getColor())/5);
 	}
 	
 	adoptionAnimalsPageDTO.setAdoptionAnimals(toReducedAdoptionAnimalDTOList(adoptionAnimals));
@@ -149,9 +167,17 @@ public class ShelterService implements IShelterService {
 	    	    Optional <Shelter> optionalShelter = shelterDAO.findById(profile.getId());
 	    	    Shelter shelter = optionalShelter.get();
 	    	    animalDTO.getAdoptionAnimalInfoDTO().setShelter(shelter);
-	    	    Animal animal = toAdoptionAnimal(animalDTO);
-	    	    Animal returnedAnimal = animalDao.save(animal);
+	    	    AdoptionAnimal animal = toAdoptionAnimal(animalDTO);
+	    	    Breed breed = breedDAO.findByName(animalDTO.getBreedName());
+	    	    animal.setBreed(breed);
+	    	    animal.setCreationDate(Calendar.getInstance());
 	    	    
+	    	    if(animalDTO.getAdoptionAnimalInfoDTO().getState() == AdoptionState.EN_ADOPCION ) {
+	    		animal.setAdoptionTime(Calendar.getInstance().toInstant().toEpochMilli());
+	    	    }
+	    	    
+	    	    Animal returnedAnimal = animalDao.save(animal);
+
 	    	    List<User> usersToNotify = userDAO.findByAnimalPreferences(profile.getLatitude(), profile.getLongitude(), animal.getBreed(), animal.getSize(), animal.getColor(), animal.getGenre());
 	    	    
 	    	    usersToNotify.forEach((user)->{
@@ -185,6 +211,8 @@ public class ShelterService implements IShelterService {
 
 		return returnedAdoptionAnimalDTO;
 	}
+    
+    
 	
     @Override
     public ReturnedAdoptionAnimalDTO editAnimal(AnimalDTO animalDTO) throws IOException {
@@ -211,17 +239,27 @@ public class ShelterService implements IShelterService {
     }
     
     public ShelterListDTO getSheltersInArea(String userToken) {
-	Profile profile = profileService.getProfileFromToken(userToken);
-	Float profileLatitude = profile.getLatitude();
-	Float profileLongitude = profile.getLongitude();
-	Double maxDistance = profile.getPreferences().getMaxAdoptionDistance();
-	List<Shelter> shelters = shelterDAO.getSheltersInArea(profileLongitude, profileLatitude, maxDistance );
-	List<Double> distances = shelterDAO.getDistances(profileLongitude, profileLatitude, maxDistance);
-	ShelterListDTO shelterListDTO = toShelterDTOList(shelters);
+	List<Shelter> shelters = new ArrayList<>();
+	List<Double> distances = new ArrayList<>();
 	
-	for(int i=0; i<shelterListDTO.getShelters().size(); i++) {
-	    shelterListDTO.getShelters().get(i).setDistance(distances.get(i));
+	if(!userToken.equals("null")) {
+		Profile profile = profileService.getProfileFromToken(userToken);
+		Float profileLatitude = profile.getLatitude();
+		Float profileLongitude = profile.getLongitude();
+		Double maxDistance = profile.getPreferences().getMaxAdoptionDistance();
+		shelters = shelterDAO.getSheltersInArea(profileLongitude, profileLatitude, maxDistance );
+		distances = shelterDAO.getDistances(profileLongitude, profileLatitude, maxDistance);
+	}else {
+	  Iterable<Shelter>  sheltersIterable = shelterDAO.findAll();
+	  sheltersIterable.forEach(shelters::add);
 	}
+
+	ShelterListDTO shelterListDTO = toShelterDTOList(shelters);
+	if(!distances.isEmpty()) {
+		for(int i=0; i<shelterListDTO.getShelters().size(); i++) {
+		    shelterListDTO.getShelters().get(i).setDistance(distances.get(i));
+	}
+}
 	
 	return shelterListDTO;
 	

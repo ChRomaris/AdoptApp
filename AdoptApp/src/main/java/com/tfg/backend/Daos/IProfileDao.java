@@ -7,11 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.tfg.backend.Entities.AdoptionAnimal;
-import com.tfg.backend.Entities.Animal.Breed;
 import com.tfg.backend.Entities.Animal.Color;
 import com.tfg.backend.Entities.Animal.Size;
 import com.tfg.backend.Entities.Profile;
-import com.tfg.backend.Entities.Profile.Genre;
+import com.tfg.backend.Entities.Profile.ProfileGenre;
 import com.tfg.backend.Entities.User;
 
 public interface IProfileDao extends PagingAndSortingRepository<Profile, Long> {

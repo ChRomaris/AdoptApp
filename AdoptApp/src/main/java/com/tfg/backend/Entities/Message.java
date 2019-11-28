@@ -32,7 +32,7 @@ public class Message {
     Calendar dateTime;
     
     @Column
-    boolean checked;
+    Boolean checked;
     
    
     @ManyToOne
@@ -76,7 +76,7 @@ public class Message {
         return checked;
     }
 
-    public void setChecked(boolean checked) {
+    public void setChecked(Boolean checked) {
         this.checked = checked;
     }
 

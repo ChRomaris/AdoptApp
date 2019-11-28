@@ -39,7 +39,7 @@ public class Location {
     
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name="animalId", referencedColumnName = "id_animal")
+    @JoinColumn(name="id_animal", referencedColumnName = "id_animal")
     private LostAnimal animal;
     
     public Location() {

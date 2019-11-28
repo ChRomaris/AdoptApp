@@ -13,12 +13,40 @@ Label {
     margin-top: 2vh;
 }
 
-.nextButton{
-    float: right;
+
+@media  screen and (max-width:600px){
+    .nextButton{
+        float: right;
+        display: block;
+        margin-right: 15vw;
+        position: absolute  ;
+        margin-top: 395vh;
+     
+    }
+    
+    .previousButton{
     display: block;
+    float: left;
+    margin-left: 15vw;
+    position: relative;
+    margin-top: 395vh;
+    
+    }
 }
 
-.previousButton{
-display: block;
-float: left;
+
+@media screen and (min-width:600px){
+
+    .nextButton{
+        float: right;
+        display: block;
+        margin-right: 15vw;
+    }
+    
+    .previousButton{
+    display: block;
+    float: left;
+    margin-left: 15vw;
+    
+    }
 }

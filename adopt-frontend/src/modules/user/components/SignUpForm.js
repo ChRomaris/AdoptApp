@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {register}  from '../actions';
+import {register}  from '../../../backend/userService';
 import {ToastsContainer, ToastsStore} from 'react-toasts';
 import {NavLink} from 'react-router-dom';
 import logo from '../../../images/cat2.gif';
@@ -117,10 +117,13 @@ class SignUpForm extends Component {
       register(signUpUser)
           .then(response => {
             
-            this.props.history.replace("/addLocation")
+          
             sessionStorage.setItem('serviceToken', response.token);
             sessionStorage.setItem('userId', response.id);
+            sessionStorage.setItem('usename', response.username);
             ToastsStore.success("Registrado Correctamente");
+            this.props.history.replace("/addLocation")
+
 
         }).catch(error => {
           ToastsStore.error(error.globalError);

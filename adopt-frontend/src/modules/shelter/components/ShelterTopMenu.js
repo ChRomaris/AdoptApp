@@ -50,7 +50,17 @@ class ShelterTopMenu extends Component {
                 <MDBDropdownItem ><a href="#/shelterList"><FormattedMessage id="menu.label.shelterList"/></a></MDBDropdownItem> 
                 </MDBDropdownMenu>
               </MDBDropdown>
-            <MDBNavItem>
+
+              <MDBDropdown>
+                      <MDBDropdownToggle nav caret>
+                        <span className="mr-2"><FormattedMessage id="menu.label.lostAnimals"/></span>
+                      </MDBDropdownToggle>
+                      <MDBDropdownMenu>
+                      <MDBDropdownItem ><a href="#/lostList"><FormattedMessage id="menu.label.animalList"/></a></MDBDropdownItem> 
+                      <MDBDropdownItem ><a href="#/lostMap"><FormattedMessage id="menu.label.animalMap"/></a></MDBDropdownItem> 
+                      </MDBDropdownMenu>
+                    </MDBDropdown>
+                    <MDBNavItem>
             <MDBDropdown>
             <MDBDropdownToggle nav caret>
                   <span className="mr-2"><FormattedMessage id="menu.label.shelterAdmin"/></span>
@@ -61,10 +71,18 @@ class ShelterTopMenu extends Component {
                 </MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavItem>
+                    <li className="nav-item">
+                  <a className="nav-link" href="#/chat">Chats Activos</a>
+                     </li>
+                    <li className="nav-item">
+                  <a className="nav-link" href="#/notifications">Notificaciones</a>
+                     </li>
+              
+
             <MDBNavItem>
               <MDBDropdown>
                 <MDBDropdownToggle nav caret>
-                  <span className="mr-2"><FormattedMessage id="menu.label.profile"/></span>
+                  <span className="mr-2">{sessionStorage.getItem('username')}</span>
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
                 <MDBDropdownItem ><a href="#/shelter/preferences"><FormattedMessage id="menu.label.preferences"/></a></MDBDropdownItem>
